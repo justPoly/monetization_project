@@ -6,10 +6,10 @@
 
 Note: Be sure to select "N0" as your response to the question: Will this app be primarily targeted to children under age 13?. Again, take another look at the screenshot above to identify this question.
 
-4. Go to windows -> package manager -> select packages: **unity registry** [from top left corner]
+4. Go to windows -> package manager -> select packages: **unity registry** [from top left corner]   
+   ![Screenshot (845)](https://github.com/justPoly/monetization_project/assets/29443625/19200e57-517a-4000-8c5e-1056543f1c01)
+
 5. Search for **Advertisement Legacy** select and install.
-   
-![Screenshot (845)](https://github.com/justPoly/monetization_project/assets/29443625/19200e57-517a-4000-8c5e-1056543f1c01)
 
 ## Unity Ads Packgage
 6. Download and import the unity ads package to your project.
