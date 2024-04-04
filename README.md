@@ -12,6 +12,7 @@ Note: Be sure to select "N0" as your response to the question: Will this app be 
 
 ## Unity Ads Packgage
 6. Download and import the unity ads package to your project.
+   click here to download
    
 ## Integrating Unity Ads into your Game
 
