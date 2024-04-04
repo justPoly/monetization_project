@@ -13,3 +13,4 @@ Note: Be sure to select "N0" as your response to the question: Will this app be 
 ## Integrating Unity Ads into your Game
 
 
+![Screenshot (845)](https://github.com/justPoly/monetization_project/assets/29443625/19200e57-517a-4000-8c5e-1056543f1c01)
