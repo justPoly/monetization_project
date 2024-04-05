@@ -19,7 +19,10 @@
    
 ## Integrating Unity Ads into your Game
 7. Go to your prefab folder and drag the UnityAdsManager prefab to the hierarchy section in unity editor.
-8. There are methods for Load and Show for Banner, Rewarded and Interstitial Ads. 
+8. If you are attaching it to a button, you can drag the UnityAdsManager prefab from the hierarchy to the "On Click" event and interact with the methods e.g  InterstitialAds.ShowInterstitialAds.
+   
+![Screenshot (846)](https://github.com/justPoly/monetization_project/assets/29443625/6fc77a76-80f1-41e0-b206-ab42d5f682ee)
 
+9. If you choose to display the ads through a method in your code base, you can use AdManager to assess any of the ads in your custom methods. E.g AdManager.Instance.BannerAds.HideBannerAds();
 
 
