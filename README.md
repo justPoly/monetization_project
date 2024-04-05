@@ -18,7 +18,8 @@
    click here to download
    
 ## Integrating Unity Ads into your Game
-7. Go to your prefab folder and drag the UnityAdsManager prefab to the hierarchy in unity editor.
+7. Go to your prefab folder and drag the UnityAdsManager prefab to the hierarchy section in unity editor.
+8. There are methods for Load and Show for Banner, Rewarded and Interstitial Ads. 
 
 
 
