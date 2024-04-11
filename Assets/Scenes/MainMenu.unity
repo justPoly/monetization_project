@@ -305,7 +305,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Play
+  m_text: Banner Ads
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -863,15 +863,15 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1217881934 stripped
+--- !u!114 &1217881936 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7762178763347918809, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7411649915459399112, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
   m_PrefabInstance: {fileID: 1504110593}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055a016345cda3444a4e2eebf2491d14, type: 3}
+  m_Script: {fileID: 11500000, guid: c0bd57719408bd54096a9392d8197e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1363395358
@@ -1459,9 +1459,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1217881934}
-        m_TargetAssemblyTypeName: RewardedAds, Assembly-CSharp
-        m_MethodName: ShowRewardedAd
+      - m_Target: {fileID: 1217881936}
+        m_TargetAssemblyTypeName: BannerAds, Assembly-CSharp
+        m_MethodName: ShowBannerAd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

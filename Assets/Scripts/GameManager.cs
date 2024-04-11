@@ -16,21 +16,18 @@ public class GameManager : MonoBehaviour
         
     }
 
-     private void Awake()
+    private void Awake()
     {
-        // if (Instance != null && Instance != this)
-        // {
-        //     Destroy(gameObject);
-        //     return;
-        // }
-        // Instance = this;
-        // DontDestroyOnLoad(gameObject);
-
-        // StartCoroutine(DisplayBannerWithDelay());
+    
     }
 
     public void DisplayIntertitialAds()
     { 
        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+    }
+
+    public void DisplayRewardedAds()
+    {
+        AdsManager.Instance.rewardedAds.ShowRewardedAd();
     }
 }
