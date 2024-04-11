@@ -22,7 +22,10 @@ public class InitializeAds : MonoBehaviour ,IUnityAdsInitializationListener
         #elif UNITY_EDITOR
                 gameId= androidGameId; // If you Havn't Switched the Platfrom...
         #endif
+    }
 
+    public void InitializeUnityAds()
+    {
         if (!Advertisement.isInitialized && Advertisement.isSupported)
         {
             Advertisement.Initialize(gameId, isTesting, this);

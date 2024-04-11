@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Advertisements;
 
 [CreateAssetMenu(menuName = "Managers/GameState Manager")]
 #if UNITY_EDITOR
@@ -13,6 +14,10 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
     [HideInInspector] public string m_loadingTxt;
     [HideInInspector] public bool m_loadingDone = false;
 
+    private float timer;
+    private bool isActionDelayed;
+    private float delayDuration = 1f; // Adjust the delay duration as needed
+
     [SerializeField] private ApplicationManager m_applicationManager;
     private ApplicationManager m_saveApplicationManager;
 
@@ -25,7 +30,25 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
 
     public void Init()
     {
-        
+       isActionDelayed = true;
+       timer = 0f;
+    }
+
+    public void Update()
+    {
+        if (isActionDelayed)
+        {
+            timer += Time.deltaTime;
+            if (timer >= delayDuration)
+            {
+                // Perform your delayed action here
+                AdsManager.Instance.bannerAds.ShowBannerAd();
+
+                // Reset the timer and flag
+                timer = 0f;
+                isActionDelayed = false;
+            }
+        }
     }
 
 }

@@ -7,6 +7,6 @@ public class SingletonReference : MonoBehaviour
 
     private void Awake()
     {
-
+         GameStateManager.Init();
     }
 }
