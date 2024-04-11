@@ -870,7 +870,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1139450463
 RectTransform:
@@ -1458,18 +1458,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1139450464}
-        m_TargetAssemblyTypeName: CheckForInternet, Assembly-CSharp
-        m_MethodName: Continue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1909925544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1642,7 +1630,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1738594721}
   - {fileID: 2013837353}
-  - {fileID: 1009501082}
   - {fileID: 1139450463}
+  - {fileID: 1009501082}
   - {fileID: 10725270}
   - {fileID: 945673951}

@@ -839,7 +839,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1216419313
 RectTransform:
@@ -1277,10 +1277,10 @@ RectTransform:
   - {fileID: 1397012198}
   m_Father: {fileID: 1720164071}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 478, y: 1082}
-  m_SizeDelta: {x: 226.0583, y: 233.9532}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -164, y: -277.4751}
+  m_SizeDelta: {x: 226.0583, y: 174.9032}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1543711914
 MonoBehaviour:
@@ -1690,6 +1690,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1217881936}
+        m_TargetAssemblyTypeName: BannerAds, Assembly-CSharp
+        m_MethodName: HideBannerAd
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1768298368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2008,7 +2020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8928687411832979424, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2022,11 +2034,11 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 519420032}
-  - {fileID: 1504110593}
   - {fileID: 652420819}
+  - {fileID: 519420032}
+  - {fileID: 1216419313}
+  - {fileID: 1504110593}
   - {fileID: 3864737716510038466}
   - {fileID: 998546856}
   - {fileID: 1511217283}
-  - {fileID: 1216419313}
   - {fileID: 176912244}
