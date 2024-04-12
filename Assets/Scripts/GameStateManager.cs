@@ -21,10 +21,18 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
     [SerializeField] private ApplicationManager m_applicationManager;
     private ApplicationManager m_saveApplicationManager;
 
+    [SerializeField] private EconomyManager m_economyManager;
+    private EconomyManager m_saveEconomyManager;
 
     public static ApplicationManager ApplicationManager
     {
         get { return Instance.m_applicationManager; }
+
+    }
+
+    public static EconomyManager EconomyManager
+    {
+        get { return Instance.m_economyManager; }
 
     }
 
@@ -49,6 +57,11 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
                 isActionDelayed = false;
             }
         }
+    }
+
+    public void InitializeValues()
+    {
+        EconomyManager.InitializeValues();
     }
 
 }
