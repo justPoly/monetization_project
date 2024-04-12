@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     
     }
 
-    public void DisplayIntertitialAds()
+    public void DisplayInterstitialAds()
     { 
        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
     }
@@ -40,6 +40,11 @@ public class GameManager : MonoBehaviour
     public void DisplayRewardedAds()
     {
         AdsManager.Instance.rewardedAds.ShowRewardedAd();
+    }
+
+    public void DisplayBannerAds()
+    {
+        AdsManager.Instance.bannerAds.ShowBannerAd();
     }
 
     public void TestAddMoney()

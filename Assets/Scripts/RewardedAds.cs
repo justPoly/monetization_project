@@ -55,6 +55,7 @@ public class RewardedAds : MonoBehaviour ,IUnityAdsLoadListener ,IUnityAdsShowLi
         if (placementId == adUnitId && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             Debug.Log("Ads Fully Watched .....");
+            GameStateManager.EconomyManager.AddMoney(30);
             //GameManager.Instance.isRewared = true;
             //GameManager.Instance.RestartGame();
         }
