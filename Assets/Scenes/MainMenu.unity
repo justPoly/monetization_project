@@ -771,6 +771,7 @@ GameObject:
   - component: {fileID: 1216419312}
   - component: {fileID: 1216419311}
   - component: {fileID: 1216419310}
+  - component: {fileID: 1216419314}
   m_Layer: 5
   m_Name: ManinMenuCanvas
   m_TagString: Untagged
@@ -864,15 +865,16 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1217881936 stripped
+--- !u!114 &1216419314
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7411649915459399112, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-  m_PrefabInstance: {fileID: 1504110593}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1216419309}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0bd57719408bd54096a9392d8197e40, type: 3}
+  m_Script: {fileID: 11500000, guid: 22ca161aed9891d42bd7d2a102b7684b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1363395358
@@ -1142,63 +1144,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397012197}
   m_CullTransparentMesh: 1
---- !u!1001 &1504110593
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1007509301215412296, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_Name
-      value: UnityAdsManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.5143287
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.48247233
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.1874425
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817259871040928662, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d51a81a5284db594db675a9a5b0380cd, type: 3}
 --- !u!1 &1511217281
 GameObject:
   m_ObjectHideFlags: 0
@@ -1460,9 +1405,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1217881936}
-        m_TargetAssemblyTypeName: BannerAds, Assembly-CSharp
-        m_MethodName: ShowBannerAd
+      - m_Target: {fileID: 1216419314}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: DisplayBannerAds
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1690,7 +1635,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1217881936}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BannerAds, Assembly-CSharp
         m_MethodName: HideBannerAd
         m_Mode: 1
@@ -2037,7 +1982,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 652420819}
   - {fileID: 1216419313}
-  - {fileID: 1504110593}
   - {fileID: 3864737716510038466}
   - {fileID: 998546856}
   - {fileID: 1511217283}

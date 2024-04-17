@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string levelToLoad = "MainLevel";
+    // public string levelToLoad = "MainLevel";
 
-    public GameObject quitMenu;
+    // public GameObject quitMenu;
    // public SceneFader sceneFader;
 
   //  public CurrencySO playerCoins;
@@ -19,6 +19,12 @@ public class MainMenu : MonoBehaviour
        // playerCoins.CurrencyInitializer();
        
     }
+
+    public void DisplayBannerAds()
+    {
+        AdsManager.Instance.bannerAds.ShowBannerAd();
+    }
+
     public void PlayGame()
     {
        // Time.timeScale = 1;
@@ -30,14 +36,14 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
-    public void QuitMenu()
-    {
-        quitMenu.gameObject.SetActive(true);
-    }
-    public void CloseQuitMenu()
-    {
-        quitMenu.gameObject.SetActive(false);
-    }
+    // public void QuitMenu()
+    // {
+    //     quitMenu.gameObject.SetActive(true);
+    // }
+    // public void CloseQuitMenu()
+    // {
+    //     quitMenu.gameObject.SetActive(false);
+    // }
     public void QuitGame()
     {
         Debug.Log("Quit Game!!");

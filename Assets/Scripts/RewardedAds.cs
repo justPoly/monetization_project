@@ -37,7 +37,7 @@ public class RewardedAds : MonoBehaviour ,IUnityAdsLoadListener ,IUnityAdsShowLi
     #region LoadCallbacks
     public void OnUnityAdsAdLoaded(string placementId)
     {
-        Debug.Log("Interstitial Ad Loaded");
+        Debug.Log("Rewarded Ad Loaded");
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message) { }
@@ -55,7 +55,7 @@ public class RewardedAds : MonoBehaviour ,IUnityAdsLoadListener ,IUnityAdsShowLi
         if (placementId == adUnitId && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             Debug.Log("Ads Fully Watched .....");
-            GameStateManager.EconomyManager.AddMoney(30);
+            GameManager.Instance.TestAddMoney();
             //GameManager.Instance.isRewared = true;
             //GameManager.Instance.RestartGame();
         }
