@@ -49,7 +49,7 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
             timer += Time.deltaTime;
             if (timer >= delayDuration)
             {
-                // Perform your delayed action here
+                // Perform delay action here
                 AdsManager.Instance.bannerAds.ShowBannerAd();
 
                 // Reset the timer and flag

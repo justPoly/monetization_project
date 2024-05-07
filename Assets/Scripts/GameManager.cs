@@ -6,7 +6,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public TMP_Text moneyText;
+    public TMP_Text diamondText;
     public TMP_Text gemsText;
 
     private static GameManager instance;
@@ -24,20 +24,23 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        UpdateUI();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         GameStateManager.EconomyManager.InitializeValues();
-        UpdateUI();
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
-        moneyText.text = "Money: " + GameStateManager.EconomyManager.Money.ToString("0.00"); // Format as currency
-        gemsText.text = "Gems: " + GameStateManager.EconomyManager.Gems.ToString();
+        // Update moneyText and gemsText directly based on the current counts and economy manager values
+        diamondText.text = $"Diamonds: {((int)GameStateManager.EconomyManager.Money).ToString()}";
+        gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
     }
+
+
 
     // Update is called once per frame
     void Update()
