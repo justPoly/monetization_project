@@ -69,9 +69,9 @@ public class GameManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void TestAddGems(float amount)
+    public void TestAddGems()
     {
-        GameStateManager.EconomyManager.AddGems(amount);
+        GameStateManager.EconomyManager.AddGems(10);
         UpdateUI();
     }
 

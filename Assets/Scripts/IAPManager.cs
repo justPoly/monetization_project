@@ -8,9 +8,10 @@ using Unity.Services.Core;
 using Unity.Services.Core.Environments;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
+using UnityEngine.Purchasing.Extension;
 
 
-public class IAPManager : MonoBehaviour, IStoreListener
+public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 {
     [SerializeField]
     private UIProduct UIProductPrefab;
@@ -41,6 +42,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         ResourceRequest operation = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
         operation.completed += HandleIAPCatalogLoaded;
         UpdateUI();
+        
     }
 
     public void UpdateUI()
@@ -99,7 +101,7 @@ public class IAPManager : MonoBehaviour, IStoreListener
         //old implementation
     // }
     
-    private void HandleAllIconsLoaded()
+    public void HandleAllIconsLoaded()
     {
         StartCoroutine(CreateUI());
     }
@@ -119,17 +121,19 @@ public class IAPManager : MonoBehaviour, IStoreListener
             yield return null;
         }
     }
+    
 
     private void HandlePurchase(Product Product, Action OnPurchaseCompleted)
     {
           LoadingOverlay.SetActive(true);
-          StoreController.InitiatePurchase(Product);
           this.OnPurchaseCompleted = OnPurchaseCompleted;
+          StoreController.InitiatePurchase(Product);
     }
 
     void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
     {
-       OnInitializeFailed(error, null);
+       Debug.LogError($"Error initializing IAP because of {error}." +
+            $"\r\nShow a message to the player depending on the error.");
     }
 
     public void OnInitializeFailed(InitializationFailureReason error, string message)
@@ -148,6 +152,14 @@ public class IAPManager : MonoBehaviour, IStoreListener
         LoadingOverlay.SetActive(false);
     }
 
+    public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
+    {
+        Debug.Log($"Failed to purchase {product.definition.id} because {failureDescription}");
+        OnPurchaseCompleted?.Invoke();
+        OnPurchaseCompleted = null;
+        LoadingOverlay.SetActive(false);
+    }
+
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
     {
         Debug.Log($"Successfully purchased {purchaseEvent.purchasedProduct.definition.id}");
@@ -157,7 +169,8 @@ public class IAPManager : MonoBehaviour, IStoreListener
 
         //do something, like give the player their currency, unlock the item,
         //update some metrics or analytics, etc.
-
+        GameStateManager.EconomyManager.AddGems(10);
+        UpdateUI();
         return PurchaseProcessingResult.Complete;
     }
 }

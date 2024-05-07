@@ -30,7 +30,7 @@ public class StoreIconProvider
         }
         else
         {
-            Debug.LogError("StoreIconProvider has already been initialized!");
+            // Debug.LogError("StoreIconProvider has already been initialized!");
         }
     }
 
