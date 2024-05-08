@@ -93,13 +93,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         ExtensionProvider = extensions;
         StoreIconProvider.Initialize(StoreController.products);
         StoreIconProvider.OnLoadComplete += HandleAllIconsLoaded;
-        // throw new System.NotImplementedException();
     }
-
-    // public void OnInitializeFailed(OnInitializationFailureReason error)
-    // {
-        //old implementation
-    // }
     
     public void HandleAllIconsLoaded()
     {
@@ -169,8 +163,17 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 
         //do something, like give the player their currency, unlock the item,
         //update some metrics or analytics, etc.
-        GameStateManager.EconomyManager.AddGems(10);
-        UpdateUI();
+        if(purchaseEvent.purchasedProduct.definition.id == "starter_pack")
+        {
+            GameStateManager.EconomyManager.AddGems(10);
+            UpdateUI();
+        }
+
+        if(purchaseEvent.purchasedProduct.definition.id == "value")
+        {
+            GameStateManager.EconomyManager.AddMoney(20);
+            UpdateUI();
+        }
         return PurchaseProcessingResult.Complete;
     }
 }
