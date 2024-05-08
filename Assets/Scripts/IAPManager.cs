@@ -13,18 +13,20 @@ using UnityEngine.Purchasing.Extension;
 
 public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 {
+    // [SerializeField]
+    // private VerticalLayoutGroup ContentPanel; 
     [SerializeField]
-    private UIProduct UIProductPrefab;
-    [SerializeField]
-    private VerticalLayoutGroup ContentPanel; 
+    private List<UIProduct> uiProducts;
     [SerializeField]
     private GameObject LoadingOverlay;
     [SerializeField]
+    private GameObject purchaseFailed;
+    [SerializeField]
     private bool UseFakeStore = false;
     [SerializeField]
-    public TMP_Text diamondText;
-    [SerializeField]
-    public TMP_Text gemsText;
+    public TMP_Text coinText;
+    // [SerializeField]
+    // public TMP_Text gemsText;
 
     private Action OnPurchaseCompleted;
     private IStoreController StoreController;
@@ -33,11 +35,11 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     private async void Awake()
     {
         InitializationOptions options = new InitializationOptions()
-    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        #if UNITY_EDITOR || DEVELOPMENT_BUILD
         .SetEnvironmentName("test");
-    #else
+        #else
         .SetEnvironmentName("production");
-    #endif
+        #endif
         await UnityServices.InitializeAsync(options);
         ResourceRequest operation = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
         operation.completed += HandleIAPCatalogLoaded;
@@ -48,8 +50,8 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     public void UpdateUI()
     {
         // Update moneyText and gemsText directly based on the current counts and economy manager values
-        diamondText.text = $"Diamonds: {((int)GameStateManager.EconomyManager.Money).ToString()}";
-        gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
+        coinText.text = $" {((int)GameStateManager.EconomyManager.Money).ToString()}";
+        // gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
     }
 
     private void HandleIAPCatalogLoaded(AsyncOperation Operation)
@@ -61,8 +63,10 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 
         if (UseFakeStore) // Use bool in editor to control fake store behavior.
         {
-            StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser; // Comment out this line if you are building the game for publishing.
-            StandardPurchasingModule.Instance().useFakeStoreAlways = true; // Comment out this line if you are building the game for publishing.
+            // Comment out this line if you are building the game for publishing.
+            StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser; 
+            // Comment out this line if you are building the game for publishing.
+            StandardPurchasingModule.Instance().useFakeStoreAlways = true; 
         }
 
     #if UNITY_ANDROID
@@ -97,25 +101,32 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     
     public void HandleAllIconsLoaded()
     {
-        StartCoroutine(CreateUI());
-    }
-
-    private IEnumerator CreateUI()
-    {
-        List<Product> sortedProducts = StoreController.products.all
-        .OrderBy(item => item.metadata.localizedPrice)
-        .ToList();
-
-        foreach(Product product in sortedProducts)
-        {
-            UIProduct uiProduct = Instantiate(UIProductPrefab);
-            uiProduct.OnPurchase += HandlePurchase;
-            uiProduct.Setup(product);
-            uiProduct.transform.SetParent(ContentPanel.transform, false);
-            yield return null;
-        }
+        CreateUI();
     }
     
+    private void CreateUI()
+    {
+        List<Product> sortedProducts = StoreController.products.all
+            .OrderBy(item => item.metadata.localizedPrice)
+            .ToList();
+
+        // Iterate through each UIProduct instance in the list
+        for (int i = 0; i < uiProducts.Count; i++)
+        {
+            if (i < sortedProducts.Count)
+            {
+                uiProducts[i].OnPurchase += HandlePurchase;
+                uiProducts[i].Setup(sortedProducts[i]);
+            }
+            else
+            {
+                Debug.LogWarning("Not enough products to fill all UIProduct instances.");
+                break;
+            }
+        }
+    }
+
+
 
     private void HandlePurchase(Product Product, Action OnPurchaseCompleted)
     {
@@ -144,6 +155,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         OnPurchaseCompleted?.Invoke();
         OnPurchaseCompleted = null;
         LoadingOverlay.SetActive(false);
+        purchaseFailed.SetActive(true);
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
@@ -152,6 +164,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         OnPurchaseCompleted?.Invoke();
         OnPurchaseCompleted = null;
         LoadingOverlay.SetActive(false);
+        purchaseFailed.SetActive(true);
     }
 
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
@@ -165,7 +178,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         //update some metrics or analytics, etc.
         if(purchaseEvent.purchasedProduct.definition.id == "starter_pack")
         {
-            GameStateManager.EconomyManager.AddGems(10);
+            GameStateManager.EconomyManager.AddMoney(20);
             UpdateUI();
         }
 
