@@ -10,11 +10,8 @@ using UnityEngine.Purchasing;
 using UnityEngine.UI;
 using UnityEngine.Purchasing.Extension;
 
-
 public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 {
-    // [SerializeField]
-    // private VerticalLayoutGroup ContentPanel; 
     [SerializeField]
     private List<UIProduct> uiProducts;
     [SerializeField]
@@ -25,8 +22,6 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     private bool UseFakeStore = false;
     [SerializeField]
     public TMP_Text coinText;
-    // [SerializeField]
-    // public TMP_Text gemsText;
 
     private Action OnPurchaseCompleted;
     private IStoreController StoreController;
@@ -44,14 +39,11 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         ResourceRequest operation = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
         operation.completed += HandleIAPCatalogLoaded;
         UpdateUI();
-        
     }
 
     public void UpdateUI()
     {
-        // Update moneyText and gemsText directly based on the current counts and economy manager values
         coinText.text = $" {((int)GameStateManager.EconomyManager.Money).ToString()}";
-        // gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
     }
 
     private void HandleIAPCatalogLoaded(AsyncOperation Operation)
@@ -61,29 +53,30 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         ProductCatalog catalog = JsonUtility.FromJson<ProductCatalog>((request.asset as TextAsset).text);
         Debug.Log($"Loaded catalog with {catalog.allProducts.Count} items");
 
+        #if UNITY_EDITOR 
+        UseFakeStore = true;
         if (UseFakeStore) // Use bool in editor to control fake store behavior.
         {
-            // Comment out this line if you are building the game for publishing.
-            StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser; 
-            // Comment out this line if you are building the game for publishing.
-            StandardPurchasingModule.Instance().useFakeStoreAlways = true; 
+            StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
+            StandardPurchasingModule.Instance().useFakeStoreAlways = true;
         }
+        #endif
 
-    #if UNITY_ANDROID
+        #if UNITY_ANDROID
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(
             StandardPurchasingModule.Instance(AppStore.GooglePlay)
         );
-    #elif UNITY_IOS
+        #elif UNITY_IOS
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(
             StandardPurchasingModule.Instance(AppStore.AppleAppStore)
         );
-    #else
+        #else
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(
             StandardPurchasingModule.Instance(AppStore.NotSpecified)
         );
-    #endif
+        #endif
 
-        foreach(ProductCatalogItem item in catalog.allProducts)
+        foreach (ProductCatalogItem item in catalog.allProducts)
         {
             builder.AddProduct(item.id, item.type);
         }
@@ -95,22 +88,15 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         StoreController = controller;
         ExtensionProvider = extensions;
-        StoreIconProvider.Initialize(StoreController.products);
-        StoreIconProvider.OnLoadComplete += HandleAllIconsLoaded;
-    }
-    
-    public void HandleAllIconsLoaded()
-    {
         CreateUI();
     }
-    
+
     private void CreateUI()
     {
         List<Product> sortedProducts = StoreController.products.all
             .OrderBy(item => item.metadata.localizedPrice)
             .ToList();
 
-        // Iterate through each UIProduct instance in the list
         for (int i = 0; i < uiProducts.Count; i++)
         {
             if (i < sortedProducts.Count)
@@ -126,27 +112,24 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         }
     }
 
-
-
     private void HandlePurchase(Product Product, Action OnPurchaseCompleted)
     {
-          LoadingOverlay.SetActive(true);
-          this.OnPurchaseCompleted = OnPurchaseCompleted;
-          StoreController.InitiatePurchase(Product);
+        LoadingOverlay.SetActive(true);
+        this.OnPurchaseCompleted = OnPurchaseCompleted;
+        StoreController.InitiatePurchase(Product);
     }
 
     void IStoreListener.OnInitializeFailed(InitializationFailureReason error)
     {
-       Debug.LogError($"Error initializing IAP because of {error}." +
+        Debug.LogError($"Error initializing IAP because of {error}." +
             $"\r\nShow a message to the player depending on the error.");
     }
 
     public void OnInitializeFailed(InitializationFailureReason error, string message)
     {
-       //implementation for new
-       Debug.LogError($"Error initializing IAP because of {error}." + 
-       $"\r\nShow a message to the player depending on the error.");
-       throw new System.NotImplementedException();
+        Debug.LogError($"Error initializing IAP because of {error}." +
+        $"\r\nShow a message to the player depending on the error.");
+        throw new System.NotImplementedException();
     }
 
     public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
@@ -154,7 +137,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         Debug.Log($"Failed to purchase {product.definition.id} because {failureReason}");
         OnPurchaseCompleted?.Invoke();
         OnPurchaseCompleted = null;
-        LoadingOverlay.SetActive(false);
+        LoadingOverlay.SetActive(true);
         purchaseFailed.SetActive(true);
     }
 
@@ -163,7 +146,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         Debug.Log($"Failed to purchase {product.definition.id} because {failureDescription}");
         OnPurchaseCompleted?.Invoke();
         OnPurchaseCompleted = null;
-        LoadingOverlay.SetActive(false);
+        LoadingOverlay.SetActive(true);
         purchaseFailed.SetActive(true);
     }
 
@@ -174,17 +157,15 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         OnPurchaseCompleted = null;
         LoadingOverlay.SetActive(false);
 
-        //do something, like give the player their currency, unlock the item,
-        //update some metrics or analytics, etc.
-        if(purchaseEvent.purchasedProduct.definition.id == "starter_pack")
+        if (purchaseEvent.purchasedProduct.definition.id == "starter_pack")
         {
             GameStateManager.EconomyManager.AddMoney(20);
             UpdateUI();
         }
 
-        if(purchaseEvent.purchasedProduct.definition.id == "value")
+        if (purchaseEvent.purchasedProduct.definition.id == "value")
         {
-            GameStateManager.EconomyManager.AddMoney(20);
+            GameStateManager.EconomyManager.AddMoney(10);
             UpdateUI();
         }
         return PurchaseProcessingResult.Complete;
