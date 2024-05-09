@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d6db9fdea7acc43b0b211d7f9b8436, type: 3}
   m_Name: EconomyManager
   m_EditorClassIdentifier: 
-  m_Money: 2500
+  m_Money: 250
   m_TotalMoney: 0
-  m_Gems: 250
+  m_Gems: 10
   onGemsChanged: {fileID: 11400000, guid: efe142138a268e549be4c7717f12d8f4, type: 2}
   onMoneyChanged: {fileID: 11400000, guid: 23ec697a56d6beb40b14c25d5649c8a0, type: 2}
   onTotalMoneyIncreased: {fileID: 11400000, guid: 048797c2fa0ea494384cfde367797950, type: 2}
-  startingMoney: 250
-  startingGems: 10
+  startingMoney: 0
+  startingGems: 0
   completedLevelReward: 200
   testAddMoneyAmount: 0
   testGemsAddAmount: 0

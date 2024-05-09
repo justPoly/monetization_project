@@ -157,17 +157,35 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         OnPurchaseCompleted = null;
         LoadingOverlay.SetActive(false);
 
-        if (purchaseEvent.purchasedProduct.definition.id == "starter_pack")
-        {
-            GameStateManager.EconomyManager.AddMoney(20);
-            UpdateUI();
-        }
+        string productId = purchaseEvent.purchasedProduct.definition.id;
 
-        if (purchaseEvent.purchasedProduct.definition.id == "value")
+        switch (productId)
         {
-            GameStateManager.EconomyManager.AddMoney(10);
-            UpdateUI();
+            case "starter_pack":
+                AddMoneyAndUpdateUI(25);
+                break;
+            case "value":
+                AddMoneyAndUpdateUI(20);
+                break;
+            case "deluxe":
+                AddMoneyAndUpdateUI(15);
+                break;
+            case "19.99":
+                AddMoneyAndUpdateUI(10);
+                break;
+            case "no_ads":
+                AddMoneyAndUpdateUI(5);
+                break;
+            default:
+                Debug.LogWarning($"Unmapped product ID: {productId}. Money not added.");
+                break;
         }
         return PurchaseProcessingResult.Complete;
+    }
+
+    private void AddMoneyAndUpdateUI(int moneyToAdd)
+    {
+        GameStateManager.EconomyManager.AddMoney(moneyToAdd);
+        UpdateUI();
     }
 }
