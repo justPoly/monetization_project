@@ -21,7 +21,10 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     [SerializeField]
     private bool UseFakeStore = false;
     [SerializeField]
-    public TMP_Text coinText;
+    public TMP_Text diamondText;
+    [SerializeField]
+    public TMP_Text gemsText;
+
 
     private Action OnPurchaseCompleted;
     private IStoreController StoreController;
@@ -43,7 +46,8 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 
     public void UpdateUI()
     {
-        coinText.text = $" {((int)GameStateManager.EconomyManager.Money).ToString()}";
+        diamondText.text = $"Diamonds: {((int)GameStateManager.EconomyManager.Money).ToString()}";
+        gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
     }
 
     private void HandleIAPCatalogLoaded(AsyncOperation Operation)
