@@ -31,6 +31,11 @@ public class RewardedAds : MonoBehaviour ,IUnityAdsLoadListener ,IUnityAdsShowLi
         LoadRewardedAd();
     }
 
+    public void HideRewardedAd()
+    {
+        Advertisement.Show("nodisplay");
+    }
+
 
 
 

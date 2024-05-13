@@ -30,6 +30,11 @@ public class InterstitialAds : MonoBehaviour , IUnityAdsLoadListener ,IUnityAdsS
         LoadInterstitialAd();
     }
 
+    public void HideInterstitialAd()
+    {
+        Advertisement.Show("nodisplay");
+    }
+
 
 
 

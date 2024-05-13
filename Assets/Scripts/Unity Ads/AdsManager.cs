@@ -32,16 +32,17 @@ public class AdsManager : MonoBehaviour
     }
 
     private IEnumerator LoadAdsAfterInitialization()
-{
-    // Wait for Unity Ads initialization to complete
-    while (!Advertisement.isInitialized || !Advertisement.isSupported)
     {
-        yield return null;
+         // Wait for Unity Ads initialization to complete
+        while (!Advertisement.isInitialized || !Advertisement.isSupported)
+        {
+            yield return null;
+        }
+
+         // Load ads now that Unity Ads is initialized and supported
+        bannerAds.LoadBannerAd();
+        interstitialAds.LoadInterstitialAd();
+        rewardedAds.LoadRewardedAd();
     }
 
-    // Load ads now that Unity Ads is initialized and supported
-    bannerAds.LoadBannerAd();
-    interstitialAds.LoadInterstitialAd();
-    rewardedAds.LoadRewardedAd();
-}
 }
