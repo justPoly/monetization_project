@@ -39,29 +39,16 @@ public class EconomyManager : ScriptableObject
 
     [BoxGroup("Config")]
     [Tooltip("The amount of money the player starts the game with")]
-    public float startingMoney = 2500f;
+    public float startingMoney = 50f;
 
     [BoxGroup("Config")]
     [Tooltip("The amount of gems the player starts the game with")]
-    public float startingGems = 250f;
+    public float startingGems = 5f;
 
     [BoxGroup("Level Amount")]
     [Tooltip("Money earned after the player has completed a level")]
     public float completedLevelReward = 200;
-    public int TotalStars { get; set; }
-    public int TotalSecrets { get; set; }
 
-    public void AddTotalStar(int _numberOf)
-    {
-        TotalStars += _numberOf;
-        PlayerPrefs.SetInt("TotalStars", TotalStars);
-    }
-
-    public void AddTotalSecret(int _numberOf)
-    {
-        TotalSecrets += _numberOf;
-        PlayerPrefs.SetInt("TotalSecrets", TotalSecrets); ;
-    }
 
     public double Gems
     {
@@ -101,9 +88,6 @@ public class EconomyManager : ScriptableObject
     {
         Money = PlayerPrefs.GetFloat("Money", (int)startingMoney);
         Gems = PlayerPrefs.GetInt("Gems", (int)startingGems);
-        TotalStars = PlayerPrefs.GetInt("TotalStars", 0);
-        TotalSecrets = PlayerPrefs.GetInt("TotalSecrets", 0);
-
         onMoneyChanged.Raise((float)Money);
         onGemsChanged.Raise((int)Gems);
     }

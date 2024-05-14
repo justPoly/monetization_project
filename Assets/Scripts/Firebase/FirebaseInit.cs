@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using System;
 using Firebase;
 
 public class FirebaseInit : MonoBehaviour
@@ -28,5 +31,19 @@ public class FirebaseInit : MonoBehaviour
             }
         });
     }
+    
+    #region 
+    public void ViewRewardedAdButton()
+    {
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("View_RewardedAd_Button");
+    }
 
+    public void OptionButton(int number)
+    {
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Option_Button_Pressed", new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter("ButtonNumber", number),
+            new Firebase.Analytics.Parameter("ButtonNumber", number),
+        });
+    }
+    #endregion
 }

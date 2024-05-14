@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "687316728308",
+    "project_id": "monetization-project-8a54d",
+    "storage_bucket": "monetization-project-8a54d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:687316728308:android:3d571055a9005ab9a7e1a1",
+        "android_client_info": {
+          "package_name": "com.maliyo.MonetizationProject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB72fiFk1gW0Rk57nu4PbVR01ghTPn_GIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
