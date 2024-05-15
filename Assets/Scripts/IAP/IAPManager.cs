@@ -19,6 +19,8 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     [SerializeField]
     private GameObject purchaseFailed;
     [SerializeField]
+    private GameObject purchaseSuccessful;
+    [SerializeField]
     private bool UseFakeStore = false;
     [SerializeField]
     public TMP_Text diamondText;
@@ -191,6 +193,8 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         GameStateManager.EconomyManager.AddMoney(moneyToAdd);
         UpdateUI();
+        LoadingOverlay.SetActive(true);
+        purchaseSuccessful.SetActive(true);
     }
 
     private IEnumerator DisableAdsFor30Days()
