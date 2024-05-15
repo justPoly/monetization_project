@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Advertisements;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using Firebase.Analytics;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance;
     private bool adsEnabled = true;
+
+    public GameObject adTypePopup;
+    public Button[] buttonPrefabs;
+    private int currentButtonIndex = -1;
 
     public static GameManager Instance => instance ??= FindObjectOfType<GameManager>() ?? new GameObject("GameManagerSingleton").AddComponent<GameManager>();
 
@@ -32,6 +38,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GameStateManager.EconomyManager.InitializeValues();
+        ShowNextButton();
+        adTypePopup.SetActive(false); 
     }
 
     public void UpdateUI()
@@ -46,7 +54,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+         
     }
 
     public void DisplayInterstitialAds()
@@ -62,6 +70,11 @@ public class GameManager : MonoBehaviour
     public void DisplayBannerAds()
     {
         AdsManager.Instance.bannerAds.ShowBannerAd();
+    }
+
+    public void StashBannerAd()
+    {
+        AdsManager.Instance.bannerAds.HideBannerAd(); 
     }
 
     public void TestAddMoney()
@@ -80,6 +93,66 @@ public class GameManager : MonoBehaviour
     {
         GameStateManager.EconomyManager.ReduceMoney(20);
         UpdateUI();
+    }
+
+    public void OnButtonClick(string adType)
+    {
+        // Show UI popup to ask about advertisement type
+        adTypePopup.SetActive(true);
+    }
+
+    public void OnYesButtonClick(string adType)
+    {
+        Debug.Log("User saw " + adType + " ad.");
+        // You can perform further actions based on whether the user saw the ad or not
+        // For example, send analytics data, reward the user, etc.
+        adTypePopup.SetActive(false); // Hide the popup after selection
+        SendFirebaseEvent(adType, true); // Send Firebase event for "Yes" response
+        DisablePreviousButton(); // Disable the previous button
+        ShowNextButton(); // Show the next button
+    }
+
+    public void OnNoButtonClick(string adType)
+    {
+        Debug.Log("User did not see " + adType + " ad.");
+        // You can perform further actions based on whether the user saw the ad or not
+        // For example, show a different ad, ask again, etc.
+        adTypePopup.SetActive(false); // Hide the popup after selection
+        SendFirebaseEvent(adType, false); // Send Firebase event for "No" response
+        DisablePreviousButton(); // Disable the previous button
+        ShowNextButton(); // Show the next button
+    }
+
+    private void ShowNextButton()
+    {
+        // Increment the button index
+        currentButtonIndex++;
+        if (currentButtonIndex < buttonPrefabs.Length)
+        {
+            // Enable the next button in the array
+            buttonPrefabs[currentButtonIndex].gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("All buttons tested.");
+        }
+    }
+
+    private void DisablePreviousButton()
+    {
+        if (currentButtonIndex >= 0 && currentButtonIndex < buttonPrefabs.Length)
+        {
+            // Disable the previous button in the array
+            buttonPrefabs[currentButtonIndex].gameObject.SetActive(false);
+        }
+    }
+
+    private void SendFirebaseEvent(string adType, bool sawAd)
+    {
+        string eventName = sawAd ? "AdSeen" : "AdNotSeen";
+        FirebaseAnalytics.LogEvent(eventName, "AdType", adType);
+        Debug.Log(adType);
+        // You can log additional parameters or customize the event as needed
     }
 
     public void DisableAdsFor30Days()

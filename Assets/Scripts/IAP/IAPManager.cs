@@ -50,6 +50,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         diamondText.text = $"Diamonds: {((int)GameStateManager.EconomyManager.Money).ToString()}";
         gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
+        GameManager.Instance.UpdateUI();
     }
 
     private void HandleIAPCatalogLoaded(AsyncOperation Operation)
@@ -195,6 +196,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         UpdateUI();
         LoadingOverlay.SetActive(true);
         purchaseSuccessful.SetActive(true);
+        PlayerPrefs.Save();
     }
 
     private IEnumerator DisableAdsFor30Days()

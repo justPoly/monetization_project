@@ -51,7 +51,6 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
             {
                 // Perform delay action here
                 AdsManager.Instance.bannerAds.ShowBannerAd();
-
                 // Reset the timer and flag
                 timer = 0f;
                 isActionDelayed = false;
