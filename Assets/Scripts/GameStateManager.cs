@@ -63,4 +63,9 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
         EconomyManager.InitializeValues();
     }
 
+    public void UpdateCurrency()
+    {
+        GameManager.Instance.UpdateUI();
+    }
+
 }

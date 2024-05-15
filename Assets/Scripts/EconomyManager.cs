@@ -199,4 +199,9 @@ public class EconomyManager : ScriptableObject
     {
         AddMoney(testAddMoneyAmount);
     }
+
+    public void UpdateCurrency()
+    {
+        GameManager.Instance.UpdateUI();
+    }
 }
