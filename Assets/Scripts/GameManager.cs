@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
         GameStateManager.EconomyManager.InitializeValues();
         ShowNextButton();
         adTypePopup.SetActive(false); 
+        allButtonsTested = false; 
     }
 
     public void UpdateUI()
@@ -56,7 +57,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (allButtonsTested && Input.GetKeyDown(KeyCode.R))
+        if (allButtonsTested)
         {
             RepeatProcess();
         }

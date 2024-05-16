@@ -169,19 +169,19 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         switch (productId)
         {
             case "starter_pack":
-                AddMoneyAndUpdateUI(25);
-                break;
-            case "value":
-                AddMoneyAndUpdateUI(20);
-                break;
-            case "deluxe":
-                AddMoneyAndUpdateUI(15);
-                break;
-            case "19.99":
                 AddMoneyAndUpdateUI(10);
                 break;
+            case "value":
+                AddMoneyAndUpdateUI(15);
+                break;
+            case "deluxe":
+                AddMoneyAndUpdateUI(20);
+                break;
+            case "19.99":
+                AddMoneyAndUpdateUI(25);
+                break;
             case "no_ads":
-                 StartCoroutine(DisableAdsFor30Days());
+                 AddMoneyAndUpdateUI(1);
                 break;
             default:
                 Debug.LogWarning($"Unmapped product ID: {productId}. Reward not added.");
