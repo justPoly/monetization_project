@@ -434,6 +434,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 175482323}
+        m_TargetAssemblyTypeName: FirebaseInit, Assembly-CSharp
+        m_MethodName: TransactionButton
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PurchaseSuccessful
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &343490508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,7 +627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 217585519314056222, guid: b209f1c953d961445be6170e36abf703, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 217585519314056222, guid: b209f1c953d961445be6170e36abf703, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -651,7 +663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3408789169997626989, guid: b209f1c953d961445be6170e36abf703, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3408789169997626989, guid: b209f1c953d961445be6170e36abf703, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1867,6 +1879,38 @@ PrefabInstance:
       propertyPath: purchaseSuccessful
       value: 
       objectReference: {fileID: 862526943}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 175482323}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: TransactionButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: FirebaseInit, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: PurchaseFailed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302990045047638776, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8526792630099890684, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2258,8 +2302,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Shop
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

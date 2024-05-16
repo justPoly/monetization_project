@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject adTypePopup;
     public Button[] buttonPrefabs;
     private int currentButtonIndex = -1;
+    private string currentAdType;
+    private bool allButtonsTested; 
 
     public static GameManager Instance => instance ??= FindObjectOfType<GameManager>() ?? new GameObject("GameManagerSingleton").AddComponent<GameManager>();
 
@@ -54,7 +56,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         
+        if (allButtonsTested && Input.GetKeyDown(KeyCode.R))
+        {
+            RepeatProcess();
+        }
+
     }
 
     public void DisplayInterstitialAds()
@@ -97,30 +103,36 @@ public class GameManager : MonoBehaviour
 
     public void OnButtonClick(string adType)
     {
-        // Show UI popup to ask about advertisement type
+        currentAdType = adType; 
+        StartCoroutine(ShowAdTypePopupCoroutine());
+    }
+
+    private IEnumerator ShowAdTypePopupCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f); // Adjust delay as needed
         adTypePopup.SetActive(true);
     }
 
-    public void OnYesButtonClick(string adType)
+    public void OnYesButtonClick()
     {
-        Debug.Log("User saw " + adType + " ad.");
+        Debug.Log("User saw " + currentAdType + " ad.");
         // You can perform further actions based on whether the user saw the ad or not
         // For example, send analytics data, reward the user, etc.
         adTypePopup.SetActive(false); // Hide the popup after selection
-        SendFirebaseEvent(adType, true); // Send Firebase event for "Yes" response
+        SendFirebaseEvent(currentAdType, true); // Send Firebase event for "Yes" response
         DisablePreviousButton(); // Disable the previous button
-        ShowNextButton(); // Show the next button
+        ShowNextButton(); // Show the next button or repeat the process
     }
 
-    public void OnNoButtonClick(string adType)
+    public void OnNoButtonClick()
     {
-        Debug.Log("User did not see " + adType + " ad.");
+        Debug.Log("User did not see " + currentAdType + " ad.");
         // You can perform further actions based on whether the user saw the ad or not
         // For example, show a different ad, ask again, etc.
         adTypePopup.SetActive(false); // Hide the popup after selection
-        SendFirebaseEvent(adType, false); // Send Firebase event for "No" response
+        SendFirebaseEvent(currentAdType, false); // Send Firebase event for "No" response
         DisablePreviousButton(); // Disable the previous button
-        ShowNextButton(); // Show the next button
+        ShowNextButton(); // Show the next button or repeat the process
     }
 
     private void ShowNextButton()
@@ -134,6 +146,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            allButtonsTested = true;
             Debug.Log("All buttons tested.");
         }
     }
@@ -152,7 +165,14 @@ public class GameManager : MonoBehaviour
         string eventName = sawAd ? "AdSeen" : "AdNotSeen";
         FirebaseAnalytics.LogEvent(eventName, "AdType", adType);
         Debug.Log(adType);
-        // You can log additional parameters or customize the event as needed
+    }
+
+    
+    private void RepeatProcess()
+    {
+        currentButtonIndex = -1; // Reset button index to start over
+        allButtonsTested = false; // Reset the flag
+        ShowNextButton(); // Start testing the buttons again
     }
 
     public void DisableAdsFor30Days()

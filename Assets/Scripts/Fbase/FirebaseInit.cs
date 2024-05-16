@@ -33,16 +33,16 @@ public class FirebaseInit : MonoBehaviour
     }
     
     #region 
-    public void ViewRewardedAdButton()
+    public void PlayButton()
     {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent("View_RewardedAd_Button");
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Play_Button");
     }
 
-    public void OptionButton(int number)
+    public void TransactionButton(string name)
     {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent("Option_Button_Pressed", new Firebase.Analytics.Parameter[] {
-            new Firebase.Analytics.Parameter("ButtonNumber", number),
-            new Firebase.Analytics.Parameter("ButtonNumber", number),
+        Firebase.Analytics.FirebaseAnalytics.LogEvent("Transaction_Button_Pressed", new Firebase.Analytics.Parameter[] {
+            new Firebase.Analytics.Parameter("ButtonName", name),
+            new Firebase.Analytics.Parameter("ButtonName", name),
         });
     }
     #endregion
