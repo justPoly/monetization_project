@@ -15,6 +15,12 @@ public class GameManager : MonoBehaviour
     private bool adsEnabled = true;
 
     public GameObject adTypePopup;
+    [SerializeField]
+    private GameObject storeEnquiryPopUp;
+    
+    [SerializeField]
+    private GameObject adTestCompletedPopUp;
+
     public Button[] buttonPrefabs;
     private int currentButtonIndex = -1;
     private string currentAdType;
@@ -42,6 +48,7 @@ public class GameManager : MonoBehaviour
         GameStateManager.EconomyManager.InitializeValues();
         ShowNextButton();
         adTypePopup.SetActive(false); 
+        storeEnquiryPopUp.SetActive(false);
         allButtonsTested = false; 
     }
 
@@ -110,7 +117,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ShowAdTypePopupCoroutine()
     {
-        yield return new WaitForSeconds(0.5f); // Adjust delay as needed
+        yield return new WaitForSeconds(0.5f); 
         adTypePopup.SetActive(true);
     }
 
@@ -148,8 +155,18 @@ public class GameManager : MonoBehaviour
         else
         {
             allButtonsTested = true;
+            StartCoroutine(storeEnquiryCoroutine());
             Debug.Log("All buttons tested.");
         }
+    }
+
+    private IEnumerator storeEnquiryCoroutine()
+    {
+        yield return new WaitForSeconds(0.5f); 
+        adTestCompletedPopUp.SetActive(true);
+        yield return new WaitForSeconds(5f); 
+        adTestCompletedPopUp.SetActive(false);
+        storeEnquiryPopUp.SetActive(true);
     }
 
     private void DisablePreviousButton()

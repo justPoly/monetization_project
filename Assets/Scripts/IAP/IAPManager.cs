@@ -46,6 +46,11 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         UpdateUI();
     }
 
+    public void Start()
+    {
+        purchaseSuccessful.SetActive(false);
+    }
+
     public void UpdateUI()
     {
         diamondText.text = $"Diamonds: {((int)GameStateManager.EconomyManager.Money).ToString()}";
