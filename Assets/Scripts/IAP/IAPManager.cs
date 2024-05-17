@@ -9,6 +9,7 @@ using Unity.Services.Core.Environments;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
 using UnityEngine.Purchasing.Extension;
+using Firebase.Analytics;
 
 public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 {
@@ -128,6 +129,11 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         LoadingOverlay.SetActive(true);
         this.OnPurchaseCompleted = OnPurchaseCompleted;
+
+        //Track button press with Firebase Analytics
+        string itemId = Product.definition.id;
+        FirebaseAnalytics.LogEvent("store_item_pressed", new Parameter("item_id", itemId));
+        Debug.Log($"Firebase Analytics: Store item pressed - {itemId}");
         StoreController.InitiatePurchase(Product);
     }
 
@@ -171,6 +177,9 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 
         string productId = purchaseEvent.purchasedProduct.definition.id;
 
+        // Track successful purchase with Firebase Analytics
+        FirebaseAnalytics.LogEvent("purchase_success", new Parameter("item_id", productId));
+        Debug.Log($"Firebase Analytics: Purchase success - {productId}");
         switch (productId)
         {
             case "starter_pack":
