@@ -367,6 +367,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: BannerAd
       objectReference: {fileID: 0}
+    - target: {fileID: 822506107432659990, guid: a7853890c7c3fa041a3440651852dd1d, type: 3}
+      propertyPath: m_text
+      value: View Banner Ads
+      objectReference: {fileID: 0}
     - target: {fileID: 2780441230437784265, guid: a7853890c7c3fa041a3440651852dd1d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -955,7 +959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8950848786724994084, guid: 4fb74de826204ee46bc53fa213e3bcc9, type: 3}
       propertyPath: m_text
-      value: Interstitial Ads
+      value: View Interstitial Ads
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1208,7 +1212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2037453666728544641, guid: 30ea9e327bf67104686d21dca047fc68, type: 3}
       propertyPath: m_text
-      value: Rewarded Ads
+      value: View Rewarded Ads
       objectReference: {fileID: 0}
     - target: {fileID: 8798898808069521187, guid: 30ea9e327bf67104686d21dca047fc68, type: 3}
       propertyPath: m_Name
@@ -2157,6 +2161,6 @@ SceneRoots:
   - {fileID: 1057134859}
   - {fileID: 998546856}
   - {fileID: 2107352414}
-  - {fileID: 175482322}
   - {fileID: 1511217283}
   - {fileID: 176912244}
+  - {fileID: 175482322}
