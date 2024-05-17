@@ -1339,6 +1339,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameShop
       objectReference: {fileID: 0}
+    - target: {fileID: 711333456795372883, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
+      propertyPath: m_text
+      value: STORE
+      objectReference: {fileID: 0}
     - target: {fileID: 1319697959053318441, guid: 03f5a1b82fb651244a4a4a43f2822dc5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2

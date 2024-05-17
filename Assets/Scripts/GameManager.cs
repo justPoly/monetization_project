@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
     public void TrackYesButtonPress()
     {
         storeEnquiryPopUp.SetActive(false);
-        FirebaseAnalytics.LogEvent("ad_response", new Parameter("response", "yes"));
+        FirebaseAnalytics.LogEvent("nav_to_store_response", new Parameter("response", "yes"));
         Debug.Log("Firebase Analytics: Yes button pressed.");
     }
 
@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
     public void TrackNoButtonPress()
     {
         storeEnquiryPopUp.SetActive(false);
-        FirebaseAnalytics.LogEvent("ad_response", new Parameter("response", "no"));
+        FirebaseAnalytics.LogEvent("nav_to_store_response", new Parameter("response", "no"));
         Debug.Log("Firebase Analytics: No button pressed.");
     }
 
