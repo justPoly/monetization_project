@@ -24,7 +24,7 @@ public class EconomyManager : ScriptableObject
     [Required]
     public IntEvent onGemsChanged;
 
-    public delegate void OnMoneyChanged(double newAmount);
+    public delegate void OnMoneyChanged(float newAmount);
     public static OnMoneyChanged m_onMoneyChanged;
 
     public delegate void OnGemsChanged(int newAmount);
@@ -45,20 +45,12 @@ public class EconomyManager : ScriptableObject
     [Tooltip("The amount of gems the player starts the game with")]
     public float startingGems = 5f;
 
-    [BoxGroup("Level Amount")]
-    [Tooltip("Money earned after the player has completed a level")]
-    public float completedLevelReward = 200;
-
-
     public double Gems
     {
         get { return m_Gems; }
         set
         {
             m_Gems = value;
-            PlayerPrefs.SetInt("Gems", (int)m_Gems);
-            PlayerPrefs.Save();
-
             onGemsChanged?.Raise((int)m_Gems);
             m_onGemsChanged?.Invoke((int)m_Gems);
         }
@@ -70,9 +62,6 @@ public class EconomyManager : ScriptableObject
         set
         {
             m_Money = value;
-            PlayerPrefs.SetFloat("Money", (float)m_Money);
-            PlayerPrefs.Save();
-
             onMoneyChanged?.Raise((float)m_Money);
             m_onMoneyChanged?.Invoke((float)m_Money);
         }
@@ -86,10 +75,29 @@ public class EconomyManager : ScriptableObject
 
     public void InitializeValues()
     {
-        Money = PlayerPrefs.GetFloat("Money", (int)startingMoney);
-        Gems = PlayerPrefs.GetInt("Gems", (int)startingGems);
+        if (!PlayerPrefs.HasKey("Money"))
+        {
+            Money = startingMoney;
+        }
+        else
+        {
+            Money = PlayerPrefs.GetFloat("Money", (float)startingMoney);
+        }
+
+        if (!PlayerPrefs.HasKey("Gems"))
+        {
+            Gems = startingGems;
+        }
+        else
+        {
+            Gems = PlayerPrefs.GetInt("Gems", (int)startingGems);
+        }
+
+        TotalMoney = PlayerPrefs.GetFloat("TotalMoney", 0);
+
         onMoneyChanged.Raise((float)Money);
         onGemsChanged.Raise((int)Gems);
+        onTotalMoneyIncreased.Raise((float)TotalMoney);
     }
 
     public void SetTotalMoney(double amount)
@@ -102,19 +110,16 @@ public class EconomyManager : ScriptableObject
     public void AddToTotalMoney(double amount)
     {
         TotalMoney += amount;
-        PlayerPrefs.SetFloat("TotalMoney", (float)TotalMoney);
         onTotalMoneyIncreased.Raise((float)TotalMoney);
+        SaveData();
     }
 
     public void SetMoney(double amount)
     {
         Money = amount;
-        PlayerPrefs.SetFloat("Money", (float)Money);
-
-        if (m_onMoneyChanged != null)
-            m_onMoneyChanged.Invoke(Money);
-
         onMoneyChanged.Raise((float)Money);
+        m_onMoneyChanged?.Invoke((float)Money);
+        SaveData();
     }
 
     public void AddMoney(float a)
@@ -130,51 +135,42 @@ public class EconomyManager : ScriptableObject
     public void AddMoney(double amount, bool addTotal = true)
     {
         Money += amount;
-        PlayerPrefs.SetFloat("Money", (float)Money);
+        if (addTotal) AddToTotalMoney(amount);
+        SaveData();
     }
 
     public void ReduceMoney(double amount)
     {
         Money -= amount;
-        PlayerPrefs.SetFloat("Money", (float)Money);
-
         if (Money < 0)
         {
             Money = 0;
-            PlayerPrefs.SetFloat("Money", (float)Money);
         }
-
-        if (m_onMoneyChanged != null)
-            m_onMoneyChanged(Money);
-
-        onMoneyChanged?.Raise((float)Money);
+        SaveData();
     }
 
     public void AddGems(double amount)
     {
         Gems += amount;
-        PlayerPrefs.SetInt("Gems", (int)Gems);
-        onGemsChanged?.Raise((int)Gems);
-        m_onGemsChanged?.Invoke((int)Gems);
+        SaveData();
     }
 
     public void ReduceGems(double amount)
     {
         Gems -= amount;
-        PlayerPrefs.SetInt("Gems", (int)Gems);
         if (Gems < 0)
         {
             Gems = 0;
         }
-        onGemsChanged?.Raise((int)Gems);
-        m_onGemsChanged?.Invoke((int)Gems);
+        SaveData();
     }
 
     public void SaveData()
     {
-        PlayerPrefs.SetString("Money", Money.ToString());
-        PlayerPrefs.SetString("TotalMoney", TotalMoney.ToString());
+        PlayerPrefs.SetFloat("Money", (float)Money);
+        PlayerPrefs.SetFloat("TotalMoney", (float)TotalMoney);
         PlayerPrefs.SetInt("Gems", (int)Gems);
+        PlayerPrefs.Save();
     }
 
     [Button]
@@ -182,8 +178,8 @@ public class EconomyManager : ScriptableObject
     {
         Money = startingMoney;
         Gems = startingGems;
+        SaveData();
     }
-
 
     public float testAddMoneyAmount;
     public int testGemsAddAmount;

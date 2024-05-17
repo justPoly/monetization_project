@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f); 
         adTestCompletedPopUp.SetActive(true);
-        yield return new WaitForSeconds(5f); 
+        yield return new WaitForSeconds(4f); 
         adTestCompletedPopUp.SetActive(false);
         storeEnquiryPopUp.SetActive(true);
     }
