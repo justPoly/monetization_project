@@ -124,8 +124,6 @@ public class GameManager : MonoBehaviour
     public void OnYesButtonClick()
     {
         Debug.Log("User saw " + currentAdType + " ad.");
-        // You can perform further actions based on whether the user saw the ad or not
-        // For example, send analytics data, reward the user, etc.
         adTypePopup.SetActive(false); // Hide the popup after selection
         SendFirebaseEvent(currentAdType, true); // Send Firebase event for "Yes" response
         DisablePreviousButton(); // Disable the previous button
@@ -135,8 +133,6 @@ public class GameManager : MonoBehaviour
     public void OnNoButtonClick()
     {
         Debug.Log("User did not see " + currentAdType + " ad.");
-        // You can perform further actions based on whether the user saw the ad or not
-        // For example, show a different ad, ask again, etc.
         adTypePopup.SetActive(false); // Hide the popup after selection
         SendFirebaseEvent(currentAdType, false); // Send Firebase event for "No" response
         DisablePreviousButton(); // Disable the previous button
@@ -191,6 +187,22 @@ public class GameManager : MonoBehaviour
         currentButtonIndex = -1; // Reset button index to start over
         allButtonsTested = false; // Reset the flag
         ShowNextButton(); // Start testing the buttons again
+    }
+
+    //Yes button when asked to navigate to the store
+    public void TrackYesButtonPress()
+    {
+        storeEnquiryPopUp.SetActive(false);
+        FirebaseAnalytics.LogEvent("ad_response", new Parameter("response", "yes"));
+        Debug.Log("Firebase Analytics: Yes button pressed.");
+    }
+
+    //No button when asked to navigate to the store
+    public void TrackNoButtonPress()
+    {
+        storeEnquiryPopUp.SetActive(false);
+        FirebaseAnalytics.LogEvent("ad_response", new Parameter("response", "no"));
+        Debug.Log("Firebase Analytics: No button pressed.");
     }
 
     public void DisableAdsFor30Days()
