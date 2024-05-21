@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameStateManager.EconomyManager.InitializeValues();
+        // GameStateManager.EconomyManager.InitializeValues();
         ShowNextButton();
         adTypePopup.SetActive(false); 
         storeEnquiryPopUp.SetActive(false);
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         ShowNextButton(); // Show the next button or repeat the process
     }
 
-    private void ShowNextButton()
+    public void ShowNextButton()
     {
         // Increment the button index
         currentButtonIndex++;
