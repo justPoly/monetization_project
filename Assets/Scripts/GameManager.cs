@@ -17,9 +17,10 @@ public class GameManager : MonoBehaviour
     public GameObject adTypePopup;
     [SerializeField]
     private GameObject storeEnquiryPopUp;
-    
     [SerializeField]
     private GameObject adTestCompletedPopUp;
+
+    public TextMeshProUGUI b1text;
 
     public Button[] buttonPrefabs;
     private int currentButtonIndex = -1;
@@ -152,8 +153,15 @@ public class GameManager : MonoBehaviour
         {
             allButtonsTested = true;
             StartCoroutine(storeEnquiryCoroutine());
+            btnValue();
             Debug.Log("All buttons tested.");
         }
+    }
+
+    public void btnValue()
+    {
+        b1text = buttonPrefabs[0].GetComponentInChildren<TextMeshProUGUI>();
+        b1text.text = "Test again";
     }
 
     private IEnumerator storeEnquiryCoroutine()
