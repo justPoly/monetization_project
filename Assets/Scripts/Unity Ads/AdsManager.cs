@@ -13,6 +13,8 @@ public class AdsManager : MonoBehaviour
 
     public static AdsManager Instance { get; private set; }
 
+    public bool adsDisabled { get; private set; }
+
     private void Awake()
     {
     if (Instance != null && Instance != this)
@@ -24,11 +26,15 @@ public class AdsManager : MonoBehaviour
     Instance = this;
     DontDestroyOnLoad(gameObject);
 
-    // Initialize Unity Ads (if not already initialized)
-    initializeAds.InitializeUnityAds();
+    adsDisabled = PlayerPrefs.GetInt("NoAds", 0) == 1;
 
-    // Load ads after Unity Ads is initialized
-    StartCoroutine(LoadAdsAfterInitialization());
+    if (!adsDisabled)
+        {
+            // Initialize Unity Ads (if not already initialized)
+            initializeAds.InitializeUnityAds();
+            // Load ads after Unity Ads is initialized
+            StartCoroutine(LoadAdsAfterInitialization());
+        }
     }
 
     private IEnumerator LoadAdsAfterInitialization()
@@ -43,6 +49,16 @@ public class AdsManager : MonoBehaviour
         bannerAds.LoadBannerAd();
         interstitialAds.LoadInterstitialAd();
         rewardedAds.LoadRewardedAd();
+    }
+
+    public void DisableAds()
+    {
+        adsDisabled = true;
+        // Replace with cloud save or any other alternative;
+        PlayerPrefs.SetInt("NoAds", 1);
+        PlayerPrefs.Save();
+        bannerAds.HideBannerAd();
+        Debug.Log("Ads disabled.");
     }
 
 }

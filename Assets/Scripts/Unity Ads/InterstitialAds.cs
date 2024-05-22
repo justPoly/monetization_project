@@ -21,22 +21,21 @@ public class InterstitialAds : MonoBehaviour , IUnityAdsLoadListener ,IUnityAdsS
 
     public void LoadInterstitialAd()
     {
-        Advertisement.Load(adUnitId, this);
+        if (!AdsManager.Instance.adsDisabled)
+        {
+            Advertisement.Load(adUnitId, this);
+        }
     }
 
     public void ShowInterstitialAd()
     {
-        Advertisement.Show(adUnitId, this);
+        if (!AdsManager.Instance.adsDisabled)
+        {
+            Advertisement.Show(adUnitId, this);
+        }
+        
         LoadInterstitialAd();
     }
-
-    public void HideInterstitialAd()
-    {
-        Advertisement.Show("nodisplay");
-    }
-
-
-
 
     #region LoadCallbacks
     public void OnUnityAdsAdLoaded(string placementId)

@@ -195,7 +195,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
                 AddMoneyAndUpdateUI(25);
                 break;
             case "no_ads_pack":
-                 AddMoneyAndUpdateUI(1);
+                ActivateNoAds();
                 break;
             default:
                 Debug.LogWarning($"Unmapped product ID: {productId}. Reward not added.");
@@ -213,10 +213,11 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         GameStateManager.EconomyManager.SaveData();
     }
 
-    private IEnumerator DisableAdsFor30Days()
+    private void ActivateNoAds()
     {
-        GameManager.Instance.DisableAdsFor30Days();
-        yield return new WaitForSeconds(30 * 24 * 60 * 60); // 30 days in seconds
-        GameManager.Instance.EnableAdsAgain();
+         PlayerPrefs.SetInt("NoAds", 1);
+         PlayerPrefs.Save();
+         AdsManager.Instance.DisableAds();
     }
+
 }

@@ -22,21 +22,20 @@ public class RewardedAds : MonoBehaviour ,IUnityAdsLoadListener ,IUnityAdsShowLi
 
     public void LoadRewardedAd()
     {
-        Advertisement.Load(adUnitId, this);
+        if (!AdsManager.Instance.adsDisabled)
+        {
+           Advertisement.Load(adUnitId, this);
+        }  
     }
 
     public void ShowRewardedAd()
     {
-        Advertisement.Show(adUnitId, this);
-        LoadRewardedAd();
+        if (!AdsManager.Instance.adsDisabled)
+        {
+           Advertisement.Show(adUnitId, this);
+           LoadRewardedAd();
+        }
     }
-
-    public void HideRewardedAd()
-    {
-        Advertisement.Show("nodisplay");
-    }
-
-
 
 
     #region LoadCallbacks

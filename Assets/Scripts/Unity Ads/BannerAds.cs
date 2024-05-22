@@ -24,25 +24,31 @@ public class BannerAds : MonoBehaviour
 
     public void LoadBannerAd()
     {
-        BannerLoadOptions options = new BannerLoadOptions
+        if (!AdsManager.Instance.adsDisabled)
         {
-            loadCallback = BannerLoaded,
-            errorCallback = BannerLoadedError
-        };
+            BannerLoadOptions options = new BannerLoadOptions
+            {
+                loadCallback = BannerLoaded,
+                errorCallback = BannerLoadedError
+            };
 
-        Advertisement.Banner.Load(adUnitId, options);
+            Advertisement.Banner.Load(adUnitId, options);
+        }
+        
     }
 
     public void ShowBannerAd()
     {
-        BannerOptions options = new BannerOptions
+        if (!AdsManager.Instance.adsDisabled)
         {
-            showCallback = BannerShown,
-            clickCallback = BannerClicked,
-            hideCallback = BannerHidden
-        };
-        Advertisement.Banner.Show(adUnitId, options);
-    
+            BannerOptions options = new BannerOptions
+            {
+                showCallback = BannerShown,
+                clickCallback = BannerClicked,
+                hideCallback = BannerHidden
+            };
+            Advertisement.Banner.Show(adUnitId, options);
+        }
     }
 
     public void HideBannerAd()
