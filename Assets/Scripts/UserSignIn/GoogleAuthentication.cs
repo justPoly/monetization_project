@@ -88,7 +88,7 @@ public class GoogleAuthentication : MonoBehaviour
                     Debug.LogError("Got Unexpected Exception: " + exception);
                 }
             }
-            loginPanel.SetActive(true);  // Ensure login panel is active
+            // loginPanel.SetActive(true);  // Ensure login panel is active
         }
         else if (task.IsCanceled)
         {
@@ -239,7 +239,7 @@ public class GoogleAuthentication : MonoBehaviour
 
     private void HandleSignedInUser(FirebaseUser user)
     {
-        userNameText.text = user.DisplayName ?? "User";
+        userNameText.text = user.DisplayName ?? "Guest";
         userEmailText.text = user.Email ?? "";
 
         // Load the profile picture if available

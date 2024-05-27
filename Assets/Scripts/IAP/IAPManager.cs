@@ -207,10 +207,10 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     private void AddMoneyAndUpdateUI(int moneyToAdd)
     {
         GameStateManager.EconomyManager.AddMoney(moneyToAdd);
-        UpdateUI();
+        // UpdateUI();
         LoadingOverlay.SetActive(true);
         purchaseSuccessful.SetActive(true);
-        GameStateManager.EconomyManager.SaveData();
+        PlayerPrefs.Save();
     }
 
     private void ActivateNoAds()
@@ -218,6 +218,13 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
          PlayerPrefs.SetInt("NoAds", 1);
          PlayerPrefs.Save();
          AdsManager.Instance.DisableAds();
+    }
+
+    public void OnPurchaseSuccessful() 
+    {
+         UpdateUI();
+         purchaseSuccessful.SetActive(false);
+         LoadingOverlay.SetActive(false);
     }
 
 }
