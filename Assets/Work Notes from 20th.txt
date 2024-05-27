@@ -1,5 +1,5 @@
 1. Ads not displaying for people outside Nigeria [Test mode]
-2. Feedback coin collection effect when you click ok for payment successful
+2. Feedback coin collection effect when you click ok for payment successful {Done}
 6. Discounts, offers, promotional, bundles
 11. Subscription {}
 9. Sign in (google sign in, guest sign in) {Done}
