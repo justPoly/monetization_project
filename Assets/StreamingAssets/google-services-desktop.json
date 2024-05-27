@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "687316728308",
+    "firebase_url": "https://monetization-project-8a54d-default-rtdb.firebaseio.com",
     "project_id": "monetization-project-8a54d",
     "storage_bucket": "monetization-project-8a54d.appspot.com"
   },
@@ -12,7 +13,12 @@
           "package_name": "com.maliyo.MonetizationProject"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "687316728308-pu6khmf1h7r8spklg0dt4a2qc5tlaemc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB72fiFk1gW0Rk57nu4PbVR01ghTPn_GIQ"
@@ -20,7 +26,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "687316728308-pu6khmf1h7r8spklg0dt4a2qc5tlaemc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

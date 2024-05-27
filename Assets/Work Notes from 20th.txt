@@ -1,17 +1,22 @@
 1. Ads not displaying for people outside Nigeria [Test mode]
-2. Feedback coin effect when you click ok for payment successful
-3. When process is complete - When you choose no or yes -> "play again" {Done} 
+2. Feedback coin collection effect when you click ok for payment successful
+6. Discounts, offers, promotional, bundles
+11. Subscription {}
+9. Sign in (google sign in, guest sign in) {Done}
+3. When process is complete - When you choose no or yes -> "play again" {Done}
+10. No Ads {Done} 
 4. Consider having to test each of the ads individually.
 5. Notifications??
-6. Discounts, offers, promotional, bundles
 7. Go checkout the reference game and focus on what is happening in their shop alone. Not the rewarded videos
    Replicate them, include things like bundles, promotions, discounts as an extension for the sections [packs, ad removal,]
 8. Document each process as you build along
-9. Sign in (google sign in, social sign in)
+
+Add No internet connection pop up
+
 API Key - {AIzaSyCVvA-EQpLBt3yX7RdAreRam3ydL9pGVK8} 
 Client Id - {883892493947-d3jcgbdrk3jbu82d2ukamh1bjan8b5tt.apps.googleusercontent.com}
-10. No Ads {Done}
-11. Subscription {}
+
+
 Note: 
 Test for this is happenning next week
 
