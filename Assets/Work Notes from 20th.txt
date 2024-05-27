@@ -1,10 +1,12 @@
 1. Ads not displaying for people outside Nigeria [Test mode]
 2. Feedback coin collection effect when you click ok for payment successful {Done}
-6. Discounts, offers, promotional, bundles
-11. Subscription {}
 9. Sign in (google sign in, guest sign in) {Done}
 3. When process is complete - When you choose no or yes -> "play again" {Done}
-10. No Ads {Done} 
+10. No Ads {Done}
+Remaining
+6. Discounts, offers, promotional, bundles {}
+11. Subscription {}
+ 
 4. Consider having to test each of the ads individually.
 5. Notifications??
 7. Go checkout the reference game and focus on what is happening in their shop alone. Not the rewarded videos
