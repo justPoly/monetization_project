@@ -182,19 +182,19 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         Debug.Log($"Firebase Analytics: Purchase success - {productId}");
         switch (productId)
         {
-            case "starter":
+            case "starter_p":
                 AddMoneyAndUpdateUI(10);
                 break;
-            case "value_pack":
+            case "value_p":
                 AddMoneyAndUpdateUI(15);
                 break;
-            case "deluxe_pack":
+            case "deluxe_p":
                 AddMoneyAndUpdateUI(20);
                 break;
-            case "premium_pack":
+            case "premium_p":
                 AddMoneyAndUpdateUI(25);
                 break;
-            case "no_ads_pack":
+            case "no_ads_p":
                 ActivateNoAds();
                 break;
             default:

@@ -968,6 +968,7 @@ MonoBehaviour:
   userNameText: {fileID: 1393298588}
   userEmailText: {fileID: 1519197694}
   profilePic: {fileID: 914945615}
+  defaultProfilePic: {fileID: 21300000, guid: 1508cef40747bf54b81c10dc0c552f8e, type: 3}
   loginPanel: {fileID: 504744602}
   webClientId: 883892493947-v6s268kg735mqiq2h4s3ik9b3ro51qun.apps.googleusercontent.com
 --- !u!4 &390094761
@@ -3161,7 +3162,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1097194150}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 504744602}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1097194150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3306,7 +3319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 822506107432659990, guid: a7853890c7c3fa041a3440651852dd1d, type: 3}
       propertyPath: m_text
-      value: Save Progress
+      value: Begin Ad Test
       objectReference: {fileID: 0}
     - target: {fileID: 2780441230437784265, guid: a7853890c7c3fa041a3440651852dd1d, type: 3}
       propertyPath: m_Pivot.x
