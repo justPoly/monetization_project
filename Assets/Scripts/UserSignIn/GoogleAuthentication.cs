@@ -12,13 +12,10 @@ using Firebase.Database;
 public class GoogleAuthentication : MonoBehaviour
 {
     public string imageURL, username, email;
-
     public TMP_Text userNameText, userEmailText;
-
     public Image profilePic;
-
+    public Sprite defaultProfilePic; // Assign this in the Unity Inspector with a default sprite image
     public GameObject loginPanel;
-
     public string webClientId = "883892493947-v6s268kg735mqiq2h4s3ik9b3ro51qun.apps.googleusercontent.com";
 
     private GoogleSignInConfiguration configuration;
@@ -38,6 +35,15 @@ public class GoogleAuthentication : MonoBehaviour
             FirebaseApp app = FirebaseApp.DefaultInstance;
             auth = FirebaseAuth.DefaultInstance;
             databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+
+            if (auth.CurrentUser != null)
+            {
+                HandleSignedInUser(auth.CurrentUser);
+            }
+            else
+            {
+                loginPanel.SetActive(true);
+            }
         });
     }
 
@@ -89,7 +95,6 @@ public class GoogleAuthentication : MonoBehaviour
                 {
                     FirebaseUser newUser = authTask.Result;
                     Debug.Log("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
-                    // You can now save progress or load existing progress
                     LoadProgress(newUser.UserId);
                 }
                 else
@@ -107,38 +112,72 @@ public class GoogleAuthentication : MonoBehaviour
         WWW www = new WWW(imageURL);
         yield return www;
 
-        profilePic.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+        if (string.IsNullOrEmpty(www.error))
+        {
+            profilePic.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), new Vector2(0, 0));
+        }
+        else
+        {
+            Debug.LogError("Failed to load profile picture: " + www.error);
+            profilePic.sprite = defaultProfilePic; // Use default profile picture if loading failed
+        }
     }
 
     public void OnSignOut()
     {
         userNameText.text = "";
         userEmailText.text = "";
-
-        imageURL = "";
+        profilePic.sprite = defaultProfilePic;
         loginPanel.SetActive(true);
 
-        Debug.Log("Calling SignOut");
         GoogleSignIn.DefaultInstance.SignOut();
-
         auth.SignOut();
     }
 
     public void SaveProgress(string userId, string progressData)
     {
-        databaseReference.Child("users").Child(userId).Child("progress").SetValueAsync(progressData);
+        var userData = new Dictionary<string, object>
+        {
+            { "username", username },
+            { "email", email },
+            { "progress", progressData }
+        };
+
+        databaseReference.Child("users").Child(userId).SetValueAsync(userData).ContinueWith(task =>
+        {
+            if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
+            {
+                Debug.Log("Progress saved successfully");
+            }
+            else
+            {
+                Debug.LogError("Failed to save progress: " + task.Exception);
+            }
+        });
+    }
+
+    public void SaveCurrentProgress()
+    {
+        string userId = auth.CurrentUser.UserId;
+        string progressData = "Save Sign in Data"; // Replace with your actual progress data
+        SaveProgress(userId, progressData);
     }
 
     public void LoadProgress(string userId)
     {
-        databaseReference.Child("users").Child(userId).Child("progress").GetValueAsync().ContinueWith(task =>
+        databaseReference.Child("users").Child(userId).GetValueAsync().ContinueWith(task =>
         {
-            if (task.IsCompleted)
+            if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
             {
                 DataSnapshot snapshot = task.Result;
-                string progressData = snapshot.Value?.ToString();
+                string progressData = snapshot.Child("progress").Value?.ToString();
+                username = snapshot.Child("username").Value?.ToString() ?? "Guest";
+                email = snapshot.Child("email").Value?.ToString() ?? "";
+
+                userNameText.text = username;
+                userEmailText.text = email;
+
                 Debug.Log("Loaded progress: " + progressData);
-                // Handle loaded progress data
             }
             else
             {
@@ -147,9 +186,49 @@ public class GoogleAuthentication : MonoBehaviour
         });
     }
 
-    void Update()
+    private void HandleSignedInUser(FirebaseUser user)
     {
-        // Optionally handle Firebase updates if needed
+        username = user.DisplayName ?? "Guest";
+        email = user.Email ?? "";
+        userNameText.text = username;
+        userEmailText.text = email;
+
+        if (user.PhotoUrl != null)
+        {
+            imageURL = user.PhotoUrl.ToString();
+            StartCoroutine(LoadProfilePic());
+        }
+        else
+        {
+            profilePic.sprite = defaultProfilePic; // Use default profile picture if no PhotoUrl
+        }
+
+        LoadProgress(user.UserId);
+        loginPanel.SetActive(false);
     }
 
+    public void OnGuestSignIn()
+    {
+        auth.SignInAnonymouslyAsync().ContinueWith(authTask =>
+        {
+            if (authTask.IsCompleted && !authTask.IsFaulted)
+            {
+                FirebaseUser newUser = authTask.Result.User;
+                Debug.Log("Guest signed in successfully: " + newUser.UserId);
+                username = "Guest";
+                email = "";
+                userNameText.text = username;
+                userEmailText.text = email;
+                profilePic.sprite = defaultProfilePic;
+
+                LoadProgress(newUser.UserId);
+                loginPanel.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("Guest sign-in failed: " + authTask.Exception);
+                loginPanel.SetActive(true);
+            }
+        });
+    }
 }
