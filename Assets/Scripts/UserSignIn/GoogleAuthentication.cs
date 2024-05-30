@@ -123,7 +123,7 @@ public class GoogleAuthentication : MonoBehaviour
         }
     }
 
-    public void OnSignOut()
+    public void OnGoogleSignOut()
     {
         userNameText.text = "";
         userEmailText.text = "";
@@ -132,6 +132,31 @@ public class GoogleAuthentication : MonoBehaviour
 
         GoogleSignIn.DefaultInstance.SignOut();
         auth.SignOut();
+    }
+
+    public void OnGuestSignOut()
+    {
+        userNameText.text = "";
+        userEmailText.text = "";
+        profilePic.sprite = defaultProfilePic;
+        loginPanel.SetActive(true);
+
+        auth.SignOut();
+    }
+
+    public void OnSignOut()
+    {
+        if (auth.CurrentUser != null)
+        {
+            if (auth.CurrentUser.IsAnonymous)
+            {
+                OnGuestSignOut();
+            }
+            else
+            {
+                OnGoogleSignOut();
+            }
+        }
     }
 
     public void SaveProgress(string userId, string progressData)
