@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Google;
 using UnityEngine.UI;
+using System.Linq;
 using TMPro;
 using Firebase;
 using Firebase.Auth;
@@ -22,7 +23,7 @@ public class GoogleAuthentication : MonoBehaviour
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
 
-void Awake()
+    void Awake()
     {
         configuration = new GoogleSignInConfiguration
         {
@@ -42,25 +43,115 @@ void Awake()
             }
             else
             {
-                // Attempt to sign in silently
-                GoogleSignIn.Configuration = configuration;
-                GoogleSignIn.Configuration.UseGameSignIn = false;
-                GoogleSignIn.Configuration.RequestIdToken = true;
-                GoogleSignIn.Configuration.RequestEmail = true;
-
-                GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(OnAuthenticationFinished, TaskScheduler.FromCurrentSynchronizationContext());
+                OnGoogleSilentlySignIn();
             }
         });
     }
 
+
+    IEnumerator Start()
+    {
+        yield return new WaitForSeconds(2);
+        if (auth != null && auth.CurrentUser != null)
+        {
+            OnGoogleSilentlySignIn();
+        }
+    }
+
+    // public void OnSignIn()
+    // {
+    //     GoogleSignIn.Configuration = configuration;
+    //     GoogleSignIn.Configuration.UseGameSignIn = false;
+    //     GoogleSignIn.Configuration.RequestIdToken = true;
+    //     GoogleSignIn.Configuration.RequestEmail = true;
+
+    //     GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished, TaskScheduler.FromCurrentSynchronizationContext());
+    // }
+
     public void OnSignIn()
     {
-        GoogleSignIn.Configuration = configuration;
-        GoogleSignIn.Configuration.UseGameSignIn = false;
-        GoogleSignIn.Configuration.RequestIdToken = true;
-        GoogleSignIn.Configuration.RequestEmail = true;
+    GoogleSignIn.Configuration = configuration;
+    GoogleSignIn.Configuration.UseGameSignIn = false;
+    GoogleSignIn.Configuration.RequestIdToken = true;
+    GoogleSignIn.Configuration.RequestEmail = true;
 
-        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished, TaskScheduler.FromCurrentSynchronizationContext());
+    GoogleSignIn.DefaultInstance.SignIn().ContinueWith(task =>
+    {
+        if (task.IsFaulted)
+        {
+            using (IEnumerator<System.Exception> enumerator = task.Exception.InnerExceptions.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
+                {
+                    GoogleSignIn.SignInException error = (GoogleSignIn.SignInException)enumerator.Current;
+                    Debug.LogError("Got Error: " + error.Status + " " + error.Message);
+                }
+                else
+                {
+                    Debug.LogError("Got Unexpected Exception?!?" + task.Exception);
+                }
+            }
+        }
+        else if (task.IsCanceled)
+        {
+            Debug.LogError("Canceled");
+        }
+        else
+        {
+            Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+
+            userNameText.text = task.Result.DisplayName;
+            userEmailText.text = task.Result.Email;
+
+            imageURL = task.Result.ImageUrl.ToString();
+            loginPanel.SetActive(false);
+
+            Firebase.Auth.Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
+            auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
+            {
+                if (authTask.IsCompleted)
+                {
+                    FirebaseUser newUser = authTask.Result;
+                    Debug.Log("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
+                    
+                    // Save user data add progress data if available
+                    SaveUserData(newUser.UserId, task.Result.DisplayName, task.Result.Email, ""); 
+                    
+                    // Load user progress
+                    LoadProgress(newUser.UserId);
+                    loginPanel.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogError("Firebase authentication failed: " + authTask.Exception);
+                }
+            });
+
+            StartCoroutine(LoadProfilePic());
+            }
+         }, TaskScheduler.FromCurrentSynchronizationContext());
+    }
+
+    private void SaveUserData(string userId, string userName, string userEmail, string progressData)
+    {
+        var userData = new Dictionary<string, object>
+        {
+            { "username", userName },
+            { "email", userEmail },
+            { "progress", progressData }
+        };
+
+        databaseReference.Child("users").Child(userId).SetValueAsync(userData).ContinueWith(task =>
+        {
+            if (task.IsCompleted && !task.IsFaulted && !task.IsCanceled)
+            {
+                Debug.Log("User data saved successfully");
+            }
+            else
+            {
+                Debug.LogError("Failed to save user data: " + task.Exception);
+            }
+        });
     }
 
     internal void OnAuthenticationFinished(Task<GoogleSignInUser> task)
@@ -131,10 +222,7 @@ void Awake()
 
     public void OnGoogleSignOut()
     {
-        userNameText.text = "";
-        userEmailText.text = "";
-        profilePic.sprite = defaultProfilePic;
-        loginPanel.SetActive(true);
+        ResetUI();
 
         GoogleSignIn.DefaultInstance.SignOut();
         auth.SignOut();
@@ -142,25 +230,30 @@ void Awake()
 
     public void OnGuestSignOut()
     {
+        ResetUI();
+
+        auth.SignOut();
+    }
+
+    private void ResetUI()
+    {
         userNameText.text = "";
         userEmailText.text = "";
         profilePic.sprite = defaultProfilePic;
         loginPanel.SetActive(true);
-
-        auth.SignOut();
     }
 
     public void OnSignOut()
     {
         if (auth.CurrentUser != null)
         {
-            if (auth.CurrentUser.IsAnonymous)
-            {
-                OnGuestSignOut();
-            }
-            else
+            if (!auth.CurrentUser.IsAnonymous && auth.CurrentUser.ProviderId == "google.com")
             {
                 OnGoogleSignOut();
+            }
+            else if (auth.CurrentUser.IsAnonymous)
+            {
+                OnGuestSignOut();
             }
         }
     }
@@ -261,5 +354,16 @@ void Awake()
                 loginPanel.SetActive(true);
             }
         });
+    }
+
+    public void OnGoogleSilentlySignIn()
+    {
+        // Attempt to sign in silently
+        GoogleSignIn.Configuration = configuration;
+        GoogleSignIn.Configuration.UseGameSignIn = false;
+        GoogleSignIn.Configuration.RequestIdToken = true;
+        GoogleSignIn.Configuration.RequestEmail = true;
+
+        GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(OnAuthenticationFinished, TaskScheduler.FromCurrentSynchronizationContext());
     }
 }
