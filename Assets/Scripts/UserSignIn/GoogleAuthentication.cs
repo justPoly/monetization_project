@@ -114,8 +114,8 @@ public class GoogleAuthentication : MonoBehaviour
                     FirebaseUser newUser = authTask.Result;
                     Debug.Log("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
                     
-                    // Save user data add progress data if available
-                    SaveUserData(newUser.UserId, task.Result.DisplayName, task.Result.Email, ""); 
+                    // Pass "google" as lastSignInMethod parameter
+                    SaveUserData(newUser.UserId, task.Result.DisplayName, task.Result.Email, "", "google"); 
                     
                     // Load user progress
                     LoadProgress(newUser.UserId);
@@ -125,20 +125,21 @@ public class GoogleAuthentication : MonoBehaviour
                 {
                     Debug.LogError("Firebase authentication failed: " + authTask.Exception);
                 }
-            });
+              });
 
             StartCoroutine(LoadProfilePic());
             }
-         }, TaskScheduler.FromCurrentSynchronizationContext());
+        }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
-    private void SaveUserData(string userId, string userName, string userEmail, string progressData)
+    private void SaveUserData(string userId, string userName, string userEmail, string progressData, string lastSignInMethod)
     {
         var userData = new Dictionary<string, object>
         {
             { "username", userName },
             { "email", userEmail },
-            { "progress", progressData }
+            { "progress", progressData },
+            { "lastSignInMethod", lastSignInMethod } // Include the lastSignInMethod field
         };
 
         databaseReference.Child("users").Child(userId).SetValueAsync(userData).ContinueWith(task =>
@@ -245,16 +246,22 @@ public class GoogleAuthentication : MonoBehaviour
 
     public void OnSignOut()
     {
-        if (auth.CurrentUser != null)
+        if (auth.CurrentUser == null)
         {
-            if (!auth.CurrentUser.IsAnonymous && auth.CurrentUser.ProviderId == "google.com")
-            {
-                OnGoogleSignOut();
-            }
-            else if (auth.CurrentUser.IsAnonymous)
-            {
-                OnGuestSignOut();
-            }
+            return; // No user signed in, nothing to do
+        }
+
+        bool isGoogleUser = !auth.CurrentUser.IsAnonymous && auth.CurrentUser.ProviderId == "google.com";
+        bool isGuestUser = auth.CurrentUser.IsAnonymous;
+
+       
+        if (isGoogleUser)
+        {
+            OnGoogleSignOut();
+        }
+        if(isGuestUser)
+        {
+            OnGuestSignOut();
         }
     }
 
@@ -364,6 +371,60 @@ public class GoogleAuthentication : MonoBehaviour
         GoogleSignIn.Configuration.RequestIdToken = true;
         GoogleSignIn.Configuration.RequestEmail = true;
 
-        GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(OnAuthenticationFinished, TaskScheduler.FromCurrentSynchronizationContext());
+        GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(task =>
+        {
+            if (task.IsFaulted)
+            {
+                using (IEnumerator<System.Exception> enumerator = task.Exception.InnerExceptions.GetEnumerator())
+                {
+                    if (enumerator.MoveNext())
+                    {
+                        GoogleSignIn.SignInException error = (GoogleSignIn.SignInException)enumerator.Current;
+                        Debug.LogError("Got Error: " + error.Status + " " + error.Message);
+                    }
+                    else
+                    {
+                        Debug.LogError("Got Unexpected Exception?!?" + task.Exception);
+                    }
+                }
+            }
+            else if (task.IsCanceled)
+            {
+                Debug.LogError("Canceled");
+            }
+            else
+            {
+                Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+
+                userNameText.text = task.Result.DisplayName;
+                userEmailText.text = task.Result.Email;
+
+                imageURL = task.Result.ImageUrl.ToString();
+                loginPanel.SetActive(false);
+
+                Firebase.Auth.Credential credential = Firebase.Auth.GoogleAuthProvider.GetCredential(task.Result.IdToken, null);
+                auth.SignInWithCredentialAsync(credential).ContinueWith(authTask =>
+                {
+                    if (authTask.IsCompleted)
+                    {
+                        FirebaseUser newUser = authTask.Result;
+                        Debug.Log("User signed in successfully: " + newUser.DisplayName + " (" + newUser.UserId + ")");
+                        
+                        // Pass "google" as lastSignInMethod parameter
+                        SaveUserData(newUser.UserId, task.Result.DisplayName, task.Result.Email, "", "google"); 
+                        
+                        LoadProgress(newUser.UserId);
+                        loginPanel.SetActive(false);
+                    }
+                    else
+                    {
+                        Debug.LogError("Firebase authentication failed: " + authTask.Exception);
+                    }
+                });
+
+                StartCoroutine(LoadProfilePic());
+            }
+        }, TaskScheduler.FromCurrentSynchronizationContext());
     }
+
 }
