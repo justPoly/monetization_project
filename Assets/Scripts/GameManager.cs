@@ -55,8 +55,8 @@ public class GameManager : MonoBehaviour
     public void UpdateUI()
     {
         // Update moneyText and gemsText directly based on the current counts and economy manager values
-        diamondText.text = $"Diamonds: {((int)GameStateManager.EconomyManager.Money).ToString()}";
-        gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
+        diamondText.text = $": {((int)GameStateManager.EconomyManager.Money).ToString()}";
+        gemsText.text = $": {((int)GameStateManager.EconomyManager.Gems).ToString()}";
     }
 
 

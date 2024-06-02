@@ -54,8 +54,8 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 
     public void UpdateUI()
     {
-        diamondText.text = $"Diamonds: {((int)GameStateManager.EconomyManager.Money).ToString()}";
-        gemsText.text = $"Gems: {((int)GameStateManager.EconomyManager.Gems).ToString()}";
+        diamondText.text = $": {((int)GameStateManager.EconomyManager.Money).ToString()}";
+        gemsText.text = $": {((int)GameStateManager.EconomyManager.Gems).ToString()}";
         GameStateManager.EconomyManager.UpdateCurrency();
     }
 
