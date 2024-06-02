@@ -22,7 +22,7 @@ public class GoogleAuthentication : MonoBehaviour
     private FirebaseAuth auth;
     private DatabaseReference databaseReference;
 
-    void Awake()
+void Awake()
     {
         configuration = new GoogleSignInConfiguration
         {
@@ -42,7 +42,13 @@ public class GoogleAuthentication : MonoBehaviour
             }
             else
             {
-                loginPanel.SetActive(true);
+                // Attempt to sign in silently
+                GoogleSignIn.Configuration = configuration;
+                GoogleSignIn.Configuration.UseGameSignIn = false;
+                GoogleSignIn.Configuration.RequestIdToken = true;
+                GoogleSignIn.Configuration.RequestEmail = true;
+
+                GoogleSignIn.DefaultInstance.SignInSilently().ContinueWith(OnAuthenticationFinished, TaskScheduler.FromCurrentSynchronizationContext());
             }
         });
     }
