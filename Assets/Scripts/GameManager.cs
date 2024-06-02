@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Advertisements;
+using UnityEngine.Networking;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -18,6 +20,11 @@ public class GameManager : MonoBehaviour
     private GameObject storeEnquiryPopUp;
     [SerializeField]
     private GameObject adTestCompletedPopUp;
+
+    public GameObject noInternetPanel;
+    private DateTime lastCheckedTime;
+    private bool lastConnectionStatus;
+    private const float cacheDuration = 30f; 
 
     public TextMeshProUGUI b1text;
 
@@ -45,12 +52,38 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // GameStateManager.EconomyManager.InitializeValues();
         ShowNextButton();
         adTypePopup.SetActive(false); 
         storeEnquiryPopUp.SetActive(false);
         allButtonsTested = false; 
+        noInternetPanel.SetActive(false);
     }
+
+    private bool IsCacheValid()
+    {
+        return (DateTime.Now - lastCheckedTime).TotalSeconds < cacheDuration;
+    }
+
+    // Method to check internet connection
+    private IEnumerator CheckInternetConnection(System.Action<bool> action)
+    {
+        if (IsCacheValid())
+        {
+            action(lastConnectionStatus);
+            yield break;
+        }
+
+        UnityWebRequest request = new UnityWebRequest("http://google.com");
+        request.timeout = 5; // Set a timeout for the request
+
+        yield return request.SendWebRequest();
+
+        lastCheckedTime = DateTime.Now;
+        lastConnectionStatus = request.result == UnityWebRequest.Result.Success;
+
+        action(lastConnectionStatus);
+    }
+
 
     public void UpdateUI()
     {
@@ -73,17 +106,54 @@ public class GameManager : MonoBehaviour
 
     public void DisplayInterstitialAds()
     {
-        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+        StartCoroutine(CheckInternetConnection(isConnected =>
+        {
+            if (isConnected)
+            {
+                noInternetPanel.SetActive(false);
+                Debug.Log("Showing interstitial ad...");
+                AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+            }
+            else
+            {
+                noInternetPanel.SetActive(true);
+            }
+        }));
+        
     }
 
     public void DisplayRewardedAds()
     {
-        AdsManager.Instance.rewardedAds.ShowRewardedAd();
+         StartCoroutine(CheckInternetConnection(isConnected =>
+        {
+            if (isConnected)
+            {
+                noInternetPanel.SetActive(false);
+                Debug.Log("Showing rewarded ad...");
+                AdsManager.Instance.rewardedAds.ShowRewardedAd();
+            }
+            else
+            {
+                noInternetPanel.SetActive(true);
+            }
+        }));
     }
 
     public void DisplayBannerAds()
     {
-        AdsManager.Instance.bannerAds.ShowBannerAd();
+        StartCoroutine(CheckInternetConnection(isConnected =>
+        {
+            if (isConnected)
+            {
+                noInternetPanel.SetActive(false);
+                Debug.Log("Showing banner ad...");
+                AdsManager.Instance.bannerAds.ShowBannerAd();
+            }
+            else
+            {
+                noInternetPanel.SetActive(true);
+            }
+        }));
     }
 
     public void StashBannerAd()
@@ -118,7 +188,18 @@ public class GameManager : MonoBehaviour
     private IEnumerator ShowAdTypePopupCoroutine()
     {
         yield return new WaitForSeconds(0.5f); 
-        adTypePopup.SetActive(true);
+        StartCoroutine(CheckInternetConnection(isConnected =>
+        {
+            if (isConnected)
+            {
+                noInternetPanel.SetActive(false);
+                adTypePopup.SetActive(true);
+            }
+            else
+            {
+                noInternetPanel.SetActive(true);
+            }
+        }));
     }
 
     public void OnYesButtonClick()
