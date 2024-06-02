@@ -2806,7 +2806,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.000036056674, y: 0}
-  m_SizeDelta: {x: 0, y: 1572.079}
+  m_SizeDelta: {x: 3665.584, y: 1572.079}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &219284807
 MonoBehaviour:
@@ -12058,7 +12058,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 935640906}
+      - m_Target: {fileID: 1635773045}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -12114,7 +12114,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 935640906}
+      - m_Target: {fileID: 1635773045}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -24832,10 +24832,10 @@ RectTransform:
   - {fileID: 2091550426}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 920, y: -800}
+  m_SizeDelta: {x: 1840, y: 1600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1821196749
 MonoBehaviour:
@@ -26881,10 +26881,10 @@ RectTransform:
   - {fileID: 590223738}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 2760, y: -800}
+  m_SizeDelta: {x: 1840, y: 1600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1992753022
 MonoBehaviour:
@@ -27941,10 +27941,10 @@ RectTransform:
   - {fileID: 1193443827}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 4600, y: -800}
+  m_SizeDelta: {x: 1840, y: 1600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2045305044
 MonoBehaviour:
@@ -30502,7 +30502,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &415921077535283373
 RectTransform:
   m_ObjectHideFlags: 0
