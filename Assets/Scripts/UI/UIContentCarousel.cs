@@ -30,11 +30,11 @@ public class UIContentCarousel : MonoBehaviour, IEndDragHandler, IBeginDragHandl
     public float snapSpeed = 8f;
 
     [Header("Navigation Buttons")]
-    [Tooltip("Click to move to the next page.")]
-    public Button nextButton;
+    // [Tooltip("Click to move to the next page.")]
+    // public Button nextButton;
 
-    [Tooltip("Click to move to the previous page.")]
-    public Button prevButton;
+    // [Tooltip("Click to move to the previous page.")]
+    // public Button prevButton;
 
     [Header("Carousel Mode")]
     [Tooltip("Enables automatic cycling through pages.")]
@@ -135,15 +135,15 @@ public class UIContentCarousel : MonoBehaviour, IEndDragHandler, IBeginDragHandl
         }
 
         // Setup navigation button click events
-        if (nextButton != null)
-        {
-            nextButton.onClick.AddListener(MoveToNextPage);
-        }
+        // if (nextButton != null)
+        // {
+        //     nextButton.onClick.AddListener(MoveToNextPage);
+        // }
 
-        if (prevButton != null)
-        {
-            prevButton.onClick.AddListener(MoveToPreviousPage);
-        }
+        // if (prevButton != null)
+        // {
+        //     prevButton.onClick.AddListener(MoveToPreviousPage);
+        // }
     }
 
     private void InitializeNavigationDots()
