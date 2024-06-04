@@ -9,8 +9,8 @@ using Firebase.Analytics;
 
 public class GameManager : MonoBehaviour
 {
-    public TMP_Text diamondText;
-    public TMP_Text gemsText;
+    public TMP_Text diamondText, miniDiamondText;
+    public TMP_Text gemsText, miniGemsText;
 
     private static GameManager instance;
 
@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour
         // Update moneyText and gemsText directly based on the current counts and economy manager values
         diamondText.text = $": {((int)GameStateManager.EconomyManager.Money).ToString()}";
         gemsText.text = $": {((int)GameStateManager.EconomyManager.Gems).ToString()}";
+        miniDiamondText.text = $": {((int)GameStateManager.EconomyManager.Money).ToString()}";
+        miniGemsText.text = $": {((int)GameStateManager.EconomyManager.Gems).ToString()}";
     }
 
     // Update is called once per frame
