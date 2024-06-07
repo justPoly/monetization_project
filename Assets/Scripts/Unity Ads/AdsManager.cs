@@ -61,4 +61,27 @@ public class AdsManager : MonoBehaviour
         Debug.Log("Ads disabled.");
     }
 
+    public void EnableAds()
+    {
+        adsDisabled = false;
+        PlayerPrefs.SetInt("NoAds", 0);
+        PlayerPrefs.Save();
+
+        // Initialize Unity Ads if necessary and load ads
+        if (!Advertisement.isInitialized || !Advertisement.isSupported)
+        {
+            initializeAds.InitializeUnityAds();
+            StartCoroutine(LoadAdsAfterInitialization());
+        }
+        else
+        {
+            // Directly load ads if already initialized
+            bannerAds.LoadBannerAd();
+            interstitialAds.LoadInterstitialAd();
+            rewardedAds.LoadRewardedAd();
+        }
+
+        Debug.Log("Ads enabled.");
+    }
+
 }

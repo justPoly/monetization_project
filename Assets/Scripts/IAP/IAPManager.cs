@@ -28,23 +28,37 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     [SerializeField]
     public TMP_Text gemsText;
 
-
     private Action OnPurchaseCompleted;
     private IStoreController StoreController;
     private IExtensionProvider ExtensionProvider;
 
+    [Serializable]
+    public class SubscriptionProduct
+    {
+        public string productID;
+        public int validityDays;
+        // public int validityMinutes;
+    }
+
+    public List<SubscriptionProduct> subscriptionProducts;
+
+    private Dictionary<string, Action> productActions;
+
     private async void Awake()
     {
         InitializationOptions options = new InitializationOptions()
-        #if UNITY_EDITOR || DEVELOPMENT_BUILD
-        .SetEnvironmentName("test");
-        #else
-        .SetEnvironmentName("production");
-        #endif
+    #if UNITY_EDITOR || DEVELOPMENT_BUILD
+                .SetEnvironmentName("test");
+    #else
+                .SetEnvironmentName("production");
+    #endif
         await UnityServices.InitializeAsync(options);
         ResourceRequest operation = Resources.LoadAsync<TextAsset>("IAPProductCatalog");
         operation.completed += HandleIAPCatalogLoaded;
         UpdateUI();
+        CheckAndHandleSubscriptions();
+
+        InitializeProductActions();
     }
 
     public void Start()
@@ -66,28 +80,28 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         ProductCatalog catalog = JsonUtility.FromJson<ProductCatalog>((request.asset as TextAsset).text);
         Debug.Log($"Loaded catalog with {catalog.allProducts.Count} items");
 
-        #if UNITY_EDITOR 
+#if UNITY_EDITOR
         UseFakeStore = true;
-        if (UseFakeStore) // Use bool in editor to control fake store behavior.
+        if (UseFakeStore)
         {
             StandardPurchasingModule.Instance().useFakeStoreUIMode = FakeStoreUIMode.StandardUser;
             StandardPurchasingModule.Instance().useFakeStoreAlways = true;
         }
-        #endif
+#endif
 
-        #if UNITY_ANDROID
+#if UNITY_ANDROID
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(
             StandardPurchasingModule.Instance(AppStore.GooglePlay)
         );
-        #elif UNITY_IOS
+#elif UNITY_IOS
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(
             StandardPurchasingModule.Instance(AppStore.AppleAppStore)
         );
-        #else
+#else
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(
             StandardPurchasingModule.Instance(AppStore.NotSpecified)
         );
-        #endif
+#endif
 
         foreach (ProductCatalogItem item in catalog.allProducts)
         {
@@ -130,7 +144,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         LoadingOverlay.SetActive(true);
         this.OnPurchaseCompleted = OnPurchaseCompleted;
 
-        //Track button press with Firebase Analytics
+        // Track button press with Firebase Analytics
         string itemId = Product.definition.id;
         FirebaseAnalytics.LogEvent("store_item_pressed", new Parameter("item_id", itemId));
         Debug.Log($"Firebase Analytics: Store item pressed - {itemId}");
@@ -146,7 +160,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     public void OnInitializeFailed(InitializationFailureReason error, string message)
     {
         Debug.LogError($"Error initializing IAP because of {error}." +
-        $"\r\nShow a message to the player depending on the error.");
+            $"\r\nShow a message to the player depending on the error.");
         throw new System.NotImplementedException();
     }
 
@@ -180,51 +194,98 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         // Track successful purchase with Firebase Analytics
         FirebaseAnalytics.LogEvent("purchase_success", new Parameter("item_id", productId));
         Debug.Log($"Firebase Analytics: Purchase success - {productId}");
-        switch (productId)
+
+        // Save the purchase date and calculate expiration date
+        DateTime purchaseDate = DateTime.UtcNow;
+        var subscriptionProduct = subscriptionProducts.FirstOrDefault(x => x.productID == productId);
+        if (subscriptionProduct != null)
         {
-            case "starter_p":
-                AddMoneyAndUpdateUI(10);
-                break;
-            case "value_p":
-                AddMoneyAndUpdateUI(15);
-                break;
-            case "deluxe_p":
-                AddMoneyAndUpdateUI(20);
-                break;
-            case "premium_p":
-                AddMoneyAndUpdateUI(25);
-                break;
-            case "no_ads_p":
-                ActivateNoAds();
-                break;
-            default:
-                Debug.LogWarning($"Unmapped product ID: {productId}. Reward not added.");
-                break;
+            // For testing, we use 5 minutes instead of days
+            DateTime expirationDate = purchaseDate.AddMinutes(5);
+            // Calculate expiration in days
+            // DateTime expirationDate = purchaseDate.AddDays(subscriptionProduct.validityDays);
+            PlayerPrefs.SetString(productId + "_expiration", expirationDate.ToString());
         }
+
+        // Execute the corresponding action
+        if (productActions.TryGetValue(productId, out Action action))
+        {
+            action.Invoke();
+        }
+        else
+        {
+            Debug.LogWarning($"Unmapped product ID: {productId}. Reward not added.");
+        }
+
         return PurchaseProcessingResult.Complete;
     }
 
     private void AddMoneyAndUpdateUI(int moneyToAdd)
     {
         GameStateManager.EconomyManager.AddMoney(moneyToAdd);
-        // UpdateUI();
+        UpdateUI();
         LoadingOverlay.SetActive(true);
         purchaseSuccessful.SetActive(true);
         PlayerPrefs.Save();
     }
 
-    private void ActivateNoAds()
+    private void AddGemsAndUpdateUI(int gemsToAdd)
     {
-         PlayerPrefs.SetInt("NoAds", 1);
-         PlayerPrefs.Save();
-         AdsManager.Instance.DisableAds();
+        GameStateManager.EconomyManager.AddGems(gemsToAdd);
+        UpdateUI();
+        LoadingOverlay.SetActive(true);
+        purchaseSuccessful.SetActive(true);
+        PlayerPrefs.Save();
     }
 
-    public void OnPurchaseSuccessful() 
+    private void ActivateNoAdsForTesting(int minutes)
     {
-         UpdateUI();
-         purchaseSuccessful.SetActive(false);
-         LoadingOverlay.SetActive(false);
+        AdsManager.Instance.DisableAds();
+        StartCoroutine(EnableAdsAfterTime(minutes));
+    }
+
+    private IEnumerator EnableAdsAfterTime(int minutes)
+    {
+        yield return new WaitForSeconds(minutes * 60);
+        AdsManager.Instance.EnableAds();
+    }
+
+    private void CheckAndHandleSubscriptions()
+    {
+        foreach (var subscription in subscriptionProducts)
+        {
+            string expirationKey = subscription.productID + "_expiration";
+            if (PlayerPrefs.HasKey(expirationKey))
+            {
+                DateTime expirationDate = DateTime.Parse(PlayerPrefs.GetString(expirationKey));
+                if (DateTime.UtcNow > expirationDate)
+                {
+                    AdsManager.Instance.EnableAds();
+                    PlayerPrefs.DeleteKey(expirationKey);
+                }
+            }
+        }
+    }
+
+    public void OnPurchaseSuccessful()
+    {
+        UpdateUI();
+        purchaseSuccessful.SetActive(false);
+        LoadingOverlay.SetActive(false);
+    }
+
+    private void InitializeProductActions()
+    {
+        productActions = new Dictionary<string, Action>
+        {
+            { "starter_p", () => AddMoneyAndUpdateUI(10) },
+            { "value_p", () => AddMoneyAndUpdateUI(15) },
+            { "deluxe_p", () => AddMoneyAndUpdateUI(20) },
+            { "premium_p", () => AddMoneyAndUpdateUI(25) },
+            { "gems_pack", () => AddGemsAndUpdateUI(50) },
+            { "no_ads_subscription", () => ActivateNoAdsForTesting(5) }
+            // Add more product actions here as needed
+        };
     }
 
 }
