@@ -29,7 +29,7 @@ public class UIProduct : MonoBehaviour
         priceText.SetText($"{Product.metadata.localizedPriceString} " +
             $"{Product.metadata.isoCurrencyCode}");
 
-        PurchaseButton.onClick.AddListener(Purchase); // Add this line to wire up the Purchase button
+        // PurchaseButton.onClick.AddListener(Purchase); 
     }
 
     public void Purchase()

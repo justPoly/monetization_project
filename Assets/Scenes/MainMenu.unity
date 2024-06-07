@@ -3145,7 +3145,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1288.541}
+  m_SizeDelta: {x: 3707.584, y: 1288.541}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &219284807
 MonoBehaviour:
@@ -6622,6 +6622,7 @@ GameObject:
   - component: {fileID: 480711044}
   - component: {fileID: 480711043}
   - component: {fileID: 480711042}
+  - component: {fileID: 480711045}
   m_Layer: 5
   m_Name: Contents_2 (3)
   m_TagString: Untagged
@@ -6732,6 +6733,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 480711040}
   m_CullTransparentMesh: 1
+--- !u!114 &480711045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480711040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a8211ba9512574468b53897cb43c436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &483166196
 GameObject:
   m_ObjectHideFlags: 0
@@ -9225,7 +9238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: no_ad_1
   nameText: {fileID: 1041585032}
   descriptionText: {fileID: 1797252347}
   priceText: {fileID: 583761438}
@@ -10400,7 +10413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_624
   nameText: {fileID: 2043891717}
   descriptionText: {fileID: 1292143763}
   priceText: {fileID: 76299986}
@@ -11429,7 +11442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_30
   nameText: {fileID: 1993097213}
   descriptionText: {fileID: 356074300}
   priceText: {fileID: 768847050}
@@ -12124,7 +12137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_66
   nameText: {fileID: 7795271}
   descriptionText: {fileID: 765495681}
   priceText: {fileID: 228795735}
@@ -12291,7 +12304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_30
   nameText: {fileID: 2001499990}
   descriptionText: {fileID: 1503004342}
   priceText: {fileID: 1678266013}
@@ -17024,6 +17037,7 @@ GameObject:
   - component: {fileID: 1178282729}
   - component: {fileID: 1178282728}
   - component: {fileID: 1178282727}
+  - component: {fileID: 1178282730}
   m_Layer: 5
   m_Name: Contents_2 (4)
   m_TagString: Untagged
@@ -17134,6 +17148,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178282725}
   m_CullTransparentMesh: 1
+--- !u!114 &1178282730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178282725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a8211ba9512574468b53897cb43c436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1186207357
 GameObject:
   m_ObjectHideFlags: 0
@@ -17296,7 +17322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_138
   nameText: {fileID: 1891823291}
   descriptionText: {fileID: 416989530}
   priceText: {fileID: 2078881589}
@@ -18511,7 +18537,6 @@ GameObject:
   - component: {fileID: 1275754014}
   - component: {fileID: 1275754013}
   - component: {fileID: 1275754012}
-  - component: {fileID: 1275754015}
   m_Layer: 5
   m_Name: Button (6)
   m_TagString: Untagged
@@ -18587,9 +18612,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1275754015}
-        m_TargetAssemblyTypeName: UIProduct, Assembly-CSharp
-        m_MethodName: Purchase
+      - m_Target: {fileID: 72091253}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: DisplayRewardedAds
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18637,23 +18662,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275754009}
   m_CullTransparentMesh: 1
---- !u!114 &1275754015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1275754009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  productID: 
-  nameText: {fileID: 782799153}
-  descriptionText: {fileID: 169815395}
-  priceText: {fileID: 87675280}
-  PurchaseButton: {fileID: 1275754012}
 --- !u!1 &1282830602
 GameObject:
   m_ObjectHideFlags: 0
@@ -22338,6 +22346,7 @@ GameObject:
   - component: {fileID: 1485884056}
   - component: {fileID: 1485884055}
   - component: {fileID: 1485884054}
+  - component: {fileID: 1485884057}
   m_Layer: 5
   m_Name: Contents_2 (2)
   m_TagString: Untagged
@@ -22448,6 +22457,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1485884052}
   m_CullTransparentMesh: 1
+--- !u!114 &1485884057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485884052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a8211ba9512574468b53897cb43c436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1486566788
 GameObject:
   m_ObjectHideFlags: 0
@@ -27639,10 +27660,10 @@ RectTransform:
   - {fileID: 946162770}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 927, y: -644.2705}
+  m_SizeDelta: {x: 1854, y: 1283}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1821196749
 MonoBehaviour:
@@ -27762,7 +27783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: remove_ads
   nameText: {fileID: 1998872248}
   descriptionText: {fileID: 1896429900}
   priceText: {fileID: 1034157852}
@@ -28306,7 +28327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_10
   nameText: {fileID: 353191137}
   descriptionText: {fileID: 274427388}
   priceText: {fileID: 699493004}
@@ -30001,10 +30022,10 @@ RectTransform:
   - {fileID: 590223738}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 2781, y: -644.2705}
+  m_SizeDelta: {x: 1854, y: 1283}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1992753022
 MonoBehaviour:
@@ -30124,7 +30145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: super_bundle
   nameText: {fileID: 706138894}
   descriptionText: {fileID: 844157766}
   priceText: {fileID: 1619528924}
@@ -31239,10 +31260,10 @@ RectTransform:
   - {fileID: 1193443827}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 4635, y: -644.2705}
+  m_SizeDelta: {x: 1854, y: 1283}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2045305044
 MonoBehaviour:
@@ -31362,7 +31383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: mega_bundle
   nameText: {fileID: 1885334088}
   descriptionText: {fileID: 208916473}
   priceText: {fileID: 2112590599}
@@ -33855,7 +33876,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &415921077535283373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36868,7 +36889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_10
   nameText: {fileID: 9012285868215709494}
   descriptionText: {fileID: 9147329035861914893}
   priceText: {fileID: 7332453022284763254}
@@ -37461,7 +37482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_3300
   nameText: {fileID: 6018590744557246501}
   descriptionText: {fileID: 4019999560913697009}
   priceText: {fileID: 832899169066568342}
@@ -40053,7 +40074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_7200
   nameText: {fileID: 6508435459326636259}
   descriptionText: {fileID: 273735192229901411}
   priceText: {fileID: 5405618169129121589}
@@ -40492,7 +40513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_1000
   nameText: {fileID: 1379463176254203456}
   descriptionText: {fileID: 4842434095145644285}
   priceText: {fileID: 2941463485183325108}
@@ -40798,6 +40819,9 @@ MonoBehaviour:
   - {fileID: 7909728321110336962}
   - {fileID: 4988967333670665738}
   - {fileID: 7500733216672252729}
+  - {fileID: 1852943452}
+  - {fileID: 835794611}
+  - {fileID: 823773875}
   LoadingOverlay: {fileID: 5686333692305084574}
   purchaseFailed: {fileID: 6501148596798781714}
   purchaseSuccessful: {fileID: 4759332553168134845}
@@ -40976,7 +41000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_66
   nameText: {fileID: 7357446359585398996}
   descriptionText: {fileID: 1070527369486032178}
   priceText: {fileID: 2856866307354160730}
@@ -41518,7 +41542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: 
+  productID: x_288
   nameText: {fileID: 6906215008330969044}
   descriptionText: {fileID: 1166440936093063847}
   priceText: {fileID: 3391118542019384392}
