@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIProduct : MonoBehaviour
 {
+    public string productID;
     [SerializeField]
     private TextMeshProUGUI nameText;
     [SerializeField]
@@ -27,6 +28,8 @@ public class UIProduct : MonoBehaviour
         descriptionText.SetText(Product.metadata.localizedDescription);
         priceText.SetText($"{Product.metadata.localizedPriceString} " +
             $"{Product.metadata.isoCurrencyCode}");
+
+        PurchaseButton.onClick.AddListener(Purchase); // Add this line to wire up the Purchase button
     }
 
     public void Purchase()

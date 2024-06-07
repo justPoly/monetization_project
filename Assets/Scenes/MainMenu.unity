@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1603897725}
   descriptionText: {fileID: 1667765838}
   priceText: {fileID: 1476288976}
@@ -5366,7 +5367,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390184861}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -7251,6 +7252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 706138894}
   descriptionText: {fileID: 844157766}
   priceText: {fileID: 1619528924}
@@ -9223,6 +9225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1041585032}
   descriptionText: {fileID: 1797252347}
   priceText: {fileID: 583761438}
@@ -10397,6 +10400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 2043891717}
   descriptionText: {fileID: 1292143763}
   priceText: {fileID: 76299986}
@@ -11425,6 +11429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1993097213}
   descriptionText: {fileID: 356074300}
   priceText: {fileID: 768847050}
@@ -12119,6 +12124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 7795271}
   descriptionText: {fileID: 765495681}
   priceText: {fileID: 228795735}
@@ -12285,6 +12291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 2001499990}
   descriptionText: {fileID: 1503004342}
   priceText: {fileID: 1678266013}
@@ -12987,6 +12994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1706929760}
   descriptionText: {fileID: 1404491561}
   priceText: {fileID: 975178090}
@@ -17288,6 +17296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1891823291}
   descriptionText: {fileID: 416989530}
   priceText: {fileID: 2078881589}
@@ -18640,6 +18649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 782799153}
   descriptionText: {fileID: 169815395}
   priceText: {fileID: 87675280}
@@ -21214,6 +21224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1212575859}
   descriptionText: {fileID: 1704363263}
   priceText: {fileID: 355457889}
@@ -23660,6 +23671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1359785857}
   descriptionText: {fileID: 1316507687}
   priceText: {fileID: 546238744}
@@ -27374,6 +27386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1885334088}
   descriptionText: {fileID: 208916473}
   priceText: {fileID: 2112590599}
@@ -27626,10 +27639,10 @@ RectTransform:
   - {fileID: 946162770}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 927, y: -644.2705}
-  m_SizeDelta: {x: 1854, y: 1283}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1821196749
 MonoBehaviour:
@@ -27749,6 +27762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1998872248}
   descriptionText: {fileID: 1896429900}
   priceText: {fileID: 1034157852}
@@ -28292,6 +28306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 353191137}
   descriptionText: {fileID: 274427388}
   priceText: {fileID: 699493004}
@@ -29986,10 +30001,10 @@ RectTransform:
   - {fileID: 590223738}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 2781, y: -644.2705}
-  m_SizeDelta: {x: 1854, y: 1283}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1992753022
 MonoBehaviour:
@@ -30109,6 +30124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 706138894}
   descriptionText: {fileID: 844157766}
   priceText: {fileID: 1619528924}
@@ -31223,10 +31239,10 @@ RectTransform:
   - {fileID: 1193443827}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 4635, y: -644.2705}
-  m_SizeDelta: {x: 1854, y: 1283}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2045305044
 MonoBehaviour:
@@ -31271,7 +31287,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2045305045}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2045305048}
+        m_TargetAssemblyTypeName: UIProduct, Assembly-CSharp
+        m_MethodName: Purchase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2045305045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31334,6 +31362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1885334088}
   descriptionText: {fileID: 208916473}
   priceText: {fileID: 2112590599}
@@ -31405,6 +31434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1298752427}
   descriptionText: {fileID: 442821552}
   priceText: {fileID: 125277080}
@@ -31716,6 +31746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1660511407}
   descriptionText: {fileID: 2056177054}
   priceText: {fileID: 1204873167}
@@ -36837,6 +36868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 9012285868215709494}
   descriptionText: {fileID: 9147329035861914893}
   priceText: {fileID: 7332453022284763254}
@@ -37429,6 +37461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 6018590744557246501}
   descriptionText: {fileID: 4019999560913697009}
   priceText: {fileID: 832899169066568342}
@@ -40020,6 +40053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 6508435459326636259}
   descriptionText: {fileID: 273735192229901411}
   priceText: {fileID: 5405618169129121589}
@@ -40458,6 +40492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 1379463176254203456}
   descriptionText: {fileID: 4842434095145644285}
   priceText: {fileID: 2941463485183325108}
@@ -40763,7 +40798,6 @@ MonoBehaviour:
   - {fileID: 7909728321110336962}
   - {fileID: 4988967333670665738}
   - {fileID: 7500733216672252729}
-  - {fileID: 1852943452}
   LoadingOverlay: {fileID: 5686333692305084574}
   purchaseFailed: {fileID: 6501148596798781714}
   purchaseSuccessful: {fileID: 4759332553168134845}
@@ -40771,7 +40805,7 @@ MonoBehaviour:
   diamondText: {fileID: 477945995795491193}
   gemsText: {fileID: 6291006096605805838}
   subscriptionProducts:
-  - productID: no_ads_1
+  - productID: no_ads_1day
     validityDays: 1
 --- !u!114 &8130405008446990943
 MonoBehaviour:
@@ -40942,6 +40976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 7357446359585398996}
   descriptionText: {fileID: 1070527369486032178}
   priceText: {fileID: 2856866307354160730}
@@ -41483,6 +41518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productID: 
   nameText: {fileID: 6906215008330969044}
   descriptionText: {fileID: 1166440936093063847}
   priceText: {fileID: 3391118542019384392}

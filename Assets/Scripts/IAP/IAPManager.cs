@@ -120,21 +120,19 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 
     private void CreateUI()
     {
-        List<Product> sortedProducts = StoreController.products.all
-            .OrderBy(item => item.metadata.localizedPrice)
-            .ToList();
-
         for (int i = 0; i < uiProducts.Count; i++)
         {
-            if (i < sortedProducts.Count)
+            string productId = uiProducts[i].productID; 
+            Product product = StoreController.products.all.FirstOrDefault(p => p.definition.id == productId);
+
+            if (product != null)
             {
                 uiProducts[i].OnPurchase += HandlePurchase;
-                uiProducts[i].Setup(sortedProducts[i]);
+                uiProducts[i].Setup(product);
             }
             else
             {
-                Debug.LogWarning("Not enough products to fill all UIProduct instances.");
-                break;
+                Debug.LogWarning($"Product with ID {productId} not found in StoreController.");
             }
         }
     }
@@ -278,14 +276,22 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         productActions = new Dictionary<string, Action>
         {
-            { "starter_p", () => AddMoneyAndUpdateUI(10) },
-            { "value_p", () => AddMoneyAndUpdateUI(15) },
-            { "deluxe_p", () => AddMoneyAndUpdateUI(20) },
-            { "premium_p", () => AddMoneyAndUpdateUI(25) },
-            { "gems_pack", () => AddGemsAndUpdateUI(50) },
-            { "no_ads_subscription", () => ActivateNoAdsForTesting(5) }
+            { "remove_ads", () => AddMoneyAndUpdateUI(10) },
+            { "super_bundle", () => AddGemsAndUpdateUI(50) },
+            { "mega_bundle", () => AddMoneyAndUpdateUI(20) },
+            { "x_10", () => AddGemsAndUpdateUI(50) },
+            { "x_30", () => AddGemsAndUpdateUI(50) },
+            { "x_66", () => AddGemsAndUpdateUI(50) },
+            { "x_138", () => AddGemsAndUpdateUI(50) },
+            { "x_288", () => {AddGemsAndUpdateUI(50); AddMoneyAndUpdateUI(15);} },
+            { "x_624", () => AddMoneyAndUpdateUI(15) },
+            { "x_1000", () => AddGemsAndUpdateUI(50) },
+            { "x_3300", () => AddGemsAndUpdateUI(50) },
+            { "x_7200", () => AddMoneyAndUpdateUI(25) },
+            { "no_ads_1", () => ActivateNoAdsForTesting(5) }
             // Add more product actions here as needed
         };
     }
+
 
 }
