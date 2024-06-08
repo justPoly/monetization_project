@@ -8,11 +8,15 @@ using UnityEngine.UI;
 public class EconomyReward : MonoBehaviour
 {
     public Transform coinPrefab;
-    public Transform targetArea;
+    public Transform gemPrefab; // Gem prefab
+    public Transform coinTargetArea;
+    public Transform gemTargetArea; // Gem target area
     public int coinCount = 6; // Number of coins in the collection
+    public int gemCount = 6; // Number of gems in the collection
     public float spawnDelay = 0.1f;
     public float moveDuration = 1f;
-    public Vector3 targetOffset = new Vector3(-100, 100, 0); // Top-left offset
+    public Vector3 coinTargetOffset = new Vector3(-100, 100, 0); // Coin top-left offset
+    public Vector3 gemTargetOffset = new Vector3(-100, 100, 0); // Gem top-left offset
     public Canvas canvas;
 
     private Transform lastButtonTransform; // To store the button's transform
@@ -48,6 +52,31 @@ public class EconomyReward : MonoBehaviour
         }
     }
 
+    public void StartGemCollection()
+    {
+        if (lastButtonTransform != null)
+        {
+            StartCoroutine(SpawnGemsCoroutine(lastButtonTransform));
+        }
+        else
+        {
+            Debug.LogError("No button transform stored. Please click a button first.");
+        }
+    }
+
+    public void StartBothCollections()
+    {
+        if (lastButtonTransform != null)
+        {
+            StartCoroutine(SpawnCoinsCoroutine(lastButtonTransform));
+            StartCoroutine(SpawnGemsCoroutine(lastButtonTransform));
+        }
+        else
+        {
+            Debug.LogError("No button transform stored. Please click a button first.");
+        }
+    }
+
     IEnumerator SpawnCoinsCoroutine(Transform spawnArea)
     {
         for (int i = 0; i < coinCount; i++)
@@ -58,13 +87,31 @@ public class EconomyReward : MonoBehaviour
         }
     }
 
+    IEnumerator SpawnGemsCoroutine(Transform spawnArea)
+    {
+        for (int i = 0; i < gemCount; i++)
+        {
+            Transform gem = Instantiate(gemPrefab, spawnArea.position, Quaternion.identity, canvas.transform);
+            MoveGem(gem);
+            yield return new WaitForSeconds(spawnDelay);
+        }
+    }
+
     void MoveCoin(Transform coin)
     {
-        Vector3 targetPosition = targetArea.position + targetOffset;
+        Vector3 targetPosition = coinTargetArea.position + coinTargetOffset;
 
         coin.DOMove(targetPosition, moveDuration)
             .SetEase(Ease.InOutQuad)
             .OnComplete(() => Destroy(coin.gameObject));
     }
 
+    void MoveGem(Transform gem)
+    {
+        Vector3 targetPosition = gemTargetArea.position + gemTargetOffset;
+
+        gem.DOMove(targetPosition, moveDuration)
+            .SetEase(Ease.InOutQuad)
+            .OnComplete(() => Destroy(gem.gameObject));
+    }
 }
