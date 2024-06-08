@@ -14,6 +14,7 @@ namespace CoppraGames
         public QuestWindow QuestWindow;
         public SpinWheelController SpinWheelWindow;
 
+        private const string LastDailyRewardTimeKey = "last_daily_reward_time";
 
         void Awake()
         {
@@ -23,13 +24,46 @@ namespace CoppraGames
             ShowQuestWindow(false);
             ShowSpinWheelWindow(false);
             ShowMainMenu(true);
-            OnClickNextButton();
+
+            CheckAndHandleDailyReward();
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        private void CheckAndHandleDailyReward()
+        {
+            // Check if the last daily reward time exists
+            if (!PlayerPrefs.HasKey(LastDailyRewardTimeKey))
+            {
+                // First day
+                OnClickNextButton();
+                DailyRewardsWindow.gameObject.SetActive(true);
+                PlayerPrefs.SetString(LastDailyRewardTimeKey, DateTime.Now.ToString());
+            }
+            else
+            {
+                // Retrieve the last daily reward time
+                string lastDailyRewardTimeString = PlayerPrefs.GetString(LastDailyRewardTimeKey, string.Empty);
+                if (DateTime.TryParse(lastDailyRewardTimeString, out DateTime lastDailyRewardTime))
+                {
+                    // Check if 24 hours have passed since the last reward
+                    if ((DateTime.Now - lastDailyRewardTime).TotalHours >= 24)
+                    {
+                        OnClickNextButton();
+                        DailyRewardsWindow.gameObject.SetActive(true);
+                        PlayerPrefs.SetString(LastDailyRewardTimeKey, DateTime.Now.ToString());
+                    }
+                }
+                else
+                {
+                    // Handle parsing failure (shouldn't normally happen)
+                    PlayerPrefs.SetString(LastDailyRewardTimeKey, DateTime.Now.ToString());
+                }
+            }
         }
 
         public void OnClickDailyRewardsButton()
@@ -56,7 +90,6 @@ namespace CoppraGames
             ShowMainMenu(false);
         }
 
-
         public void ShowMainMenu(bool isTrue)
         {
             if (MainMenu)
@@ -65,9 +98,7 @@ namespace CoppraGames
             }
         }
 
-
-
-        //DAILY REWARDS OPTIONS
+        // DAILY REWARDS OPTIONS
         public void ShowDailyRewardsWindow(bool isTrue)
         {
             if (DailyRewardsWindow)
@@ -95,8 +126,7 @@ namespace CoppraGames
             DailyRewardsWindow.Init();
         }
 
-
-        //QUESTS OPTIONS
+        // QUESTS OPTIONS
         public void ShowQuestWindow(bool isTrue)
         {
             if (QuestWindow)
@@ -135,7 +165,7 @@ namespace CoppraGames
             QuestManager.instance.ResetAllDailyQuests();
         }
 
-        //SPINWHEEL OPTIONS
+        // SPINWHEEL OPTIONS
         public void ShowSpinWheelWindow(bool isTrue)
         {
             if (SpinWheelWindow)
@@ -148,6 +178,5 @@ namespace CoppraGames
                     ShowMainMenu(true);
             }
         }
-
     }
 }

@@ -120,7 +120,7 @@ namespace CoppraGames
                     ResultCount.text = "x" + rewards[resultIndex].count.ToString();
                 }
 
-                ResultPanel.GetComponent<Animator>().Play("clip");
+                // ResultPanel.GetComponent<Animator>().Play("clip");
             }
             yield return new WaitForSeconds(3.3f);
             HideResult();

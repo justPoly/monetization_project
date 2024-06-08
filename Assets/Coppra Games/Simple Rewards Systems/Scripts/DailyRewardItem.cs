@@ -33,7 +33,7 @@ namespace CoppraGames
             GreenPanel.SetActive(isReadyToCollect);
             Glow.SetActive(!isClaimed && selectedItem == this);
 
-            DayPanel.color = isReadyToCollect && !isClaimed ? Color.green : Color.white;
+            DayPanel.color = isReadyToCollect && !isClaimed ? Color.green : Color.blue;
             TickMark.SetActive(isClaimed);
 
             if (isReadyToCollect && !isClaimed)
