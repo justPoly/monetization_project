@@ -23,6 +23,7 @@ namespace CoppraGames
             ShowQuestWindow(false);
             ShowSpinWheelWindow(false);
             ShowMainMenu(true);
+            OnClickNextButton();
         }
 
         // Update is called once per frame
@@ -36,7 +37,7 @@ namespace CoppraGames
             ShowDailyRewardsWindow(true);
             ShowQuestWindow(false);
             ShowSpinWheelWindow(false);
-            ShowMainMenu(false);
+            ShowMainMenu(true);
         }
 
         public void OnClickQuestButton()
