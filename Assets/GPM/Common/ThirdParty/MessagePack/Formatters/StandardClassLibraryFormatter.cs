@@ -492,28 +492,4 @@ namespace Gpm.Common.ThirdParty.MessagePack.Formatters
             }
         }
     }
-
-
-#if NET5_0_OR_GREATER
-
-    public sealed class HalfFormatter : IMessagePackFormatter<Half>
-    {
-        public static readonly IMessagePackFormatter<Half> Instance = new HalfFormatter();
-
-        private HalfFormatter()
-        {
-        }
-
-        public int Serialize(ref byte[] bytes, int offset, Half value, IFormatterResolver formatterResolver)
-        {
-            return MessagePackBinary.WriteSingle(ref bytes, offset, (float)value);
-        }
-
-        public Half Deserialize(byte[] bytes, int offset, IFormatterResolver formatterResolver, out int readSize)
-        {
-            return (Half)MessagePackBinary.ReadSingle(bytes, offset, out readSize);
-        }
-    }
-
-#endif
 }

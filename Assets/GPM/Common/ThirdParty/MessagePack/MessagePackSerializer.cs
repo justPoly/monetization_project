@@ -127,42 +127,7 @@ namespace Gpm.Common.ThirdParty.MessagePack
         {
             return resolver.GetFormatterWithVerify<T>().Serialize(ref bytes, offset, value, resolver);
         }
-
-#if NETSTANDARD
-
-        /// <summary>
-        /// Serialize to stream(async).
-        /// </summary>
-        public static System.Threading.Tasks.Task SerializeAsync<T>(Stream stream, T obj)
-        {
-            return SerializeAsync(stream, obj, defaultResolver);
-        }
-
-        /// <summary>
-        /// Serialize to stream(async) with specified resolver.
-        /// </summary>
-        public static async System.Threading.Tasks.Task SerializeAsync<T>(Stream stream, T obj, IFormatterResolver resolver)
-        {
-            if (resolver == null) resolver = DefaultResolver;
-            var formatter = resolver.GetFormatterWithVerify<T>();
-
-            var rentBuffer = BufferPool.Default.Rent();
-            try
-            {
-                var buffer = rentBuffer;
-                var len = formatter.Serialize(ref buffer, 0, obj, resolver);
-
-                // do not need resize.
-                await stream.WriteAsync(buffer, 0, len).ConfigureAwait(false);
-            }
-            finally
-            {
-                BufferPool.Default.Return(rentBuffer);
-            }
-        }
-
-#endif
-
+        
         public static T Deserialize<T>(byte[] bytes)
         {
             return Deserialize<T>(bytes, defaultResolver);
@@ -213,7 +178,7 @@ namespace Gpm.Common.ThirdParty.MessagePack
 
             if (!readStrict)
             {
-#if NETSTANDARD && !NET45
+#if !NET45
 
                 var ms = stream as MemoryStream;
                 if (ms != null)
@@ -254,42 +219,6 @@ namespace Gpm.Common.ThirdParty.MessagePack
         {
             return resolver.GetFormatterWithVerify<T>().Deserialize(bytes, offset, resolver, out readSize);
         }
-
-#if NETSTANDARD
-
-        public static System.Threading.Tasks.Task<T> DeserializeAsync<T>(Stream stream)
-        {
-            return DeserializeAsync<T>(stream, defaultResolver);
-        }
-
-        // readStrict async read is too slow(many Task garbage) so I don't provide async option.
-
-        public static async System.Threading.Tasks.Task<T> DeserializeAsync<T>(Stream stream, IFormatterResolver resolver)
-        {
-            var rentBuffer = BufferPool.Default.Rent();
-            var buf = rentBuffer;
-            try
-            {
-                int length = 0;
-                int read;
-                while ((read = await stream.ReadAsync(buf, length, buf.Length - length).ConfigureAwait(false)) > 0)
-                {
-                    length += read;
-                    if (length == buf.Length)
-                    {
-                        MessagePackBinary.FastResize(ref buf, length * 2);
-                    }
-                }
-
-                return Deserialize<T>(buf, resolver);
-            }
-            finally
-            {
-                BufferPool.Default.Return(rentBuffer);
-            }
-        }
-
-#endif
 
         static int FillFromStream(Stream input, ref byte[] buffer)
         {

@@ -18936,6 +18936,7 @@ GameObject:
   - component: {fileID: 1216419310}
   - component: {fileID: 1216419314}
   - component: {fileID: 1216419315}
+  - component: {fileID: 1216419316}
   m_Layer: 5
   m_Name: ManinMenuCanvas
   m_TagString: Untagged
@@ -19054,6 +19055,18 @@ MonoBehaviour:
   DailyRewardsWindow: {fileID: 1568865313}
   QuestWindow: {fileID: 3761492674248360847, guid: de386fb832e92491783ad34b3daca82a, type: 3}
   SpinWheelWindow: {fileID: 8754789523399227645, guid: 1f09fa1141bb54984b5a2c577ec77aec, type: 3}
+--- !u!114 &1216419316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216419309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92554190db916f845baeb60dc0635604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1218465418
 GameObject:
   m_ObjectHideFlags: 0
@@ -19838,7 +19851,7 @@ GameObject:
   - component: {fileID: 1292136161}
   - component: {fileID: 1292136160}
   m_Layer: 5
-  m_Name: UserSettings
+  m_Name: PopUpCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20282,7 +20295,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1304179469}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1216419316}
+        m_TargetAssemblyTypeName: WebViewPath, Assembly-CSharp
+        m_MethodName: ShowUrlFullScreen
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1304179469
 MonoBehaviour:
   m_ObjectHideFlags: 0

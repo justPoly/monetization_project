@@ -12,10 +12,6 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
     {
         public static readonly IFormatterResolver Instance = new StandardResolver();
 
-#if NETSTANDARD
-        public static readonly IMessagePackFormatter<object> ObjectFallbackFormatter = new DynamicObjectTypeFallbackFormatter(StandardResolverCore.Instance);
-#endif
-
         StandardResolver()
         {
         }
@@ -34,11 +30,7 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
                 if (typeof(T) == typeof(object))
                 {
                     // final fallback
-#if NETSTANDARD
-                    formatter = (IMessagePackFormatter<T>)ObjectFallbackFormatter;
-#else
                     formatter = PrimitiveObjectResolver.Instance.GetFormatter<T>();
-#endif
                 }
                 else
                 {
@@ -51,10 +43,6 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
     public sealed class ContractlessStandardResolver : IFormatterResolver
     {
         public static readonly IFormatterResolver Instance = new ContractlessStandardResolver();
-
-#if NETSTANDARD
-        public static readonly IMessagePackFormatter<object> ObjectFallbackFormatter = new DynamicObjectTypeFallbackFormatter(ContractlessStandardResolverCore.Instance);
-#endif
 
         ContractlessStandardResolver()
         {
@@ -74,11 +62,7 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
                 if (typeof(T) == typeof(object))
                 {
                     // final fallback
-#if NETSTANDARD
-                    formatter = (IMessagePackFormatter<T>)ObjectFallbackFormatter;
-#else
                     formatter = PrimitiveObjectResolver.Instance.GetFormatter<T>();
-#endif
                 }
                 else
                 {
@@ -91,10 +75,6 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
     public sealed class StandardResolverAllowPrivate : IFormatterResolver
     {
         public static readonly IFormatterResolver Instance = new StandardResolverAllowPrivate();
-
-#if NETSTANDARD
-        public static readonly IMessagePackFormatter<object> ObjectFallbackFormatter = new DynamicObjectTypeFallbackFormatter(StandardResolverAllowPrivateCore.Instance);
-#endif
 
         StandardResolverAllowPrivate()
         {
@@ -114,11 +94,7 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
                 if (typeof(T) == typeof(object))
                 {
                     // final fallback
-#if NETSTANDARD
-                    formatter = (IMessagePackFormatter<T>)ObjectFallbackFormatter;
-#else
                     formatter = PrimitiveObjectResolver.Instance.GetFormatter<T>();
-#endif
                 }
                 else
                 {
@@ -131,10 +107,6 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
     public sealed class ContractlessStandardResolverAllowPrivate : IFormatterResolver
     {
         public static readonly IFormatterResolver Instance = new ContractlessStandardResolverAllowPrivate();
-
-#if NETSTANDARD
-        public static readonly IMessagePackFormatter<object> ObjectFallbackFormatter = new DynamicObjectTypeFallbackFormatter(ContractlessStandardResolverAllowPrivateCore.Instance);
-#endif
 
         ContractlessStandardResolverAllowPrivate()
         {
@@ -154,11 +126,7 @@ namespace Gpm.Common.ThirdParty.MessagePack.Resolvers
                 if (typeof(T) == typeof(object))
                 {
                     // final fallback
-#if NETSTANDARD
-                    formatter = (IMessagePackFormatter<T>)ObjectFallbackFormatter;
-#else
                     formatter = PrimitiveObjectResolver.Instance.GetFormatter<T>();
-#endif
                 }
                 else
                 {
@@ -181,9 +149,7 @@ namespace Gpm.Common.ThirdParty.MessagePack.Internal
             BuiltinResolver.Instance, // Try Builtin
             AttributeFormatterResolver.Instance, // Try use [MessagePackFormatter]
 
-#if !NETSTANDARD
             MessagePack.Unity.UnityResolver.Instance,
-#endif
 
 #if !ENABLE_IL2CPP && !UNITY_WSA && !NET_STANDARD_2_0
 

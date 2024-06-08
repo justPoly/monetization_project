@@ -2,7 +2,7 @@
 {
     public static class GpmCommon
     {
-        public const string VERSION = "2.3.1";
+        public const string VERSION = "2.4.0";
         public static bool DebugLogEnabled { get; set; }
     }
 }

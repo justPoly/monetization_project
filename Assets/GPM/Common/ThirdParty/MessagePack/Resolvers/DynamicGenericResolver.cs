@@ -57,21 +57,6 @@ namespace Gpm.Common.ThirdParty.MessagePack.Internal
               {typeof(SortedList<,>), typeof(SortedListFormatter<,>)},
               {typeof(ILookup<,>), typeof(InterfaceLookupFormatter<,>)},
               {typeof(IGrouping<,>), typeof(InterfaceGroupingFormatter<,>)},
-              {typeof(ObservableCollection<>), typeof(ObservableCollectionFormatter<>)},
-              {typeof(ReadOnlyObservableCollection<>),(typeof(ReadOnlyObservableCollectionFormatter<>))},
-              {typeof(IReadOnlyList<>), typeof(InterfaceReadOnlyListFormatter<>)},
-              {typeof(IReadOnlyCollection<>), typeof(InterfaceReadOnlyCollectionFormatter<>)},
-              {typeof(ISet<>), typeof(InterfaceSetFormatter<>)},
-#if NET5_0_OR_GREATER
-              { typeof(IReadOnlySet<>), typeof(InterfaceReadOnlySetFormatter<>) },
-#endif
-              {typeof(System.Collections.Concurrent.ConcurrentBag<>), typeof(ConcurrentBagFormatter<>)},
-              {typeof(System.Collections.Concurrent.ConcurrentQueue<>), typeof(ConcurrentQueueFormatter<>)},
-              {typeof(System.Collections.Concurrent.ConcurrentStack<>), typeof(ConcurrentStackFormatter<>)},
-              {typeof(ReadOnlyDictionary<,>), typeof(ReadOnlyDictionaryFormatter<,>)},
-              {typeof(IReadOnlyDictionary<,>), typeof(InterfaceReadOnlyDictionaryFormatter<,>)},
-              {typeof(System.Collections.Concurrent.ConcurrentDictionary<,>), typeof(ConcurrentDictionaryFormatter<,>)},
-              {typeof(Lazy<>), typeof(LazyFormatter<>)},
         };
 
         // Reduce IL2CPP code generate size(don't write long code in <T>)
@@ -123,81 +108,6 @@ namespace Gpm.Common.ThirdParty.MessagePack.Internal
                 {
                     return CreateInstance(typeof(NullableFormatter<>), new[] { nullableElementType });
                 }
-
-                // Tuple
-                else if (ti.FullName.StartsWith("System.Tuple") is true)
-                {
-                    Type tupleFormatterType = null;
-                    switch (ti.GenericTypeArguments.Length)
-                    {
-                        case 1:
-                            tupleFormatterType = typeof(TupleFormatter<>);
-                            break;
-                        case 2:
-                            tupleFormatterType = typeof(TupleFormatter<,>);
-                            break;
-                        case 3:
-                            tupleFormatterType = typeof(TupleFormatter<,,>);
-                            break;
-                        case 4:
-                            tupleFormatterType = typeof(TupleFormatter<,,,>);
-                            break;
-                        case 5:
-                            tupleFormatterType = typeof(TupleFormatter<,,,,>);
-                            break;
-                        case 6:
-                            tupleFormatterType = typeof(TupleFormatter<,,,,,>);
-                            break;
-                        case 7:
-                            tupleFormatterType = typeof(TupleFormatter<,,,,,,>);
-                            break;
-                        case 8:
-                            tupleFormatterType = typeof(TupleFormatter<,,,,,,,>);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    return CreateInstance(tupleFormatterType, ti.GenericTypeArguments);
-                }
-
-                // ValueTuple
-                else if (ti.FullName.StartsWith("System.ValueTuple"))
-                {
-                    Type tupleFormatterType = null;
-                    switch (ti.GenericTypeArguments.Length)
-                    {
-                        case 1:
-                            tupleFormatterType = typeof(ValueTupleFormatter<>);
-                            break;
-                        case 2:
-                            tupleFormatterType = typeof(ValueTupleFormatter<,>);
-                            break;
-                        case 3:
-                            tupleFormatterType = typeof(ValueTupleFormatter<,,>);
-                            break;
-                        case 4:
-                            tupleFormatterType = typeof(ValueTupleFormatter<,,,>);
-                            break;
-                        case 5:
-                            tupleFormatterType = typeof(ValueTupleFormatter<,,,,>);
-                            break;
-                        case 6:
-                            tupleFormatterType = typeof(ValueTupleFormatter<,,,,,>);
-                            break;
-                        case 7:
-                            tupleFormatterType = typeof(ValueTupleFormatter<,,,,,,>);
-                            break;
-                        case 8:
-                            tupleFormatterType = typeof(ValueTupleFormatter<,,,,,,,>);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    return CreateInstance(tupleFormatterType, ti.GenericTypeArguments);
-                }
-
 
                 // ArraySegement
                 else if (genericType == typeof(ArraySegment<>))
