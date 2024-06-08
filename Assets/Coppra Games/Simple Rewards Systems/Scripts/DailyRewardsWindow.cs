@@ -143,7 +143,7 @@ namespace CoppraGames
                 {
                     ClaimDailyReward(day);
                     ShowResult(DailyRewardItem.selectedItem.GetDay() - 1);
-
+                    GameManager.Instance.TestAddMoney();
                     Init();
                 }
             }
