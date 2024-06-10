@@ -38,7 +38,7 @@ public class WebViewPath : MonoBehaviour
     public void ShowUrlPopupDefault()
     {
         GpmWebView.ShowUrl(
-            "https://google.com/",
+            "https://maliyo.com/",
             new GpmWebViewRequest.Configuration()
             {
                 style = GpmWebViewStyle.POPUP,
@@ -63,7 +63,7 @@ public class WebViewPath : MonoBehaviour
     public void ShowUrlPopupPositionSize()
     {
         GpmWebView.ShowUrl(
-            "https://google.com/",
+            "https://maliyo.com/",
             new GpmWebViewRequest.Configuration()
             {
                 style = GpmWebViewStyle.POPUP,
@@ -99,7 +99,7 @@ public class WebViewPath : MonoBehaviour
     public void ShowUrlPopupMargins()
     {
         GpmWebView.ShowUrl(
-            "https://google.com/",
+            "https://maliyo.com/",
             new GpmWebViewRequest.Configuration()
             {
                 style = GpmWebViewStyle.POPUP,
