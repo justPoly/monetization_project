@@ -3221,7 +3221,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1288.541}
+  m_SizeDelta: {x: 3707.584, y: 1288.541}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &219284807
 MonoBehaviour:
@@ -8114,7 +8114,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $19.9
+  m_text: $1.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -17902,9 +17902,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '$19.9
-
-'
+  m_text: $1.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22498,7 +22496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $19.9
+  m_text: $1.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -28183,7 +28181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $19.9
+  m_text: $1.99
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -29336,10 +29334,10 @@ RectTransform:
   - {fileID: 946162770}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 927, y: -644.2705}
+  m_SizeDelta: {x: 1854, y: 1283}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1821196749
 MonoBehaviour:
@@ -31687,10 +31685,10 @@ RectTransform:
   - {fileID: 590223738}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 2781, y: -644.2705}
+  m_SizeDelta: {x: 1854, y: 1283}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1992753022
 MonoBehaviour:
@@ -32882,10 +32880,10 @@ RectTransform:
   - {fileID: 1193443827}
   m_Father: {fileID: 219284806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 4635, y: -644.2705}
+  m_SizeDelta: {x: 1854, y: 1283}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2045305044
 MonoBehaviour:
@@ -35457,7 +35455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &415921077535283373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37900,6 +37898,42 @@ MonoBehaviour:
     rewardType: 2
   - button: {fileID: 1791973542}
     rewardType: 2
+  - button: {fileID: 2780343404971437767}
+    rewardType: 1
+  - button: {fileID: 790649871}
+    rewardType: 1
+  - button: {fileID: 8209856657461931402}
+    rewardType: 1
+  - button: {fileID: 1186207360}
+    rewardType: 1
+  - button: {fileID: 8765330435721365243}
+    rewardType: 1
+  - button: {fileID: 729791448}
+    rewardType: 1
+  - button: {fileID: 3018581566631809774}
+    rewardType: 0
+  - button: {fileID: 8008322858433697644}
+    rewardType: 0
+  - button: {fileID: 6588855111657851973}
+    rewardType: 0
+  - button: {fileID: 1852943449}
+    rewardType: 1
+  - button: {fileID: 835794608}
+    rewardType: 1
+  - button: {fileID: 823773872}
+    rewardType: 1
+  - button: {fileID: 1558640772}
+    rewardType: 1
+  - button: {fileID: 5582933}
+    rewardType: 1
+  - button: {fileID: 869657800}
+    rewardType: 1
+  - button: {fileID: 2058462594}
+    rewardType: 0
+  - button: {fileID: 2052344502}
+    rewardType: 0
+  - button: {fileID: 1452754137}
+    rewardType: 0
 --- !u!222 &3204798035290535237
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40710,13 +40744,13 @@ MonoBehaviour:
           m_StringArgument: PurchaseSuccessful
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 544480518859365192}
-        m_TargetAssemblyTypeName: FirebaseInit, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 3135369948843146672}
+        m_TargetAssemblyTypeName: EconomyReward, Assembly-CSharp
+        m_MethodName: TriggerRewardEffect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
