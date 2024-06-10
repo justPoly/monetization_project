@@ -27847,7 +27847,7 @@ MonoBehaviour:
   snapSpeed: 8
   carouselMode: 1
   autoMove: 1
-  autoMoveTimer: 8
+  autoMoveTimer: 12
   dotPrefab: {fileID: 5235413537511932513, guid: 810ecb1636c8c2640b3a7e3c33a73588, type: 3}
   dotsContainer: {fileID: 1751218798}
   activeDotColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -29006,6 +29006,10 @@ PrefabInstance:
     - target: {fileID: 1487858089839940799, guid: 897643d85179743e7a8fb75a72d3cb23, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -134.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 7631914925233312518, guid: 897643d85179743e7a8fb75a72d3cb23, type: 3}
+      propertyPath: m_text
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9047047772565477275, guid: 897643d85179743e7a8fb75a72d3cb23, type: 3}
       propertyPath: m_AnchorMax.y
@@ -37842,9 +37846,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3135369948843146672}
+      - m_Target: {fileID: 544480518859365192}
         m_TargetAssemblyTypeName: EconomyReward, Assembly-CSharp
-        m_MethodName: OnButtonClick
+        m_MethodName: 
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 3018581566631809774}
@@ -37886,9 +37890,16 @@ MonoBehaviour:
   gemCount: 6
   spawnDelay: 0.1
   moveDuration: 1
-  coinTargetOffset: {x: -100, y: 28, z: 0}
-  gemTargetOffset: {x: -100, y: 28, z: 0}
+  coinTargetOffset: {x: -100, y: 26, z: 0}
+  gemTargetOffset: {x: -100, y: 26, z: 0}
   canvas: {fileID: 8928687412218750699}
+  buttonRewards:
+  - button: {fileID: 390184863}
+    rewardType: 2
+  - button: {fileID: 503223398}
+    rewardType: 2
+  - button: {fileID: 1791973542}
+    rewardType: 2
 --- !u!222 &3204798035290535237
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40699,13 +40710,13 @@ MonoBehaviour:
           m_StringArgument: PurchaseSuccessful
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3135369948843146672}
-        m_TargetAssemblyTypeName: EconomyReward, Assembly-CSharp
-        m_MethodName: StartCoinCollection
+      - m_Target: {fileID: 544480518859365192}
+        m_TargetAssemblyTypeName: FirebaseInit, Assembly-CSharp
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

@@ -1,43 +1,102 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class EconomyReward : MonoBehaviour
 {
+    public static EconomyReward Instance { get; private set; }
+
     public Transform coinPrefab;
-    public Transform gemPrefab; // Gem prefab
+    public Transform gemPrefab;
     public Transform coinTargetArea;
-    public Transform gemTargetArea; // Gem target area
-    public int coinCount = 6; // Number of coins in the collection
-    public int gemCount = 6; // Number of gems in the collection
+    public Transform gemTargetArea;
+    public int coinCount = 6;
+    public int gemCount = 6;
     public float spawnDelay = 0.1f;
     public float moveDuration = 1f;
-    public Vector3 coinTargetOffset = new Vector3(-100, 100, 0); // Coin top-left offset
-    public Vector3 gemTargetOffset = new Vector3(-100, 100, 0); // Gem top-left offset
+    public Vector3 coinTargetOffset = new Vector3(-100, 26, 0);
+    public Vector3 gemTargetOffset = new Vector3(-100, 26, 0);
     public Canvas canvas;
+    
+    private Transform lastButtonTransform;
+    private RewardType lastRewardType;
 
-    private Transform lastButtonTransform; // To store the button's transform
-
-    void Start()
+    [Serializable]
+    public enum RewardType
     {
-        // Example: Set up button click events for store buttons
-        Button[] storeButtons = GetComponentsInChildren<Button>();
-        foreach (Button button in storeButtons)
+        Coins,
+        Gems,
+        Both
+    }
+
+    [Serializable]
+    public class ButtonReward
+    {
+        public Button button;
+        public RewardType rewardType;
+    }
+
+    [Header("Button Reward Settings")]
+    public List<ButtonReward> buttonRewards;
+
+    private void Awake()
+    {
+        if (Instance == null)
         {
-            button.onClick.AddListener(() => OnButtonClick(button));
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Optional: Keeps the singleton alive across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Ensures that there is only one instance
         }
     }
 
-    public void OnButtonClick(Button button)
+    void Start()
     {
-        // Store the button's transform
-        lastButtonTransform = button.transform;
+        foreach (ButtonReward buttonReward in buttonRewards)
+        {
+            buttonReward.button.onClick.AddListener(() => OnButtonClick(buttonReward.button, buttonReward.rewardType));
+        }
+    }
 
-        // You can call the method that starts the coin collection effect from here or from another place
-        // StartCoinCollection();
+    public void OnButtonClick(Button button, RewardType rewardType)
+    {
+        lastButtonTransform = button.transform;
+        lastRewardType = rewardType;
+    }
+
+    public void SetLastButtonTransform(Transform buttonTransform, RewardType rewardType)
+    {
+        lastButtonTransform = buttonTransform;
+        lastRewardType = rewardType;
+    }
+
+    public void TriggerRewardEffect()
+    {
+        SetRewardEffect(lastRewardType);
+    }
+
+    public void SetRewardEffect(RewardType rewardType)
+    {
+        switch (rewardType)
+        {
+            case RewardType.Coins:
+                StartCoinCollection();
+                break;
+            case RewardType.Gems:
+                StartGemCollection();
+                break;
+            case RewardType.Both:
+                StartBothCollections();
+                break;
+            default:
+                Debug.LogError("Unknown reward type.");
+                break;
+        }
     }
 
     public void StartCoinCollection()

@@ -117,7 +117,7 @@ namespace CoppraGames
                 if (rewards.Length > resultIndex)
                 {
                     ResultIcon.sprite = rewards[resultIndex].icon;
-                    ResultCount.text = "x" + rewards[resultIndex].count.ToString();
+                    ResultCount.text = "+" + rewards[resultIndex].count.ToString();
                 }
 
                 // ResultPanel.GetComponent<Animator>().Play("clip");
