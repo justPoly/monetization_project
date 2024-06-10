@@ -235,6 +235,10 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         purchaseSuccessful.SetActive(true);
         PlayerPrefs.Save();
     }
+    private void ActivateNoAds()
+    {
+        AdsManager.Instance.DisableAds();
+    }
 
     private void ActivateNoAdsForTesting(int minutes)
     {
@@ -276,18 +280,18 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         productActions = new Dictionary<string, Action>
         {
-            { "remove_ads", () => AddMoneyAndUpdateUI(10) },
-            { "super_bundle", () => AddGemsAndUpdateUI(50) },
-            { "mega_bundle", () => AddMoneyAndUpdateUI(20) },
-            { "x_10", () => AddGemsAndUpdateUI(50) },
-            { "x_30", () => AddGemsAndUpdateUI(50) },
-            { "x_66", () => AddGemsAndUpdateUI(50) },
-            { "x_138", () => AddGemsAndUpdateUI(50) },
-            { "x_288", () => {AddGemsAndUpdateUI(50); AddMoneyAndUpdateUI(15);} },
-            { "x_624", () => AddMoneyAndUpdateUI(15) },
-            { "x_1000", () => AddGemsAndUpdateUI(50) },
-            { "x_3300", () => AddGemsAndUpdateUI(50) },
-            { "x_7200", () => AddMoneyAndUpdateUI(25) },
+            { "remove_ads", () => {ActivateNoAds(); AddGemsAndUpdateUI(10); AddMoneyAndUpdateUI(300);} },
+            { "super_bundle", () => {AddGemsAndUpdateUI(50); AddMoneyAndUpdateUI(500);} },
+            { "mega_bundle", () => {AddGemsAndUpdateUI(150); AddMoneyAndUpdateUI(1000);} },
+            { "x_10", () => AddGemsAndUpdateUI(10) },
+            { "x_30", () => AddGemsAndUpdateUI(30) },
+            { "x_66", () => AddGemsAndUpdateUI(66) },
+            { "x_138", () => AddGemsAndUpdateUI(138) },
+            { "x_288", () => AddGemsAndUpdateUI(288) },
+            { "x_624", () => AddGemsAndUpdateUI(624) },
+            { "x_1000", () => AddMoneyAndUpdateUI(1000) },
+            { "x_3300", () => AddMoneyAndUpdateUI(3300)},
+            { "x_7200", () => AddMoneyAndUpdateUI(7200) },
             { "no_ads_1", () => ActivateNoAdsForTesting(5) }
             // Add more product actions here as needed
         };

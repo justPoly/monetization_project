@@ -9,7 +9,7 @@ public class WebViewPath : MonoBehaviour
     public void ShowUrlFullScreen(string url)
     {
         GpmWebView.ShowUrl(
-            "https://google.com/",
+            "https://maliyo.com/",
             new GpmWebViewRequest.Configuration()
             {
                 style = GpmWebViewStyle.FULLSCREEN,

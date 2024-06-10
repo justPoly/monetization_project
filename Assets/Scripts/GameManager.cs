@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     private string currentAdType;
     private bool allButtonsTested; 
 
+    private int currentMoneyIncrement = 0;
+
     public static GameManager Instance => instance ??= FindObjectOfType<GameManager>() ?? new GameObject("GameManagerSingleton").AddComponent<GameManager>();
 
     private void Awake()
@@ -133,7 +135,8 @@ public class GameManager : MonoBehaviour
 
     public void TestAddMoney()
     {
-        GameStateManager.EconomyManager.AddMoney(30);
+        GameStateManager.EconomyManager.AddMoney(currentMoneyIncrement);
+        currentMoneyIncrement += 5;
         UpdateUI();
     }
 
