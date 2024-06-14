@@ -51,16 +51,16 @@ namespace CoppraGames
                 selectedItem = this;
         }
 
-        // private bool _IsReadyToCollect()
-        // {
+        //private bool _IsReadyToCollect()
+        //{
         //    int loginDay = GetComponentInParent<DailyRewardsWindow>().GetDaysSinceSignUp();
         //    return (loginDay >= _day);
-        // }
+        //}
 
-        // private bool _IsClaimed()
-        // {
+        //private bool _IsClaimed()
+        //{
         //    return GetComponentInParent<DailyRewardsWindow>().IsDailyRewardClaimed(_day);
-        // }
+        //}
 
        
         public int GetDay()
