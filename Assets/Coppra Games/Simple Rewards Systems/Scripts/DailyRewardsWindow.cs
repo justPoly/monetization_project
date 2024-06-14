@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -22,14 +21,13 @@ namespace CoppraGames
         public TextMeshProUGUI ResultCount;
 
         public Button ClaimButton;
-
+        private const string SignUpTimeKey = "sign_up_time";
         public RewardData[] rewards;
         public DailyRewardItem[] rewardItemComponents;
 
         void Awake()
         {
             HideResult();
-            //Init();
         }
 
         public void Init()
@@ -63,11 +61,11 @@ namespace CoppraGames
             DateTime current = DateTime.Now;
             DateTime signTime;
 
-            string signTimeString = PlayerPrefs.GetString("sign_up_time");
+            string signTimeString = PlayerPrefs.GetString(SignUpTimeKey);
             if (string.IsNullOrEmpty(signTimeString))
             {
                 signTime = DateTime.Now;
-                PlayerPrefs.SetString("sign_up_time", signTime.ToString());
+                PlayerPrefs.SetString(SignUpTimeKey, signTime.ToString());
             }
             else
             {
@@ -106,7 +104,6 @@ namespace CoppraGames
             StartCoroutine(_ShowResult(resultIndex));
             // SoundController.instance.PlaySoundEffect("collection", false, 1);
         }
-
 
         private IEnumerator _ShowResult(int resultIndex)
         {
@@ -160,7 +157,9 @@ namespace CoppraGames
                 this.ClaimButton.interactable = !isClaimed && isReadyToCollect;
             }
             else
+            {
                 this.ClaimButton.interactable = false;
+            }
         }
 
         public void OnClickCloseButton()

@@ -29,10 +29,8 @@ namespace CoppraGames
             CheckAndHandleDailyReward();
         }
 
-        // Update is called once per frame
         void Update()
         {
-
         }
 
         private void CheckAndHandleDailyReward()
@@ -121,28 +119,10 @@ namespace CoppraGames
 
         public void OnClickNextButton()
         {
-            // Get the sign-up time
-            if (PlayerPrefs.HasKey(SignUpTimeKey))
-            {
-                string signUpTimeString = PlayerPrefs.GetString(SignUpTimeKey, string.Empty);
-                if (DateTime.TryParse(signUpTimeString, out DateTime signUpTime))
-                {
-                    int currentDay = DailyRewardsWindow.GetDaysSinceSignUp(signUpTime);
-                    var newSignTime = DateTime.Now - new TimeSpan((currentDay + 1) * 24, 0, 0);
-                    PlayerPrefs.SetString(SignUpTimeKey, newSignTime.ToString());
-                    DailyRewardsWindow.Init();
-                }
-                else
-                {
-                    Debug.LogError("Failed to parse sign-up time.");
-                }
-            }
-            else
-            {
-                // First time setup
-                PlayerPrefs.SetString(SignUpTimeKey, DateTime.Now.ToString());
-                DailyRewardsWindow.Init();
-            }
+            int currentDay = DailyRewardsWindow.GetDaysSinceSignUp();
+            var signTime = DateTime.Now - new TimeSpan((currentDay + 1) * 24, 0, 0);
+            PlayerPrefs.SetString(SignUpTimeKey, signTime.ToString());
+            DailyRewardsWindow.Init();
         }
 
         // QUESTS OPTIONS
