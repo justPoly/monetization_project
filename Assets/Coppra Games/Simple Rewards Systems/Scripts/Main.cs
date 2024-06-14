@@ -15,6 +15,7 @@ namespace CoppraGames
         public SpinWheelController SpinWheelWindow;
 
         private const string LastDailyRewardTimeKey = "last_daily_reward_time";
+        private const string SignUpTimeKey = "sign_up_time";
 
         void Awake()
         {
@@ -120,10 +121,28 @@ namespace CoppraGames
 
         public void OnClickNextButton()
         {
-            int currentDay = DailyRewardsWindow.GetDaysSinceSignUp();
-            var signTime = DateTime.Now - new TimeSpan((currentDay + 1) * 24, 0, 0);
-            PlayerPrefs.SetString("sign_up_time", signTime.ToString());
-            DailyRewardsWindow.Init();
+            // Get the sign-up time
+            if (PlayerPrefs.HasKey(SignUpTimeKey))
+            {
+                string signUpTimeString = PlayerPrefs.GetString(SignUpTimeKey, string.Empty);
+                if (DateTime.TryParse(signUpTimeString, out DateTime signUpTime))
+                {
+                    int currentDay = DailyRewardsWindow.GetDaysSinceSignUp(signUpTime);
+                    var newSignTime = DateTime.Now - new TimeSpan((currentDay + 1) * 24, 0, 0);
+                    PlayerPrefs.SetString(SignUpTimeKey, newSignTime.ToString());
+                    DailyRewardsWindow.Init();
+                }
+                else
+                {
+                    Debug.LogError("Failed to parse sign-up time.");
+                }
+            }
+            else
+            {
+                // First time setup
+                PlayerPrefs.SetString(SignUpTimeKey, DateTime.Now.ToString());
+                DailyRewardsWindow.Init();
+            }
         }
 
         // QUESTS OPTIONS
