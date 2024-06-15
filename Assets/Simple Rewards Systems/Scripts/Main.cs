@@ -15,7 +15,6 @@ namespace CoppraGames
         public SpinWheelController SpinWheelWindow;
 
         private const string LastDailyRewardTimeKey = "last_daily_reward_time";
-        private const string SignUpTimeKey = "sign_up_time";
 
         void Awake()
         {
@@ -29,8 +28,10 @@ namespace CoppraGames
             CheckAndHandleDailyReward();
         }
 
+        // Update is called once per frame
         void Update()
         {
+
         }
 
         private void CheckAndHandleDailyReward()
@@ -121,7 +122,7 @@ namespace CoppraGames
         {
             int currentDay = DailyRewardsWindow.GetDaysSinceSignUp();
             var signTime = DateTime.Now - new TimeSpan((currentDay + 1) * 24, 0, 0);
-            PlayerPrefs.SetString(SignUpTimeKey, signTime.ToString());
+            PlayerPrefs.SetString("sign_up_time", signTime.ToString());
             DailyRewardsWindow.Init();
         }
 

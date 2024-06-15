@@ -238,10 +238,12 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     private void ActivateNoAds()
     {
         AdsManager.Instance.DisableAds();
+        purchaseSuccessful.SetActive(true);
     }
 
     private void ActivateNoAdsForTesting(int minutes)
     {
+        purchaseSuccessful.SetActive(true);
         AdsManager.Instance.DisableAds();
         StartCoroutine(EnableAdsAfterTime(minutes));
     }
