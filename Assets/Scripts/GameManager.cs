@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CheckInternetConnection(string adType)
     {
-        UnityWebRequest request = new UnityWebRequest("https://www.google.com");
+        UnityWebRequest request = new UnityWebRequest("https://www.maliyo.com");
         yield return request.SendWebRequest();
 
         if (request.error != null)

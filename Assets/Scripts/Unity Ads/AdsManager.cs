@@ -80,7 +80,7 @@ public class AdsManager : MonoBehaviour
             interstitialAds.LoadInterstitialAd();
             rewardedAds.LoadRewardedAd();
         }
-
+        bannerAds.ShowBannerAd();
         Debug.Log("Ads enabled.");
     }
 
