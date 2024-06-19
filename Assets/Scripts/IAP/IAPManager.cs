@@ -243,6 +243,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
 
     private void ActivateNoAdsForTesting(int minutes)
     {
+        LoadingOverlay.SetActive(true);
         purchaseSuccessful.SetActive(true);
         AdsManager.Instance.DisableAds();
         StartCoroutine(EnableAdsAfterTime(minutes));
@@ -294,7 +295,10 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
             { "x_1000", () => AddMoneyAndUpdateUI(1000) },
             { "x_3300", () => AddMoneyAndUpdateUI(3300)},
             { "x_7200", () => AddMoneyAndUpdateUI(7200) },
-            { "no_ads_1", () => ActivateNoAdsForTesting(5) }
+            { "no_ads_1day", () => ActivateNoAdsForTesting(1440) },
+            { "no_ads_1", () => ActivateNoAdsForTesting(4320) },
+            { "no_ads_2", () => ActivateNoAdsForTesting(10080) },
+            { "no_ads_3", () => ActivateNoAdsForTesting(20160) }
             // Add more product actions here as needed
         };
     }

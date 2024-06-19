@@ -6818,6 +6818,7 @@ GameObject:
   - component: {fileID: 480711043}
   - component: {fileID: 480711042}
   - component: {fileID: 480711045}
+  - component: {fileID: 480711046}
   m_Layer: 5
   m_Name: Contents_2 (3)
   m_TagString: Untagged
@@ -6889,7 +6890,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480711043}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1485884058}
+        m_TargetAssemblyTypeName: UIProduct, Assembly-CSharp
+        m_MethodName: Purchase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &480711043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6940,6 +6953,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8211ba9512574468b53897cb43c436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &480711046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 480711040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: ' no_ads_2'
+  nameText: {fileID: 985626742}
+  descriptionText: {fileID: 131413069}
+  priceText: {fileID: 1170120714}
+  PurchaseButton: {fileID: 480711042}
 --- !u!1 &483166196
 GameObject:
   m_ObjectHideFlags: 0
@@ -9846,7 +9876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  productID: no_ads_1
+  productID: no_ads_1day
   nameText: {fileID: 1041585032}
   descriptionText: {fileID: 1797252347}
   priceText: {fileID: 583761438}
@@ -18137,6 +18167,7 @@ GameObject:
   - component: {fileID: 1178282728}
   - component: {fileID: 1178282727}
   - component: {fileID: 1178282730}
+  - component: {fileID: 1178282731}
   m_Layer: 5
   m_Name: Contents_2 (4)
   m_TagString: Untagged
@@ -18208,7 +18239,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1178282728}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1485884058}
+        m_TargetAssemblyTypeName: UIProduct, Assembly-CSharp
+        m_MethodName: Purchase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1178282728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18259,6 +18302,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8211ba9512574468b53897cb43c436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1178282731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178282725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: no_ads_3
+  nameText: {fileID: 1414436090}
+  descriptionText: {fileID: 282375838}
+  priceText: {fileID: 1757521466}
+  PurchaseButton: {fileID: 480711042}
 --- !u!1 &1186207357
 GameObject:
   m_ObjectHideFlags: 0
@@ -23901,6 +23961,7 @@ GameObject:
   - component: {fileID: 1485884055}
   - component: {fileID: 1485884054}
   - component: {fileID: 1485884057}
+  - component: {fileID: 1485884058}
   m_Layer: 5
   m_Name: Contents_2 (2)
   m_TagString: Untagged
@@ -23972,7 +24033,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1485884055}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1485884058}
+        m_TargetAssemblyTypeName: UIProduct, Assembly-CSharp
+        m_MethodName: Purchase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1485884055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24023,6 +24096,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8211ba9512574468b53897cb43c436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1485884058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485884052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc07a0988c9ac64395eef277e0d4f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  productID: no_ads_1
+  nameText: {fileID: 1562278680}
+  descriptionText: {fileID: 789712533}
+  priceText: {fileID: 1449432289}
+  PurchaseButton: {fileID: 1485884054}
 --- !u!1 &1486566788
 GameObject:
   m_ObjectHideFlags: 0
@@ -38076,6 +38166,14 @@ MonoBehaviour:
     rewardType: 0
   - button: {fileID: 1452754137}
     rewardType: 0
+  - button: {fileID: 655531768}
+    rewardType: 3
+  - button: {fileID: 1485884054}
+    rewardType: 3
+  - button: {fileID: 480711042}
+    rewardType: 3
+  - button: {fileID: 1178282727}
+    rewardType: 3
 --- !u!222 &3204798035290535237
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -42521,6 +42619,9 @@ MonoBehaviour:
   - {fileID: 2052344501}
   - {fileID: 1452754136}
   - {fileID: 655531771}
+  - {fileID: 1485884058}
+  - {fileID: 480711046}
+  - {fileID: 1178282731}
   LoadingOverlay: {fileID: 5686333692305084574}
   purchaseFailed: {fileID: 6501148596798781714}
   purchaseSuccessful: {fileID: 4759332553168134845}
@@ -42530,6 +42631,12 @@ MonoBehaviour:
   subscriptionProducts:
   - productID: no_ads_1day
     validityDays: 1
+  - productID: no_ads_1
+    validityDays: 3
+  - productID: no_ads_2
+    validityDays: 7
+  - productID: no_ads_3
+    validityDays: 14
 --- !u!114 &8130405008446990943
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -29,7 +29,8 @@ public class EconomyReward : MonoBehaviour
     {
         Coins,
         Gems,
-        Both
+        Both,
+        None
     }
 
     [Serializable]
