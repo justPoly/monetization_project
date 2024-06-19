@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using Firebase.Analytics;
+using UnityEngine.Events;
 
 public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -10,6 +11,11 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     [SerializeField] private string iosAdUnitId;
 
     private string adUnitId;
+    
+    // Event to handle scene transition
+    public UnityEvent OnAdCompleted;
+
+    public bool AdCompleted { get; private set; }
 
     private void Awake()
     {
@@ -83,10 +89,14 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         Debug.Log("Interstitial Ad Completed");
-        FirebaseAnalytics.LogEvent("interstitial_ad_completed", new Parameter[] {
+        FirebaseAnalytics.LogEvent("interstitial_ad_completed", new Parameter[] 
+        {
             new Parameter("placement_id", placementId),
             new Parameter("completion_state", showCompletionState.ToString())
         });
+        // Set ad completion state
+        AdCompleted = true;
+        OnAdCompleted?.Invoke();
     }
     #endregion
 }
