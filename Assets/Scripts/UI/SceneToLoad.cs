@@ -7,7 +7,7 @@ public class SceneToLoad : MonoBehaviour
     public string sceneName;
     public int countDownTime;
     public SceneFader sceneFader;
-    
+
     private void Start()
     {
         // Subscribe to the OnAdCompleted event
@@ -19,7 +19,7 @@ public class SceneToLoad : MonoBehaviour
 
     public void MoveToLoading()
     {
-        if (AdsManager.Instance != null)
+        if (AdsManager.Instance != null && AdsManager.Instance.interstitialAds.isAdLoaded)
         {
             StartCoroutine(ShowAdAndTransition());
         }
@@ -48,12 +48,9 @@ public class SceneToLoad : MonoBehaviour
         StartCoroutine(CountDown());
     }
 
-
-
     private void OnAdCompleted()
     {
-        // Perform scene transition when the ad is completed
-        sceneFader.FadeTo(sceneName);
+        StartSceneTransition();
     }
 
     public void RestartScene()
@@ -82,8 +79,5 @@ public class SceneToLoad : MonoBehaviour
         }
 
         sceneFader.FadeToSame();
-
-
     }
-
 }
