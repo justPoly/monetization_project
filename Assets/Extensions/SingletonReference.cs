@@ -1,13 +1,12 @@
 using UnityEngine;
-using System.Collections;
 
 public class SingletonReference : MonoBehaviour
 {
     public GameStateManager GameStateManager;
 
 
-    private void Start()
+    private void Awake()
     {
-        //  GameStateManager.Init();
+         GameStateManager.Init();
     }
 }

@@ -1,8 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
 using UnityEngine.Advertisements;
 using Firebase.Analytics;
-using Firebase;
 
 public class BannerAds : MonoBehaviour
 {
@@ -10,8 +10,6 @@ public class BannerAds : MonoBehaviour
     [SerializeField] private string iosAdUnitId;
 
     private string adUnitId;
-    private bool isFirebaseInitialized = false;
-    private bool isBannerLoaded = false;
 
     private void Awake()
     {
@@ -24,34 +22,9 @@ public class BannerAds : MonoBehaviour
         Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
     }
 
-    private async void Start()
-    {
-        await InitializeFirebaseAndLoadBannerAd();
-    }
-
-    public async Task InitializeFirebaseAndLoadBannerAd()  // Change this method to public
+    public void LoadBannerAd()
     {
         if (!AdsManager.Instance.adsDisabled)
-        {
-            await CheckFirebaseDependenciesAsync();
-            isFirebaseInitialized = true;
-            LoadBanner();
-        }
-    }
-
-    private async Task CheckFirebaseDependenciesAsync()
-    {
-        var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
-        if (dependencyStatus != DependencyStatus.Available)
-        {
-            Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
-            // Handle dependency resolution failure (e.g., show an error message)
-        }
-    }
-
-    private void LoadBanner()
-    {
-        if (isFirebaseInitialized && !isBannerLoaded)
         {
             BannerLoadOptions options = new BannerLoadOptions
             {
@@ -66,7 +39,7 @@ public class BannerAds : MonoBehaviour
 
     public void ShowBannerAd()
     {
-        if (isFirebaseInitialized && isBannerLoaded && !AdsManager.Instance.adsDisabled)
+        if (!AdsManager.Instance.adsDisabled)
         {
             BannerOptions options = new BannerOptions
             {
@@ -74,7 +47,6 @@ public class BannerAds : MonoBehaviour
                 clickCallback = BannerClicked,
                 hideCallback = BannerHidden
             };
-
             Advertisement.Banner.Show(adUnitId, options);
             FirebaseAnalytics.LogEvent("banner_ad_show_attempt", "ad_unit_id", adUnitId);
         }
@@ -86,6 +58,7 @@ public class BannerAds : MonoBehaviour
         FirebaseAnalytics.LogEvent("banner_ad_hidden", "ad_unit_id", adUnitId);
     }
 
+    #region Show Callbacks
     private void BannerHidden()
     {
         Debug.Log("Banner Ad Hidden");
@@ -103,7 +76,9 @@ public class BannerAds : MonoBehaviour
         Debug.Log("Banner Ad Shown");
         FirebaseAnalytics.LogEvent("banner_ad_shown", "ad_unit_id", adUnitId);
     }
+    #endregion
 
+    #region Load Callbacks
     private void BannerLoadedError(string message)
     {
         Debug.LogError("Banner Ad Load Failed: " + message);
@@ -116,7 +91,7 @@ public class BannerAds : MonoBehaviour
     private void BannerLoaded()
     {
         Debug.Log("Banner Ad Loaded");
-        isBannerLoaded = true;
         FirebaseAnalytics.LogEvent("banner_ad_loaded", "ad_unit_id", adUnitId);
     }
+    #endregion
 }

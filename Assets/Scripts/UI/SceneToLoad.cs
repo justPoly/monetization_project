@@ -17,11 +17,6 @@ public class SceneToLoad : MonoBehaviour
         }
     }
 
-    public void MoveToNext()
-    {
-         StartSceneTransition();
-    }
-
     public void MoveToLoading()
     {
         if (AdsManager.Instance != null && AdsManager.Instance.interstitialAds.isAdLoaded)

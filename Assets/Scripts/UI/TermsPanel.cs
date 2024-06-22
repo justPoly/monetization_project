@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using TMPro;
 
 public class TermsPanel : MonoBehaviour
 {
@@ -19,7 +14,7 @@ public class TermsPanel : MonoBehaviour
     {
         // Load the panel state from PlayerPrefs
         bool isPanelActive = PlayerPrefs.GetInt(PanelStateKey, 0) == 0;
-        panel.SetActive(isPanelActive);
+        // panel.SetActive(isPanelActive);
 
         // Add a listener to the button click event
         button.onClick.AddListener(OnButtonClick);
@@ -27,13 +22,12 @@ public class TermsPanel : MonoBehaviour
 
     public void OnButtonClick()
     {
-        Debug.Log("Button Clicked");
         if (isPanelActive = PlayerPrefs.GetInt(PanelStateKey, 0) == 0)
         {
-            panel.SetActive(true);
+          panel.SetActive(true);
         } else {
-            panel.SetActive(false);
-            sceneToLoad.MoveToNext();
+                panel.SetActive(false);
+                sceneToLoad.MoveToLoading();
         }
     }
 
@@ -45,7 +39,7 @@ public class TermsPanel : MonoBehaviour
         // Save the state to PlayerPrefs
         PlayerPrefs.SetInt(PanelStateKey, 1);
         PlayerPrefs.Save();
-        // sceneToLoad.MoveToNext();
+        sceneToLoad.MoveToLoading();
     }
 
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7731736803150069489}
   - component: {fileID: 4199699934739867109}
   - component: {fileID: 1528875438}
-  - component: {fileID: 7268574712513790566}
+  - component: {fileID: 10979184982429188}
   m_Layer: 5
   m_Name: LoadingCanvas
   m_TagString: Untagged
@@ -150,7 +150,7 @@ MonoBehaviour:
       m_Calls: []
   invokeCheckOnEnable: 0
   m_disableFirstEvent: 0
---- !u!114 &7268574712513790566
+--- !u!114 &10979184982429188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
