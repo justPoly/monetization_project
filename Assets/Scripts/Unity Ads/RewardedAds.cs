@@ -1,8 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Advertisements;
 using Firebase.Analytics;
+using Firebase;
+using Firebase.Extensions;
+using UnityEngine.Events;
+using System.Threading.Tasks;
 
 public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -20,6 +23,23 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         #endif
     }
 
+    private async void Start()
+    {
+        await WaitForFirebaseInitialization();
+        LoadRewardedAd();
+    }
+
+    private async Task WaitForFirebaseInitialization()
+    {
+        var dependencyTask = FirebaseApp.CheckAndFixDependenciesAsync();
+        await dependencyTask;
+        if (dependencyTask.Result != DependencyStatus.Available)
+        {
+            Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyTask.Result);
+            // Handle dependency resolution failure (e.g., show an error message)
+        }
+    }
+
     public void LoadRewardedAd()
     {
         if (!AdsManager.Instance.adsDisabled)
@@ -35,11 +55,9 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         {
             Advertisement.Show(adUnitId, this);
             FirebaseAnalytics.LogEvent("rewarded_ad_show_attempt", "ad_unit_id", adUnitId);
-            LoadRewardedAd();  // Preload the next ad
         }
     }
 
-    #region LoadCallbacks
     public void OnUnityAdsAdLoaded(string placementId)
     {
         Debug.Log("Rewarded Ad Loaded");
@@ -55,9 +73,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             new Parameter("message", message)
         });
     }
-    #endregion
 
-    #region ShowCallbacks
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
         Debug.LogError($"Failed to show rewarded ad: {message}");
@@ -88,8 +104,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             {
                 Debug.Log("Ads Fully Watched .....");
                 GameManager.Instance.TestAddMoney();
-                //GameManager.Instance.isRewared = true;
-                //GameManager.Instance.RestartGame();
+                LoadRewardedAd();  // Preload the next ad
                 FirebaseAnalytics.LogEvent("rewarded_ad_completed", "placement_id", placementId);
             }
             else if (showCompletionState == UnityAdsShowCompletionState.SKIPPED)
@@ -104,5 +119,4 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             }
         }
     }
-    #endregion
 }

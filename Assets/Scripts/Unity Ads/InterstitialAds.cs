@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Advertisements;
 using Firebase.Analytics;
+using Firebase;
+using Firebase.Extensions;
 using UnityEngine.Events;
+using System.Threading.Tasks;
 
 public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -11,14 +13,10 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     [SerializeField] private string iosAdUnitId;
 
     private string adUnitId;
-
-    // Event to handle scene transition
     public UnityEvent OnAdCompleted;
-
     public bool AdCompleted { get; private set; }
-
-    // Property to track if ad is loaded
-    public bool isAdLoaded;
+    public bool isAdLoaded { get; private set; }
+    private bool isTesting = false;
 
     private void Awake()
     {
@@ -29,16 +27,20 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         #endif
     }
 
-    private void Start()
+    private async void Start()
     {
-        // Ensure AdsManager is initialized before loading the ad
-        if (AdsManager.Instance != null)
+        await WaitForFirebaseInitialization();
+        LoadInterstitialAd();
+    }
+
+    private async Task WaitForFirebaseInitialization()
+    {
+        var dependencyTask = FirebaseApp.CheckAndFixDependenciesAsync();
+        await dependencyTask;
+        if (dependencyTask.Result != DependencyStatus.Available)
         {
-            LoadInterstitialAd();
-        }
-        else
-        {
-            Debug.LogError("AdsManager.Instance is null. Make sure AdsManager is initialized.");
+            Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyTask.Result);
+            // Handle dependency resolution failure (e.g., show an error message)
         }
     }
 
@@ -56,18 +58,32 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         if (!AdsManager.Instance.adsDisabled && isAdLoaded)
         {
             AdCompleted = false;
+            isTesting = false; // Normal ad show, not for testing
             Advertisement.Show(adUnitId, this);
             FirebaseAnalytics.LogEvent("interstitial_ad_show_attempt", "ad_unit_id", adUnitId);
         }
         else
         {
-            // Directly invoke ad completion if ads are disabled or not loaded
             AdCompleted = true;
             OnAdCompleted?.Invoke();
         }
     }
 
-    #region LoadCallbacks
+    public void ShowInterstitialAdsForTesting()
+    {
+        if (!AdsManager.Instance.adsDisabled && isAdLoaded)
+        {
+            AdCompleted = false;
+            isTesting = true; // Mark as testing
+            Advertisement.Show(adUnitId, this);
+            FirebaseAnalytics.LogEvent("interstitial_ad_test_show_attempt", "ad_unit_id", adUnitId);
+        }
+        else
+        {
+            Debug.LogWarning("Ad is not loaded or ads are disabled.");
+        }
+    }
+
     public void OnUnityAdsAdLoaded(string placementId)
     {
         Debug.Log("Interstitial Ad Loaded");
@@ -86,13 +102,11 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
             new Parameter("message", message)
         });
     }
-    #endregion
 
-    #region ShowCallbacks
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
         Debug.LogError($"Failed to show interstitial ad: {message}");
-        AdCompleted = true; // Set ad completion state even on failure
+        AdCompleted = true;
         OnAdCompleted?.Invoke();
         FirebaseAnalytics.LogEvent("interstitial_ad_show_failed", new Parameter[] {
             new Parameter("placement_id", placementId),
@@ -115,18 +129,33 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        Debug.Log("Interstitial Ad Completed");
-        FirebaseAnalytics.LogEvent("interstitial_ad_completed", new Parameter[] 
+        if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
         {
-            new Parameter("placement_id", placementId),
-            new Parameter("completion_state", showCompletionState.ToString())
-        });
-        // Set ad completion state
-        AdCompleted = true;
-        OnAdCompleted?.Invoke();
-        // Preload the next ad
-        isAdLoaded = false;
-        LoadInterstitialAd();
+            Debug.Log("Interstitial Ad Completed");
+            FirebaseAnalytics.LogEvent("interstitial_ad_completed", new Parameter[] {
+                new Parameter("placement_id", placementId),
+                new Parameter("completion_state", showCompletionState.ToString())
+            });
+        }
+        else if (showCompletionState == UnityAdsShowCompletionState.SKIPPED)
+        {
+            Debug.Log("Interstitial Ad Skipped");
+            FirebaseAnalytics.LogEvent("interstitial_ad_skipped", "placement_id", placementId);
+        }
+        else if (showCompletionState == UnityAdsShowCompletionState.UNKNOWN)
+        {
+            Debug.Log("Interstitial Ad Completed with Unknown State");
+            FirebaseAnalytics.LogEvent("interstitial_ad_unknown_completion", "placement_id", placementId);
+        }
+
+        if (!isTesting)
+        {
+           AdCompleted = true;
+           OnAdCompleted?.Invoke();
+           isAdLoaded = false;
+           LoadInterstitialAd();
+        }
+
+
     }
-    #endregion
 }

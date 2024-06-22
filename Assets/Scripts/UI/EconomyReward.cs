@@ -48,7 +48,7 @@ public class EconomyReward : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: Keeps the singleton alive across scenes
+            // DontDestroyOnLoad(gameObject); // Optional: Keeps the singleton alive across scenes
         }
         else
         {

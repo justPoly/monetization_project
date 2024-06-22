@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Advertisements;
-
+using Firebase.Extensions;
+using Firebase;
 
 public class AdsManager : MonoBehaviour
 {
@@ -17,36 +17,47 @@ public class AdsManager : MonoBehaviour
 
     private void Awake()
     {
-    if (Instance != null && Instance != this)
-    {
-        Destroy(gameObject);
-        return;
-    }
-
-    Instance = this;
-    DontDestroyOnLoad(gameObject);
-
-    adsDisabled = PlayerPrefs.GetInt("NoAds", 0) == 1;
-
-    if (!adsDisabled)
+        if (Instance != null && Instance != this)
         {
-            // Initialize Unity Ads (if not already initialized)
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        adsDisabled = PlayerPrefs.GetInt("NoAds", 0) == 1;
+
+        if (!adsDisabled)
+        {
             initializeAds.InitializeUnityAds();
-            // Load ads after Unity Ads is initialized
             StartCoroutine(LoadAdsAfterInitialization());
         }
     }
 
     private IEnumerator LoadAdsAfterInitialization()
     {
-         // Wait for Unity Ads initialization to complete
-        while (!Advertisement.isInitialized || !Advertisement.isSupported)
-        {
-            yield return null;
-        }
+        // Wait for Firebase initialization to complete
+        var checkDependencyTask = FirebaseApp.CheckAndFixDependenciesAsync();
+        yield return new WaitUntil(() => checkDependencyTask.IsCompleted);
 
-         // Load ads now that Unity Ads is initialized and supported
-        bannerAds.LoadBannerAd();
+        if (checkDependencyTask.Result == DependencyStatus.Available)
+        {
+            // Initialize and load ads now that Firebase is initialized and supported
+            StartCoroutine(InitializeAndLoadAds());
+        }
+        else
+        {
+            Debug.LogError("Firebase initialization failed.");
+        }
+    }
+
+    private IEnumerator InitializeAndLoadAds()
+    {
+        // Ensure BannerAds has initialized Firebase and loaded the banner ad
+        yield return bannerAds.InitializeFirebaseAndLoadBannerAd();
+
+        // Load other ad types
         interstitialAds.LoadInterstitialAd();
         rewardedAds.LoadRewardedAd();
     }
@@ -54,7 +65,6 @@ public class AdsManager : MonoBehaviour
     public void DisableAds()
     {
         adsDisabled = true;
-        // Replace with cloud save or any other alternative;
         PlayerPrefs.SetInt("NoAds", 1);
         PlayerPrefs.Save();
         bannerAds.HideBannerAd();
@@ -67,7 +77,6 @@ public class AdsManager : MonoBehaviour
         PlayerPrefs.SetInt("NoAds", 0);
         PlayerPrefs.Save();
 
-        // Initialize Unity Ads if necessary and load ads
         if (!Advertisement.isInitialized || !Advertisement.isSupported)
         {
             initializeAds.InitializeUnityAds();
@@ -75,13 +84,9 @@ public class AdsManager : MonoBehaviour
         }
         else
         {
-            // Directly load ads if already initialized
-            bannerAds.LoadBannerAd();
-            interstitialAds.LoadInterstitialAd();
-            rewardedAds.LoadRewardedAd();
+            StartCoroutine(InitializeAndLoadAds());
         }
         bannerAds.ShowBannerAd();
         Debug.Log("Ads enabled.");
     }
-
 }

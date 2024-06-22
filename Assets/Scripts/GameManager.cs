@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Advertisements;
-using UnityEngine.Networking;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 using Firebase.Analytics;
@@ -21,13 +19,12 @@ public class GameManager : MonoBehaviour
     private GameObject adTestCompletedPopUp;
     public GameObject noInternetPanel;
 
-    
     public TextMeshProUGUI b1text;
 
     public Button[] buttonPrefabs;
     private int currentButtonIndex = -1;
     private string currentAdType;
-    private bool allButtonsTested; 
+    private bool allButtonsTested;
 
     private int currentMoneyIncrement = 0;
 
@@ -35,27 +32,16 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        UpdateUI();
+        InitializeUI();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void InitializeUI()
     {
-        // GameStateManager.EconomyManager.InitializeValues();
         ShowNextButton();
-        adTypePopup.SetActive(false); 
-        storeEnquiryPopUp.SetActive(false);
-        allButtonsTested = false; 
-        noInternetPanel.SetActive(false);
+        SetActiveIfNotNull(adTypePopup, false);
+        SetActiveIfNotNull(storeEnquiryPopUp, false);
+        allButtonsTested = false;
+        SetActiveIfNotNull(noInternetPanel, false);
     }
 
     IEnumerator CheckInternetConnection(string adType)
@@ -65,33 +51,38 @@ public class GameManager : MonoBehaviour
 
         if (request.error != null)
         {
-            noInternetPanel.SetActive(true);
+            SetActiveIfNotNull(noInternetPanel, true);
         }
         else
         {
             ShowAd(adType);
-            noInternetPanel.SetActive(false);
+            SetActiveIfNotNull(noInternetPanel, false);
             StartCoroutine(ShowAdTypePopupCoroutine());
         }
     }
 
     public void UpdateUI()
     {
-        // Update moneyText and gemsText directly based on the current counts and economy manager values
+        if (GameStateManager.EconomyManager == null)
+        {
+            Debug.LogError("EconomyManager is null");
+            return;
+        }
+
         diamondText.text = $": {((int)GameStateManager.EconomyManager.Money).ToString()}";
         gemsText.text = $": {((int)GameStateManager.EconomyManager.Gems).ToString()}";
         miniDiamondText.text = $": {((int)GameStateManager.EconomyManager.Money).ToString()}";
         miniGemsText.text = $": {((int)GameStateManager.EconomyManager.Gems).ToString()}";
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (allButtonsTested)
         {
             RepeatProcess();
         }
-
+         UpdateUI();
     }
 
     private void ShowAd(string adType)
@@ -115,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     public void DisplayInterstitialAds()
     {
-        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+        AdsManager.Instance.interstitialAds.ShowInterstitialAdsForTesting();
     }
 
     public void DisplayRewardedAds()
@@ -130,66 +121,67 @@ public class GameManager : MonoBehaviour
 
     public void StashBannerAd()
     {
-        AdsManager.Instance.bannerAds.HideBannerAd(); 
+        AdsManager.Instance?.bannerAds?.HideBannerAd();
     }
 
     public void TestAddMoney()
     {
-        GameStateManager.EconomyManager.AddMoney(currentMoneyIncrement);
+        GameStateManager.EconomyManager?.AddMoney(currentMoneyIncrement);
         currentMoneyIncrement += 5;
         UpdateUI();
     }
 
     public void TestAddGems()
     {
-        GameStateManager.EconomyManager.AddGems(10);
+        GameStateManager.EconomyManager?.AddGems(10);
         UpdateUI();
     }
 
     public void TestReduceMoney()
     {
-        GameStateManager.EconomyManager.ReduceMoney(20);
+        GameStateManager.EconomyManager?.ReduceMoney(20);
         UpdateUI();
     }
 
     public void OnButtonClick(string adType)
     {
-        currentAdType = adType; 
+        currentAdType = adType;
         StartCoroutine(CheckInternetConnection(adType));
     }
 
     private IEnumerator ShowAdTypePopupCoroutine()
     {
-        yield return new WaitForSeconds(0.5f); 
-        adTypePopup.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        SetActiveIfNotNull(adTypePopup, true);
     }
 
     public void OnYesButtonClick()
     {
         Debug.Log("User saw " + currentAdType + " ad.");
-        adTypePopup.SetActive(false); // Hide the popup after selection
-        SendFirebaseEvent(currentAdType, true); // Send Firebase event for "Yes" response
-        DisablePreviousButton(); // Disable the previous button
-        ShowNextButton(); // Show the next button or repeat the process
+        SetActiveIfNotNull(adTypePopup, false);
+        SendFirebaseEvent(currentAdType, true);
+        DisablePreviousButton();
+        ShowNextButton();
     }
 
     public void OnNoButtonClick()
     {
         Debug.Log("User did not see " + currentAdType + " ad.");
-        adTypePopup.SetActive(false); // Hide the popup after selection
-        SendFirebaseEvent(currentAdType, false); // Send Firebase event for "No" response
-        DisablePreviousButton(); // Disable the previous button
-        ShowNextButton(); // Show the next button or repeat the process
+        SetActiveIfNotNull(adTypePopup, false);
+        SendFirebaseEvent(currentAdType, false);
+        DisablePreviousButton();
+        ShowNextButton();
     }
 
     public void ShowNextButton()
     {
-        // Increment the button index
+        Debug.Log("ShowNextButton called.");
         currentButtonIndex++;
+        Debug.Log("Current button index: " + currentButtonIndex);
         if (currentButtonIndex < buttonPrefabs.Length)
         {
-            // Enable the next button in the array
-            buttonPrefabs[currentButtonIndex].gameObject.SetActive(true);
+            buttonPrefabs[currentButtonIndex]?.gameObject.SetActive(true);
+            Debug.Log("Enabled button: " + buttonPrefabs[currentButtonIndex].name);
         }
         else
         {
@@ -202,25 +194,27 @@ public class GameManager : MonoBehaviour
 
     public void UpdateButtonText()
     {
-        b1text = buttonPrefabs[0].GetComponentInChildren<TextMeshProUGUI>();
-        b1text.text = "Test again";
+        b1text = buttonPrefabs[0]?.GetComponentInChildren<TextMeshProUGUI>();
+        if (b1text != null)
+        {
+            b1text.text = "Test again";
+        }
     }
 
     private IEnumerator storeEnquiryCoroutine()
     {
-        yield return new WaitForSeconds(0.5f); 
-        adTestCompletedPopUp.SetActive(true);
-        yield return new WaitForSeconds(4f); 
-        adTestCompletedPopUp.SetActive(false);
-        storeEnquiryPopUp.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        SetActiveIfNotNull(adTestCompletedPopUp, true);
+        yield return new WaitForSeconds(4f);
+        SetActiveIfNotNull(adTestCompletedPopUp, false);
+        SetActiveIfNotNull(storeEnquiryPopUp, true);
     }
 
     private void DisablePreviousButton()
     {
         if (currentButtonIndex >= 0 && currentButtonIndex < buttonPrefabs.Length)
         {
-            // Disable the previous button in the array
-            buttonPrefabs[currentButtonIndex].gameObject.SetActive(false);
+            buttonPrefabs[currentButtonIndex]?.gameObject.SetActive(false);
         }
     }
 
@@ -228,31 +222,35 @@ public class GameManager : MonoBehaviour
     {
         string eventName = sawAd ? "AdSeen" : "AdNotSeen";
         FirebaseAnalytics.LogEvent(eventName, "AdType", adType);
-        Debug.Log(adType);
+        Debug.Log("Firebase event sent for " + adType);
     }
 
-    
     private void RepeatProcess()
     {
-        currentButtonIndex = -1; // Reset button index to start over
-        allButtonsTested = false; // Reset the flag
-        ShowNextButton(); // Start testing the buttons again
+        currentButtonIndex = -1;
+        allButtonsTested = false;
+        ShowNextButton();
     }
 
-    //Yes button when asked to navigate to the store
     public void TrackYesButtonPress()
     {
-        storeEnquiryPopUp.SetActive(false);
+        SetActiveIfNotNull(storeEnquiryPopUp, false);
         FirebaseAnalytics.LogEvent("nav_to_store_response", new Parameter("response", "yes"));
         Debug.Log("Firebase Analytics: Yes button pressed.");
     }
 
-    //No button when asked to navigate to the store
     public void TrackNoButtonPress()
     {
-        storeEnquiryPopUp.SetActive(false);
+        SetActiveIfNotNull(storeEnquiryPopUp, false);
         FirebaseAnalytics.LogEvent("nav_to_store_response", new Parameter("response", "no"));
         Debug.Log("Firebase Analytics: No button pressed.");
     }
-  
+
+    private void SetActiveIfNotNull(GameObject obj, bool isActive)
+    {
+        if (obj != null)
+        {
+            obj.SetActive(isActive);
+        }
+    }
 }

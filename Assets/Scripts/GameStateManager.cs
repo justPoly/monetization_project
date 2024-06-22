@@ -1,61 +1,36 @@
-using UnityEditor;
 using UnityEngine;
+using System.Collections;
+using Firebase;
+using Firebase.Extensions;
 using UnityEngine.Advertisements;
 
-[CreateAssetMenu(menuName = "Managers/GameState Manager")]
-#if UNITY_EDITOR
-[FilePath("Scriptable Objects/Managers/GameStateManager.asset", FilePathAttribute.Location.PreferencesFolder)]
-#endif
 public class GameStateManager : SingletonScriptableObject<GameStateManager>
 {
-    [FancyHeader("GAMESTATE MANAGER", 3f, "#D4AF37", 8.5f, order = 0)]
-    [Space(order = 1)]
-    [CustomProgressBar(hideWhenZero = true, label = "m_loadingTxt"), SerializeField] public float m_loadingBar;
-    [HideInInspector] public string m_loadingTxt;
-    [HideInInspector] public bool m_loadingDone = false;
+    [SerializeField] private ApplicationManager m_applicationManager;
+    [SerializeField] private EconomyManager m_economyManager;
 
-    private float timer;
     private bool isActionDelayed;
     private float delayDuration = 1f; // Adjust the delay duration as needed
 
-    [SerializeField] private ApplicationManager m_applicationManager;
-    private ApplicationManager m_saveApplicationManager;
+    public static ApplicationManager ApplicationManager => Instance.m_applicationManager;
+    public static EconomyManager EconomyManager => Instance.m_economyManager;
 
-    [SerializeField] private EconomyManager m_economyManager;
-    private EconomyManager m_saveEconomyManager;
+    private DelayHandler delayHandler; // Reference to the MonoBehaviour that handles the coroutine
 
-    public static ApplicationManager ApplicationManager
+    private void Start()
     {
-        get { return Instance.m_applicationManager; }
-
+        delayHandler = new GameObject("DelayHandler").AddComponent<DelayHandler>(); // Create the MonoBehaviour
+        delayHandler.Initialize(this);
     }
 
-    public static EconomyManager EconomyManager
+    public void DelayBannerAd()
     {
-        get { return Instance.m_economyManager; }
-
-    }
-
-    public void Init()
-    {
-       isActionDelayed = true;
-       timer = 0f;
+        delayHandler.StartCoroutine(delayHandler.DelayCoroutine());
     }
 
     public void Update()
     {
-        if (isActionDelayed)
-        {
-            timer += Time.deltaTime;
-            if (timer >= delayDuration)
-            {
-                // Perform delay action here
-                AdsManager.Instance.bannerAds.ShowBannerAd();
-                // Reset the timer and flag
-                timer = 0f;
-                isActionDelayed = false;
-            }
-        }
+        // Other update logic here
     }
 
     public void InitializeValues()
@@ -68,4 +43,23 @@ public class GameStateManager : SingletonScriptableObject<GameStateManager>
         GameManager.Instance.UpdateUI();
     }
 
+    private class DelayHandler : MonoBehaviour
+    {
+        private GameStateManager gameStateManager;
+
+        public void Initialize(GameStateManager manager)
+        {
+            gameStateManager = manager;
+        }
+
+        public IEnumerator DelayCoroutine()
+        {
+            yield return new WaitUntil(() => FirebaseApp.CheckAndFixDependenciesAsync().IsCompleted);
+
+            // Now that Firebase initialization is done, show the banner ad
+            AdsManager.Instance.bannerAds.ShowBannerAd();
+
+            gameStateManager.isActionDelayed = false; // Reset the delay flag
+        }
+    }
 }

@@ -97,7 +97,7 @@ namespace CoppraGames
         {
             string key = "reward_claimed_" + day;
             PlayerPrefs.SetInt(key, 1);
-
+            GameManager.Instance.UpdateUI();
             // QuestManager.instance.OnAchieveQuestGoal(QuestManager.QuestGoals.COLLECT_DAILY_REWARDS);
         }
 

@@ -44,5 +44,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad0ad7c3b1735b419238b90b24d2dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moneyText: {fileID: 0}
+  diamondText: {fileID: 0}
+  miniDiamondText: {fileID: 0}
   gemsText: {fileID: 0}
+  miniGemsText: {fileID: 0}
+  adTypePopup: {fileID: 0}
+  storeEnquiryPopUp: {fileID: 0}
+  adTestCompletedPopUp: {fileID: 0}
+  noInternetPanel: {fileID: 0}
+  b1text: {fileID: 0}
+  buttonPrefabs:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
