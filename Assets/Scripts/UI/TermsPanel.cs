@@ -24,7 +24,8 @@ public class TermsPanel : MonoBehaviour
     {
         if (isPanelActive = PlayerPrefs.GetInt(PanelStateKey, 0) == 0)
         {
-          panel.SetActive(true);
+        // Hide the panel
+            panel.SetActive(true);
         } else {
                 panel.SetActive(false);
                 sceneToLoad.MoveToLoading();

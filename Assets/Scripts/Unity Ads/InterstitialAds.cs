@@ -11,14 +11,11 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     [SerializeField] private string iosAdUnitId;
 
     private string adUnitId;
-
+    
     // Event to handle scene transition
     public UnityEvent OnAdCompleted;
 
     public bool AdCompleted { get; private set; }
-
-    // Property to track if ad is loaded
-    public bool isAdLoaded;
 
     private void Awake()
     {
@@ -27,19 +24,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         #elif UNITY_ANDROID
             adUnitId = androidAdUnitId;
         #endif
-    }
-
-    private void Start()
-    {
-        // Ensure AdsManager is initialized before loading the ad
-        if (AdsManager.Instance != null)
-        {
-            LoadInterstitialAd();
-        }
-        else
-        {
-            Debug.LogError("AdsManager.Instance is null. Make sure AdsManager is initialized.");
-        }
     }
 
     public void LoadInterstitialAd()
@@ -53,17 +37,11 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
 
     public void ShowInterstitialAd()
     {
-        if (!AdsManager.Instance.adsDisabled && isAdLoaded)
+        if (!AdsManager.Instance.adsDisabled)
         {
-            AdCompleted = false;
             Advertisement.Show(adUnitId, this);
             FirebaseAnalytics.LogEvent("interstitial_ad_show_attempt", "ad_unit_id", adUnitId);
-        }
-        else
-        {
-            // Directly invoke ad completion if ads are disabled or not loaded
-            AdCompleted = true;
-            OnAdCompleted?.Invoke();
+            LoadInterstitialAd();  // Preload the next ad
         }
     }
 
@@ -71,15 +49,12 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsAdLoaded(string placementId)
     {
         Debug.Log("Interstitial Ad Loaded");
-        isAdLoaded = true;
         FirebaseAnalytics.LogEvent("interstitial_ad_loaded", "placement_id", placementId);
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
         Debug.LogError($"Failed to load interstitial ad: {message}");
-        isAdLoaded = false;
-        LoadInterstitialAd();
         FirebaseAnalytics.LogEvent("interstitial_ad_load_failed", new Parameter[] {
             new Parameter("placement_id", placementId),
             new Parameter("error", error.ToString()),
@@ -92,8 +67,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
         Debug.LogError($"Failed to show interstitial ad: {message}");
-        AdCompleted = true; // Set ad completion state even on failure
-        OnAdCompleted?.Invoke();
         FirebaseAnalytics.LogEvent("interstitial_ad_show_failed", new Parameter[] {
             new Parameter("placement_id", placementId),
             new Parameter("error", error.ToString()),
@@ -124,9 +97,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         // Set ad completion state
         AdCompleted = true;
         OnAdCompleted?.Invoke();
-        // Preload the next ad
-        isAdLoaded = false;
-        LoadInterstitialAd();
     }
     #endregion
 }

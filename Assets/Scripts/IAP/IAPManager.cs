@@ -37,6 +37,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         public string productID;
         public int validityDays;
+        // public int validityMinutes;
     }
 
     public List<SubscriptionProduct> subscriptionProducts;
@@ -56,6 +57,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         operation.completed += HandleIAPCatalogLoaded;
         UpdateUI();
         CheckAndHandleSubscriptions();
+
         InitializeProductActions();
     }
 
@@ -196,8 +198,10 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         var subscriptionProduct = subscriptionProducts.FirstOrDefault(x => x.productID == productId);
         if (subscriptionProduct != null)
         {
-            // For testing, we use specific minutes instead of days
-            DateTime expirationDate = purchaseDate.AddMinutes(subscriptionProduct.validityDays);
+            // For testing, we use 5 minutes instead of days
+            DateTime expirationDate = purchaseDate.AddMinutes(5);
+            // Calculate expiration in days
+            // DateTime expirationDate = purchaseDate.AddDays(subscriptionProduct.validityDays);
             PlayerPrefs.SetString(productId + "_expiration", expirationDate.ToString());
         }
 
@@ -231,7 +235,6 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
         purchaseSuccessful.SetActive(true);
         PlayerPrefs.Save();
     }
-
     private void ActivateNoAds()
     {
         AdsManager.Instance.DisableAds();
@@ -292,15 +295,13 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
             { "x_1000", () => AddMoneyAndUpdateUI(1000) },
             { "x_3300", () => AddMoneyAndUpdateUI(3300)},
             { "x_7200", () => AddMoneyAndUpdateUI(7200) },
-            { "no_ads_1day", () => ActivateNoAdsForTesting(5) }, // 1440 =1 day
-            { "no_ads_1", () => ActivateNoAdsForTesting(10) }, // 3 days
-            { "no_ads_2", () => ActivateNoAdsForTesting(15) }, // 7 days
-            { "no_ads_3", () => ActivateNoAdsForTesting(20) } // 14 days
+            { "no_ads_1day", () => ActivateNoAdsForTesting(5) }, //1440
+            { "no_ads_1", () => ActivateNoAdsForTesting(10) },
+            { "no_ads_2", () => ActivateNoAdsForTesting(15) },
+            { "no_ads_3", () => ActivateNoAdsForTesting(20) }
+            // Add more product actions here as needed
         };
     }
+
+
 }
-
-
-
-
-
