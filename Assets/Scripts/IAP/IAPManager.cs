@@ -253,6 +253,7 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
     {
         yield return new WaitForSeconds(minutes * 60);
         AdsManager.Instance.EnableAds();
+        AdsManager.Instance.bannerAds.ShowBannerAd();
     }
 
     private void CheckAndHandleSubscriptions()

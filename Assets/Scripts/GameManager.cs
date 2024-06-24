@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -116,6 +116,11 @@ public class GameManager : MonoBehaviour
     public void DisplayInterstitialAds()
     {
         AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+    }
+
+    public void DisplayInterstitialAdsTest()
+    {
+        AdsManager.Instance.interstitialAds.ShowInterstitialAdTesting();
     }
 
     public void DisplayRewardedAds()

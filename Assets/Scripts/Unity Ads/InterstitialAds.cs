@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using Firebase.Analytics;
+using UnityEngine.SceneManagement;
 
 public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -10,6 +11,9 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     [SerializeField] private string iosAdUnitId;
 
     private string adUnitId;
+    private bool isTestingAd = false;
+
+    public static event Action OnInterstitialAdCompleted; // Define an event
 
     private void Awake()
     {
@@ -33,6 +37,17 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     {
         if (!AdsManager.Instance.adsDisabled)
         {
+            Advertisement.Show(adUnitId, this);
+            FirebaseAnalytics.LogEvent("interstitial_ad_show_attempt", "ad_unit_id", adUnitId);
+            LoadInterstitialAd();  // Preload the next ad
+        }
+    }
+
+    public void ShowInterstitialAdTesting()
+    {
+        if (!AdsManager.Instance.adsDisabled)
+        {
+            isTestingAd = true;
             Advertisement.Show(adUnitId, this);
             FirebaseAnalytics.LogEvent("interstitial_ad_show_attempt", "ad_unit_id", adUnitId);
             LoadInterstitialAd();  // Preload the next ad
@@ -87,6 +102,12 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
             new Parameter("placement_id", placementId),
             new Parameter("completion_state", showCompletionState.ToString())
         });
+
+        if (isTestingAd)
+        {
+            isTestingAd = false;
+            OnInterstitialAdCompleted?.Invoke(); // Invoke the event when ad is completed
+        }
     }
     #endregion
 }

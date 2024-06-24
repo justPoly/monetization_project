@@ -2930,6 +2930,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5744664845007974298, guid: 573c73c42cfd24248b9b752f66e50b7d, type: 3}
+      propertyPath: sceneToLoad
+      value: 
+      objectReference: {fileID: 945673953}
     - target: {fileID: 7600922944220675655, guid: 573c73c42cfd24248b9b752f66e50b7d, type: 3}
       propertyPath: m_Name
       value: AdsManager

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,11 +7,26 @@ public class SceneToLoad : MonoBehaviour
     public string sceneName;
     public int countDownTime;
     public SceneFader sceneFader;
-    
+
+    private void OnEnable()
+    {
+        // Subscribe to the event when this script is enabled
+        InterstitialAds.OnInterstitialAdCompleted += AdCompletedHandler;
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from the event when this script is disabled or destroyed
+        InterstitialAds.OnInterstitialAdCompleted -= AdCompletedHandler;
+    }
+
+    public void AdCompletedHandler()
+    {
+        MoveToLoading();
+    }
+
     public void MoveToLoading()
     {
-        // PlayerMovement.instance.speed = 0;
-        // EnemyMovement.instance.speed = 0;
         GameStateManager.ApplicationManager.PlayGame();
         GameStateManager.ApplicationManager.OnSceneLoad.Raise();
         StartCoroutine(CountDown());
@@ -22,7 +38,7 @@ public class SceneToLoad : MonoBehaviour
         StartCoroutine(CountDownToSame());
     }
 
-    IEnumerator CountDown()
+    private IEnumerator CountDown()
     {
         while (countDownTime > 0)
         {
@@ -33,7 +49,7 @@ public class SceneToLoad : MonoBehaviour
         sceneFader.FadeTo(sceneName);
     }
 
-    IEnumerator CountDownToSame()
+    private IEnumerator CountDownToSame()
     {
         while (countDownTime > 0)
         {
@@ -42,8 +58,5 @@ public class SceneToLoad : MonoBehaviour
         }
 
         sceneFader.FadeToSame();
-
-
     }
-
 }
