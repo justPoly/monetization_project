@@ -296,8 +296,8 @@ public class IAPManager : MonoBehaviour, IStoreListener, IDetailedStoreListener
             { "x_1000", () => AddMoneyAndUpdateUI(1000) },
             { "x_3300", () => AddMoneyAndUpdateUI(3300)},
             { "x_7200", () => AddMoneyAndUpdateUI(7200) },
-            { "no_ads_1day", () => ActivateNoAdsForTesting(5) }, //1440
-            { "no_ads_1", () => ActivateNoAdsForTesting(10) },
+            { "no_ads_1", () => ActivateNoAdsForTesting(5) }, //1440
+            { "no_ads_1day", () => ActivateNoAdsForTesting(10) },
             { "no_ads_2", () => ActivateNoAdsForTesting(15) },
             { "no_ads_3", () => ActivateNoAdsForTesting(20) }
             // Add more product actions here as needed

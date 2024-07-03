@@ -1,0 +1,21 @@
+I am interested in a platform that offers  multiplayer functionality for mobile games
+
+Particularly, I am interested in a system that can support e-Sports competition including live streaming of gameplay
+
+Prepare a presentation for when I get back next Wednesday to share what each of these platforms offer and what makes them different from each other and which one of them you’d recommend for us to use
+
+
+Platforms:
+https://snapser.com/
+detailed specifics about its support for multiplayer functionality and e-Sports competition, 
+including live streaming, were not easily found
+
+https://lootlocker.com/
+However, direct support for live streaming of gameplay is not explicitly mentioned​
+
+https://pragma.gg/
+specific details on live streaming integration are not clearly stated.
+
+https://metaplay.io/
+Metaplay's focus on multiplayer and live operations aligns well with the requirements for e-Sports competition.
+Specific details on live streaming capabilities were not explicitly found.
