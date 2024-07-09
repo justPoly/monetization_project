@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CoppraGames
@@ -39,10 +37,9 @@ namespace CoppraGames
             // Check if the last daily reward time exists
             if (!PlayerPrefs.HasKey(LastDailyRewardTimeKey))
             {
-                // First day
-                OnClickNextButton();
-                DailyRewardsWindow.gameObject.SetActive(true);
-                PlayerPrefs.SetString(LastDailyRewardTimeKey, DateTime.Now.ToString());
+                // First time user opens the app
+                ShowDailyRewardsWindow(true);
+                UpdateLastDailyRewardTime();
             }
             else
             {
@@ -53,17 +50,21 @@ namespace CoppraGames
                     // Check if 24 hours have passed since the last reward
                     if ((DateTime.Now - lastDailyRewardTime).TotalHours >= 24)
                     {
-                        OnClickNextButton();
-                        DailyRewardsWindow.gameObject.SetActive(true);
-                        PlayerPrefs.SetString(LastDailyRewardTimeKey, DateTime.Now.ToString());
+                        ShowDailyRewardsWindow(true);
+                        UpdateLastDailyRewardTime();
                     }
                 }
                 else
                 {
                     // Handle parsing failure (shouldn't normally happen)
-                    PlayerPrefs.SetString(LastDailyRewardTimeKey, DateTime.Now.ToString());
+                    UpdateLastDailyRewardTime();
                 }
             }
+        }
+
+        private void UpdateLastDailyRewardTime()
+        {
+            PlayerPrefs.SetString(LastDailyRewardTimeKey, DateTime.Now.ToString());
         }
 
         public void OnClickDailyRewardsButton()
@@ -71,7 +72,7 @@ namespace CoppraGames
             ShowDailyRewardsWindow(true);
             ShowQuestWindow(false);
             ShowSpinWheelWindow(false);
-            ShowMainMenu(true);
+            ShowMainMenu(false);
         }
 
         public void OnClickQuestButton()
@@ -94,7 +95,7 @@ namespace CoppraGames
         {
             if (MainMenu)
             {
-                MainMenu.gameObject.SetActive(isTrue);
+                MainMenu.SetActive(isTrue);
             }
         }
 
@@ -106,23 +107,19 @@ namespace CoppraGames
                 DailyRewardsWindow.gameObject.SetActive(isTrue);
 
                 if (isTrue)
+                {
                     DailyRewardsWindow.Init();
+                }
                 else
+                {
                     ShowMainMenu(true);
+                }
             }
         }
 
         public void OnClickResetDailyRewardsButton()
         {
             PlayerPrefs.DeleteAll();
-            DailyRewardsWindow.Init();
-        }
-
-        public void OnClickNextButton()
-        {
-            int currentDay = DailyRewardsWindow.GetDaysSinceSignUp();
-            var signTime = DateTime.Now - new TimeSpan((currentDay + 1) * 24, 0, 0);
-            PlayerPrefs.SetString("sign_up_time", signTime.ToString());
             DailyRewardsWindow.Init();
         }
 
@@ -134,9 +131,13 @@ namespace CoppraGames
                 QuestWindow.gameObject.SetActive(isTrue);
 
                 if (isTrue)
+                {
                     QuestWindow.Init();
+                }
                 else
+                {
                     ShowMainMenu(true);
+                }
             }
         }
 
@@ -157,7 +158,9 @@ namespace CoppraGames
 
         public void OnClickCollectDailyRewards()
         {
-            ShowDailyRewardsWindow(true);
+            // When the daily reward is collected, update the last reward time
+            UpdateLastDailyRewardTime();
+            ShowDailyRewardsWindow(false); // Hide the daily rewards window after collecting the reward
         }
 
         public void OnClickResetQuest()
@@ -173,9 +176,13 @@ namespace CoppraGames
                 SpinWheelWindow.gameObject.SetActive(isTrue);
 
                 if (isTrue)
+                {
                     SpinWheelWindow.Init();
+                }
                 else
+                {
                     ShowMainMenu(true);
+                }
             }
         }
     }

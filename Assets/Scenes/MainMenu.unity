@@ -43174,9 +43174,9 @@ MonoBehaviour:
   diamondText: {fileID: 477945995795491193}
   gemsText: {fileID: 6291006096605805838}
   subscriptionProducts:
-  - productID: no_ads_1day
-    validityDays: 5
   - productID: no_ads_1
+    validityDays: 5
+  - productID: no_ads_1day
     validityDays: 10
   - productID: no_ads_2
     validityDays: 15
