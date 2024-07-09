@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
 
     public void TestReduceMoney()
     {
-        GameStateManager.EconomyManager.ReduceMoney(20);
+        GameStateManager.EconomyManager.SpendMoney(20);
         UpdateUI();
     }
 
