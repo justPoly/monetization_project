@@ -44,12 +44,15 @@ namespace CoppraGames
 
         public void ApplyValues()
         {
-            int daysSinceSignUp = GetDaysSinceSignUp();
-
-            for (int i = 0; i < rewardItemComponents.Length; i++)
+            int index = 0;
+            foreach (var r in rewards)
             {
-                int index = (daysSinceSignUp + i) % rewards.Length;
-                rewardItemComponents[i].SetData(rewards[index]);
+                if (rewardItemComponents.Length > index)
+                {
+                    rewardItemComponents[index].SetData(r);
+                }
+
+                index++;
             }
 
             RefreshClaimButton();
