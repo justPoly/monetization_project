@@ -19,7 +19,7 @@ public class WebViewPath : MonoBehaviour
                 backgroundColor = "#FFFFFF",
                 isNavigationBarVisible = true,
                 navigationBarColor = "#4B96E6",
-                title = "The page title.",
+                title = "maliyo",
                 isBackButtonVisible = true,
                 isForwardButtonVisible = true,
                 isCloseButtonVisible = true,
@@ -27,6 +27,35 @@ public class WebViewPath : MonoBehaviour
 #if UNITY_IOS
                 contentMode = GpmWebViewContentMode.MOBILE
 #endif
+            },
+            // See the end of the code example
+            OnCallback,
+            new List<string>() { "USER_ CUSTOM_SCHEME" }
+        );
+    }
+
+        // FullScreen
+    public void ShowUrlFullScreenI(string url)
+    {
+        GpmWebView.ShowUrl(
+            "https://discord.com/channels/1253296686155960390/1253392791795400907",
+            new GpmWebViewRequest.Configuration()
+            {
+                style = GpmWebViewStyle.FULLSCREEN,
+                orientation = GpmOrientation.UNSPECIFIED,
+                isClearCookie = true,
+                isClearCache = true,
+                backgroundColor = "#FFFFFF",
+                isNavigationBarVisible = true,
+                navigationBarColor = "#4B96E6",
+                title = "Discord",
+                isBackButtonVisible = true,
+                isForwardButtonVisible = true,
+                isCloseButtonVisible = true,
+                supportMultipleWindows = true,
+                #if UNITY_IOS
+                contentMode = GpmWebViewContentMode.MOBILE
+                #endif
             },
             // See the end of the code example
             OnCallback,
