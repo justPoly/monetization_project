@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System;
 
 public class BlogScraper : MonoBehaviour
 {
@@ -52,24 +51,23 @@ public class BlogScraper : MonoBehaviour
 
             string articleHtml = match.Groups[1].Value;
 
-            // Regular expression to match the title
-            string titlePattern = @"<h3 class=\""elementor-post__title\"">.*?<a.*?>(.*?)<\/a>";
+            // Regular expression to match the title and link
+            string titlePattern = @"<h3 class=\""elementor-post__title\"">.*?<a href=\""(.*?)\"".*?>(.*?)<\/a>";
             Match titleMatch = Regex.Match(articleHtml, titlePattern, RegexOptions.Singleline);
-            string titleHtml = titleMatch.Success ? titleMatch.Groups[1].Value.Trim() : string.Empty;
-
-            // Decode HTML entities in the title
-            string title = DecodeHtmlEntities(titleHtml);
+            string url = titleMatch.Success ? titleMatch.Groups[1].Value.Trim() : string.Empty;
+            string title = titleMatch.Success ? Regex.Replace(titleMatch.Groups[2].Value.Trim(), @"&#[0-9]+;", m => ((char)int.Parse(m.Value.Substring(2, m.Value.Length - 3))).ToString()) : string.Empty;
 
             // Regular expression to match the image URL
             string imagePattern = @"<img.*?src=\""([^\""]*?)\"".*?class=\""attachment-full size-full";
             Match imageMatch = Regex.Match(articleHtml, imagePattern, RegexOptions.Singleline);
             string imageUrl = imageMatch.Success ? imageMatch.Groups[1].Value.Trim() : string.Empty;
 
-            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(imageUrl))
+            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(imageUrl) && !string.IsNullOrEmpty(url))
             {
-                blogPosts.Add(new BlogPost { Title = title, ImageUrl = imageUrl });
+                blogPosts.Add(new BlogPost { Title = title, ImageUrl = imageUrl, Url = url });
                 Debug.Log("Extracted Title: " + title);
                 Debug.Log("Extracted Image URL: " + imageUrl);
+                Debug.Log("Extracted URL: " + url);
             }
         }
 
@@ -82,15 +80,9 @@ public class BlogScraper : MonoBehaviour
         {
             GameObject blogPostGO = Instantiate(blogPostPrefab, contentParent);
             BlogPostUI blogPostUI = blogPostGO.GetComponent<BlogPostUI>();
-            blogPostUI.SetPost(post.Title, post.ImageUrl);
+            blogPostUI.SetPost(post.Title, post.ImageUrl, post.Url);
             Debug.Log("Instantiated Blog Post Prefab: " + post.Title); // Log the instantiation of the prefab
         }
-    }
-
-    // Method to decode HTML entities using System.Net.WebUtility.HtmlDecode
-    string DecodeHtmlEntities(string input)
-    {
-        return System.Net.WebUtility.HtmlDecode(input);
     }
 }
 
@@ -99,4 +91,5 @@ public class BlogPost
 {
     public string Title;
     public string ImageUrl;
+    public string Url;
 }

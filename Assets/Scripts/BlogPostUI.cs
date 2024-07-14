@@ -9,9 +9,12 @@ public class BlogPostUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private RawImage image;
 
-    public void SetPost(string title, string imageUrl)
+    private string url;
+
+    public void SetPost(string title, string imageUrl, string postUrl)
     {
         titleText.text = title;
+        url = postUrl;
         StartCoroutine(LoadImage(imageUrl));
     }
 
@@ -28,5 +31,10 @@ public class BlogPostUI : MonoBehaviour
 
         Texture2D texture = DownloadHandlerTexture.GetContent(www);
         image.texture = texture;
+    }
+
+    public void OnClick()
+    {
+        Application.OpenURL(url);
     }
 }
