@@ -10,12 +10,25 @@ public class BlogPostUI : MonoBehaviour
     [SerializeField] private RawImage image;
 
     private string url;
+    private string imageUrl;
 
     public void SetPost(string title, string imageUrl, string postUrl)
     {
         titleText.text = title;
-        url = postUrl;
-        StartCoroutine(LoadImage(imageUrl));
+        this.url = postUrl;
+        this.imageUrl = imageUrl;
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(LoadImage(imageUrl));
+        }
+    }
+
+    void OnEnable()
+    {
+        if (!string.IsNullOrEmpty(imageUrl))
+        {
+            StartCoroutine(LoadImage(imageUrl));
+        }
     }
 
     IEnumerator LoadImage(string url)

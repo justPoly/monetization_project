@@ -79,6 +79,7 @@ public class BlogScraper : MonoBehaviour
         foreach (var post in blogPosts)
         {
             GameObject blogPostGO = Instantiate(blogPostPrefab, contentParent);
+            blogPostGO.SetActive(true); // Ensure the GameObject is active
             BlogPostUI blogPostUI = blogPostGO.GetComponent<BlogPostUI>();
             blogPostUI.SetPost(post.Title, post.ImageUrl, post.Url);
             Debug.Log("Instantiated Blog Post Prefab: " + post.Title); // Log the instantiation of the prefab
