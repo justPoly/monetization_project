@@ -11,6 +11,8 @@ public class BlogScraper : MonoBehaviour
     [SerializeField] private Transform contentParent; // Parent transform to instantiate blog post prefabs
     private List<BlogPost> blogPosts = new List<BlogPost>(); // List to store blog post data
 
+    public GameObject noInternetPanel;
+
     void Start()
     {
         StartCoroutine(LoadBlogPosts());
@@ -23,6 +25,7 @@ public class BlogScraper : MonoBehaviour
 
         if (www.result != UnityWebRequest.Result.Success)
         {
+            noInternetPanel.SetActive(true);
             Debug.LogError("Failed to load blog: " + www.error);
             yield break;
         }

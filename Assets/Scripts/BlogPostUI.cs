@@ -17,6 +17,11 @@ public class BlogPostUI : MonoBehaviour
         titleText.text = title;
         this.url = postUrl;
         this.imageUrl = imageUrl;
+
+        // Ensure the title is updated immediately
+        titleText.ForceMeshUpdate();
+
+        // Start the coroutine to load the image if the GameObject is active
         if (gameObject.activeInHierarchy)
         {
             StartCoroutine(LoadImage(imageUrl));
@@ -25,6 +30,7 @@ public class BlogPostUI : MonoBehaviour
 
     void OnEnable()
     {
+        // Ensure the image is loaded when the GameObject becomes active
         if (!string.IsNullOrEmpty(imageUrl))
         {
             StartCoroutine(LoadImage(imageUrl));
@@ -44,10 +50,32 @@ public class BlogPostUI : MonoBehaviour
 
         Texture2D texture = DownloadHandlerTexture.GetContent(www);
         image.texture = texture;
+
+        // Adjust the aspect ratio of the image if needed
+        RectTransform rt = image.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(rt.sizeDelta.x, rt.sizeDelta.x * texture.height / texture.width);
     }
 
     public void OnClick()
     {
+        Debug.Log("Opening URL: " + url);
+
+        // Use a coroutine to handle opening the URL and then restoring the UI
+        StartCoroutine(OpenURLAndRestore());
+    }
+
+    IEnumerator OpenURLAndRestore()
+    {
+        // Open URL
         Application.OpenURL(url);
+
+        // Wait for a short delay to ensure the URL is opened
+        yield return new WaitForSeconds(0.1f);
+
+        // Reload the image to ensure it is still visible
+        if (!string.IsNullOrEmpty(imageUrl))
+        {
+            StartCoroutine(LoadImage(imageUrl));
+        }
     }
 }

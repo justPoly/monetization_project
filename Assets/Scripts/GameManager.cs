@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     private GameObject adTestCompletedPopUp;
     public GameObject noInternetPanel;
 
+    [SerializeField] private Transform contentParent; // Parent transform to instantiate game entries
+    [SerializeField] private GameObject gameEntryPrefab; // Prefab for displaying game entries
+    [SerializeField] private GameInfo[] games;
+
     
     public TextMeshProUGUI b1text;
 
@@ -56,6 +60,13 @@ public class GameManager : MonoBehaviour
         storeEnquiryPopUp.SetActive(false);
         allButtonsTested = false; 
         noInternetPanel.SetActive(false);
+
+        foreach (var game in games)
+        {
+            GameObject gameEntryGO = Instantiate(gameEntryPrefab, contentParent);
+            GameEntryUI gameEntryUI = gameEntryGO.GetComponent<GameEntryUI>();
+            gameEntryUI.Setup(game);
+        }
     }
 
     IEnumerator CheckInternetConnection(string adType)
